@@ -11,6 +11,7 @@
   "dependencies": {
     "ear-pipe": "0.0.0",
     "ivona-node": "^0.1.2",
-    "node-wit": "^1.1.0"
+    "node-wit": "^1.1.0",
+    "request": "^2.53.0"
   }
 }
