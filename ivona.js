@@ -7,4 +7,11 @@ var ivona = new Ivona({
     secretKey: 'T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp'
 });
 
-ivona.createVoice(args[0]).pipe(fs.createWriteStream('temp.mp3'));
+ivona.createVoice(args[0], {
+    body: {
+        voice: {
+            // language: 'en-GB',
+            gender: 'Female'
+        }
+    }
+}).pipe(fs.createWriteStream('temp.mp3'));
