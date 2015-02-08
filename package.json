@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ear-pipe": "0.0.0",
+    "ivona-node": "^0.1.2",
     "node-wit": "^1.1.0"
   }
 }
