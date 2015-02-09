@@ -31,10 +31,21 @@ var getForecast = function(type, datetime, callback) {
         url: url,
         qs: params
     }, function(req, resp) {
-        console.log(url);
         var data = JSON.parse(resp.body);
         var weather;
         switch (type) {
+            case 'day':
+                var utDay = dateToUT(datetime.value);
+
+                weather = data.list.filter(function(item) {
+                    return utDay >= item.dt && item.dt - utDay < 86400;
+                }).map(function(item) {
+                    return new ForecastDailyItem(item);
+                });
+                console.log(JSON.stringify(weather, true, '  '));
+                console.log(utDay);
+                break;
+
             case 'hour':
                 var utHour = dateToUT(datetime.value);
 
@@ -44,7 +55,6 @@ var getForecast = function(type, datetime, callback) {
                     return new ForecastItem(item);
                 });
 
-                // console.log(JSON.stringify(weather, true, ' '));
                 break;
 
             case 'interval':
@@ -65,6 +75,54 @@ var getForecast = function(type, datetime, callback) {
         callback(weather);
     });
 };
+
+function ForecastDailyItem(params) {
+    this.datetime = new Date(params.dt * 1000);
+    this.temp = params.temp;
+
+    for (var t in this.temp) {
+        this.temp[t] = +(this.temp[t].toFixed(0));
+    }
+
+    this.pressure = params.pressure;
+    this.weather = params.weather;
+    this.humidity = params.humidity;
+    this.description = params.weather[0].description;
+    this.speed = params.speed;
+    this.deg = params.deg;
+    this.clouds = params.clouds;
+    this.snow = params.snow > 0;
+    this.rain = params.rain > 0;
+};
+
+ForecastDailyItem.prototype.toString = function(params) {
+    var me = this;
+    switch (params.details) {
+        case 'all':
+            return 'Maximum is ' + me.temp.max + ' and ' +
+                'minimum is ' + me.temp.min + ' degrees outside. ' +
+                'The wind is ' + me.speed + ' meters per second. ' +
+                'I expect ' + me.description;
+        case 'temperature':
+            return this.temp.morn + ' in the morning, ' +
+                this.temp.day + ' in the day, ' +
+                this.temp.eve + ' in the evening, ' +
+                this.temp.night + ' in the night.';
+        case 'precipitation':
+            var buildPrecipitationString = function() {
+                if (me.rain && me.snow) {
+                    return 'Yes, it is going to rain and snow';
+                } else if (me.rain) {
+                    return 'Yes, it is going to rain';
+                } else if (me.snow) {
+                    return 'Yes, it is going to snow';
+                } else {
+                    return 'No';
+                }
+            }
+            return buildPrecipitationString();
+    }
+}
 
 function ForecastItem(params) {
     this.datetime = new Date(params.dt * 1000);
@@ -101,11 +159,11 @@ ForecastItem.prototype.toString = function(params) {
 
     var buildPrecipitationString = function() {
         if (me.rain && me.snow) {
-            return 'it is going to rain and snow';
+            return 'Yes, it is going to rain and snow';
         } else if (me.rain) {
-            return 'it is going to rain';
+            return 'Yes, it is going to rain';
         } else if (me.snow) {
-            return 'it is going to snow';
+            return 'Yes, it is going to snow';
         } else {
             return 'No';
         }
@@ -119,6 +177,8 @@ ForecastItem.prototype.toString = function(params) {
                 'Overall condition is ' + me.description;
         case 'precipitation':
             return buildPrecipitationString();
+        default:
+            return params.details;
     }
 }
 
@@ -128,9 +188,8 @@ function WeatherIntent(params) {
         undefined;
 
     this.datetime = params.datetime[0];
-    /*params.datetime ?*/
-    // .value; //:
-    /*undefined*/
+
+    console.log(this.details);
 };
 
 WeatherIntent.prototype.exec = function(callback) {
