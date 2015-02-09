@@ -110,37 +110,32 @@ ForecastDailyItem.prototype.toString = function(params) {
                 this.temp.night + ' in the night.';
         case 'precipitation':
             var buildPrecipitationString = function() {
-                switch (params.verbosity) {
-                    case 'yes_no_rain':
-                        if (me.rain && me.snow) {
-                            return 'Yes, it is going to rain and snow is also expected';
-                        } else if (me.rain) {
-                            return 'Yes, it is going to rain';
-                        } else if (me.snow) {
-                            return 'No, but it is going to snow';
-                        } else {
-                            return 'No';
-                        }
-                        break;
-                    case 'yes_no_snow':
-                        if (me.rain && me.snow) {
-                            return 'Yes, it is going to snow and rain is also expected';
-                        } else if (me.rain) {
-                            return 'No, but it is going to rain';
-                        } else if (me.snow) {
-                            return 'Yes, it is going to snow';
-                        } else {
-                            return 'No';
-                        }
-                        break;
-                    default:
-                        if (me.rain && me.snow) {} else if (me.rain) {
-                            return 'Yes, it is going to rain';
-                        } else if (me.snow) {
-                            return 'Yes, it is going to snow';
-                        } else {
-                            return 'No';
-                        }
+                var askedPrecip = params.verbosity ?
+                    params.verbosity.replace('yes_no', '') : undefined;
+                var anotherPrecip = askedPrecip === 'snow' ? 'rain' : 'snow';
+
+                if (askedPrecip) {
+                    if (me.rain && me.snow) {
+                        return 'Yes, it is going to ' +
+                            askedPrecip + ' and ' +
+                            anotherPrecip + ' is also expected';
+                    } else if (me[askedPrecip]) {
+                        return 'Yes, it is going to ' + askedPrecip;
+                    } else if (me[anotherPrecip]) {
+                        return 'No, but it is going to ' + anotherPrecip;
+                    } else {
+                        return 'No';
+                    }
+                } else {
+                    if (me.rain && me.snow) {
+                        return 'It is going to rain and snow';
+                    } else if (me.rain) {
+                        return 'It is going to rain';
+                    } else if (me.snow) {
+                        return 'It is going to snow';
+                    } else {
+                        return 'I expect no precipitation';
+                    }
                 }
 
             }
