@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ansi-color": "^0.2.1",
     "ear-pipe": "0.0.0",
     "ivona-node": "^0.1.2",
     "node-wit": "^1.1.0",
