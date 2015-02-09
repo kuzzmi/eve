@@ -110,15 +110,39 @@ ForecastDailyItem.prototype.toString = function(params) {
                 this.temp.night + ' in the night.';
         case 'precipitation':
             var buildPrecipitationString = function() {
-                if (me.rain && me.snow) {
-                    return 'Yes, it is going to rain and snow';
-                } else if (me.rain) {
-                    return 'Yes, it is going to rain';
-                } else if (me.snow) {
-                    return 'Yes, it is going to snow';
-                } else {
-                    return 'No';
+                switch (params.verbosity) {
+                    case 'yes_no_rain':
+                        if (me.rain && me.snow) {
+                            return 'Yes, it is going to rain and snow is also expected';
+                        } else if (me.rain) {
+                            return 'Yes, it is going to rain';
+                        } else if (me.snow) {
+                            return 'No, but it is going to snow';
+                        } else {
+                            return 'No';
+                        }
+                        break;
+                    case 'yes_no_snow':
+                        if (me.rain && me.snow) {
+                            return 'Yes, it is going to snow and rain is also expected';
+                        } else if (me.rain) {
+                            return 'No, but it is going to rain';
+                        } else if (me.snow) {
+                            return 'Yes, it is going to snow';
+                        } else {
+                            return 'No';
+                        }
+                        break;
+                    default:
+                        if (me.rain && me.snow) {} else if (me.rain) {
+                            return 'Yes, it is going to rain';
+                        } else if (me.snow) {
+                            return 'Yes, it is going to snow';
+                        } else {
+                            return 'No';
+                        }
                 }
+
             }
             return buildPrecipitationString();
     }
@@ -187,9 +211,13 @@ function WeatherIntent(params) {
         params.weather_details[0].value :
         undefined;
 
+    this.verbosity = params.weather_verbosity ?
+        params.weather_verbosity[0].value :
+        undefined;
+
     this.datetime = params.datetime[0];
 
-    console.log(this.details);
+    console.log(this.verbosity);
 };
 
 WeatherIntent.prototype.exec = function(callback) {
@@ -207,7 +235,8 @@ WeatherIntent.prototype.exec = function(callback) {
         getForecast(forecastType, me.datetime, function(weather) {
             weather.map(function(item) {
                 callback(item.toString({
-                    details: me.details
+                    details: me.details,
+                    verbosity: me.verbosity
                 }));
             });
         });
