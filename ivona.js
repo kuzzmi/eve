@@ -10,6 +10,7 @@ var ivona = new Ivona({
 ivona.createVoice(args[0], {
     body: {
         voice: {
+            name: 'Kimberly',
             // language: 'en-GB',
             gender: 'Female'
         }

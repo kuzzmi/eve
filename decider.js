@@ -1,6 +1,8 @@
 var child = require('child_process');
 var request = require('request');
 
+var MediaIntent = require('./intents/media');
+
 var say = function(what) {
     child.spawn('./send_and_play.sh', [what + ', sir']);
 }
@@ -29,25 +31,9 @@ process.stdin.on('data', function(data) {
 
                 break;
             case 'media':
-                var type = outcome.entities.media_type[0].value;
-                var action = outcome.entities.action[0].value;
-                var property = outcome.entities.media_propery ?
-                    outcome.entities.media_propery[0].value : undefined;
-
-                request(apiUrl + '/media/' + type + '/query/unwatched=1', function(req, resp) {
-                    var movies = JSON.parse(resp.body).video;
-
-                    switch (action) {
-                        case 'count':
-                            say('You have ' + movies.length + ' movies to watch');
-                            break;
-                        case 'read':
-                            var titles = movies.map(function(a) {
-                                return a.attributes.title;
-                            }).join('. ');
-                            say('You have these movies: ' + titles);
-                            break;
-                    }
+                var intent = new MediaIntent(outcome, apiUrl);
+                intent.exec(function(data) {
+                    say(data);
                 });
                 break;
             case 'tell_time':
