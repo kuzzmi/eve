@@ -3,24 +3,33 @@ var speechApparatus = require('./speechApparatus')();
 function Reflex(stimulus) {
 
     this.intent = stimulus.intent;
+    this.entities = stimulus.entities || [];
 
 };
 
+function say(what) {
+    return speechApparatus.exec(what + ', sir.');
+}
+
 Reflex.prototype.exec = function() {
+    var getIntent = function(name, params) {
+        return require('../intents/' + name)(params);
+    };
     var intent;
     switch (this.intent) {
         case 'tell_time':
-            intent = require('../intents/time')();
-            speechApparatus.exec('It is ' + intent.exec() + ', sir');
+            intent = getIntent('time', this.entities);
+            intent.exec(say);
             break;
         case 'reference':
-            speechApparatus.exec('Hello to you too, sir');
+            say('Hello to you too');
             break;
         case 'weather_forecast':
-            speechApparatus.exec('Please, create an intent for that');
+            intent = getIntent('weather', this.entities);
+            intent.exec(say);
             break;
         default:
-            speechApparatus.exec('Sorry, sir, I don\'t understand you yet');
+            say('Sorry, sir, I don\'t understand you yet');
             break;
     }
 };

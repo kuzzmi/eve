@@ -15,13 +15,6 @@ rl.prompt(true);
 function output(msg) {
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    console.log(msg);
-    rl.prompt(true);
-}
-
-function output(msg) {
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
     console.log(color(msg, "cyan"));
     rl.prompt(true);
 }

@@ -18,8 +18,8 @@ TimeIntent.prototype._getHumanLikeTime = function(date) {
     }
 }
 
-TimeIntent.prototype.exec = function(params) {
-    return this._getHumanLikeTime();
+TimeIntent.prototype.exec = function(callback) {
+    callback(this._getHumanLikeTime());
 }
 
 module.exports = function(params) {
