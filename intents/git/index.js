@@ -21,12 +21,26 @@ GitIntent.prototype.exec = function(callback) {
                         }, function(error, stdout, stderr) {
                             if (!error) {
                                 callback('Done');
+                            } else {
+                                callback('Problem occured');
                             }
                         })
                     } else {
                         callback('Problem occured');
                     }
+
                 });
+            break;
+        case 'status':
+            child.exec('git diff --stat | tail -n 1', {
+                cwd: '.'
+            }, function(error, stdout, stderr) {
+                if (!error) {
+                    callback(stdout.trim() + ' in current state');
+                } else {
+                    callback('Problem occured');
+                }
+            });
             break;
         default:
             callback('Unrecognized command - ' + this.action);
