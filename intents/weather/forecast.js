@@ -61,7 +61,6 @@ Forecast.prototype._tempString = function(params) {
             if (isItCold) {
                 return _gp('yes_no.yes', this.temp.max);
             } else {
-                console.log(this.temp);
                 return _gp('yes_no.no', this.temp.max);
             }
         case 'warm':
