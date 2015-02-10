@@ -1,6 +1,7 @@
 var speechApparatus = require('./speechApparatus');
 
-function say(phrase) {
+function say(phrase, callback) {
+    callback(phrase + ', sir.');
     return speechApparatus.exec(phrase + ', sir.');
 }
 
@@ -13,14 +14,17 @@ function getIntent(name, params) {
 };
 
 var Reflex = {
-    on: function(stimulus) {
+    on: function(stimulus, callback) {
         var entities = stimulus.entities || [];
         var intent = getIntent(stimulus.intent, entities);
 
         if (intent) {
-            intent.exec(say);
+            intent.exec(function(result) {
+                say(result, callback);
+            });
         } else {
-            say('Shame on me, I can\'t react on that yet');
+            console.log(stimulus);
+            say('Shame on me, I can\'t react on that yet', callback);
         }
 
         intent = null;

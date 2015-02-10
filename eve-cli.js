@@ -25,7 +25,7 @@ function send(msg) {
         function(err, res) {
             if (err) output("Error: ", err);
             if (!res) output("Result: ", res);
-            Reflex.on(res.outcomes[0]);
+            Reflex.on(res.outcomes[0], output);
         }
     );
 }

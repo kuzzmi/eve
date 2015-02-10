@@ -1,33 +1,37 @@
 {
+    "all": [
+        "Maximum is {0} degrees and minimum is {1}. The wind is {2} meters per second. Overall: {3}"
+    ],
     "temperature": {
         "yes_no": {
             "yes": [
+                "Duh",
                 "Yes",
-                "Yes, %0% degrees",
+                "Yes, {0} degrees",
                 "Aha",
-                "Aha, %0% degrees",
+                "Aha, {0} degrees",
                 "Yep",
-                "Yep, %0% degrees",
+                "Yep, {0} degrees",
                 "Exactly",
-                "Exactly, %0% degrees",
+                "Exactly, {0} degrees",
                 "Definitely",
-                "Definitely, %0% degrees",
+                "Definitely, {0} degrees",
                 "Of course",
-                "Of course, %0% degrees",
+                "Of course, {0} degrees",
                 "Sure",
-                "Sure, %0% degrees"
+                "Sure, {0} degrees"
             ],
             "no": [
                 "No",
-                "No, %0% degrees",
+                "No, {0} degrees",
                 "Not at all",
-                "Not at all, %0% degrees",
+                "Not at all, {0} degrees",
                 "Absolutely not",
-                "Absolutely not, %0% degrees",
+                "Absolutely not, {0} degrees",
                 "No way",
-                "No way, %0% degrees",
+                "No way, {0} degrees",
                 "I'm not sure",
-                "I'm not sure, just %0% degrees"
+                "I'm not sure, just {0} degrees"
             ]
         }
     },
@@ -36,7 +40,8 @@
             "It is going to rain and snow"
         ],
         "rain": [
-            "It is going to rain"
+            "It is going to rain",
+            "I expect cats and dogs"
         ],
         "snow": [
             "It is going to snow"
@@ -48,8 +53,8 @@
             "yes": [
                 "Yes",
                 "Unfortunately, yes",
-                "Yep, %0%ing is expected",
-                "Yes, %0%ing is expected",
+                "Yep, {0}ing is expected",
+                "Yes, {0}ing is expected",
                 "I'm sorry but yes",
                 "I expecte some"
             ],
@@ -64,8 +69,8 @@
                 "Chances are really miserable"
             ],
             "both": [
-                "Yikes, i'd rather prepare for %0% and %1%",
-                "Yes, it's going to %0% and %1%. I'm sorry"
+                "Yikes, i'd rather prepare for {0} and {1}",
+                "Yes, it's going to {0} and {1}. I'm sorry"
             ]
         }
     }
