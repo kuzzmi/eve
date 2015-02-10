@@ -12,14 +12,12 @@ function getFirstValue(arr) {
     }
 }
 
-function MediaIntent(outcome, apiUrl) {
-    var entities = outcome.entities;
-
-    this.apiUrl = apiUrl;
-    this.type = getFirstValue(entities.media_type);
-    this.action = getFirstValue(entities.action);
-    this.properties = entities.media_property ?
-        entities.media_property.map(function(a) {
+function MediaIntent(params) {
+    this.apiUrl = 'http://192.168.0.4:3000';
+    this.type = getFirstValue(params.media_type);
+    this.action = getFirstValue(params.action);
+    this.properties = params.media_property ?
+        params.media_property.map(function(a) {
             return a.value;
         }) : false;
 
@@ -36,11 +34,13 @@ MediaIntent.prototype._makeRequest = function(callback) {
     var me = this;
 
     var buildUrl = function() {
-        var base = me.apiUrl + '/media/' + me.type + '/query/?';
+        var base = me.apiUrl + '/media/' + me.type + '/query/';
 
         if (me._is('unwatched')) {
-            base += 'unwatched=1';
+            base += 'unwatched=1&';
         }
+
+        console.log(base);
 
         return base;
     }
@@ -88,4 +88,6 @@ MediaIntent.prototype.exec = function(callback) {
     }
 };
 
-module.exports = MediaIntent;
+module.exports = function(params) {
+    return new MediaIntent(params);
+}

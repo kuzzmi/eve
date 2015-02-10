@@ -1,7 +1,7 @@
 var speechApparatus = require('./speechApparatus');
 
 function say(phrase, callback) {
-    callback(phrase + ', sir.');
+    callback && callback(phrase + ', sir.');
     return speechApparatus.exec(phrase + ', sir.');
 }
 
@@ -9,6 +9,7 @@ function getIntent(name, params) {
     try {
         return require('../intents/' + name)(params);
     } catch (e) {
+        console.log(e);
         return false;
     }
 };
