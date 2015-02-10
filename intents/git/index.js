@@ -28,7 +28,6 @@ GitIntent.prototype.exec = function(callback) {
                     } else {
                         callback('Problem occured');
                     }
-
                 });
             break;
         case 'status':
