@@ -54,7 +54,7 @@ printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 rl.prompt(true);
 
 function printFaceLines(line) {
-    console.log(color(line, "bold+magenta_bg"));
+    console.log(color(line, "black+bold+white_bg"));
 };
 
 function output(msg) {
