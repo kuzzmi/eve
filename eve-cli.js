@@ -3,7 +3,6 @@ var color = require("ansi-color").set;
 var wit = require('node-wit');
 
 var Reflex = require('./brain/reflex');
-var SpeechApparatus = require('./brain/speechApparatus')();
 
 var rl = readline.createInterface({
     input: process.stdin,
@@ -25,8 +24,8 @@ function send(msg) {
         msg,
         function(err, res) {
             if (err) output("Error: ", err);
-            var reflex = new Reflex(res.outcomes[0]);
-            reflex.exec();
+            if (!res) output("Result: ", res);
+            Reflex.on(res.outcomes[0]);
         }
     );
 }

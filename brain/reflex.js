@@ -1,37 +1,30 @@
-var speechApparatus = require('./speechApparatus')();
+var speechApparatus = require('./speechApparatus');
 
-function Reflex(stimulus) {
-
-    this.intent = stimulus.intent;
-    this.entities = stimulus.entities || [];
-
-};
-
-function say(what) {
-    return speechApparatus.exec(what + ', sir.');
+function say(phrase) {
+    return speechApparatus.exec(phrase + ', sir.');
 }
 
-Reflex.prototype.exec = function() {
-    var getIntent = function(name, params) {
+function getIntent(name, params) {
+    try {
         return require('../intents/' + name)(params);
-    };
-    var intent;
-    switch (this.intent) {
-        case 'tell_time':
-            intent = getIntent('time', this.entities);
-            intent.exec(say);
-            break;
-        case 'reference':
-            say('Hello to you too');
-            break;
-        case 'weather_forecast':
-            intent = getIntent('weather', this.entities);
-            intent.exec(say);
-            break;
-        default:
-            say('Sorry, sir, I don\'t understand you yet');
-            break;
+    } catch (e) {
+        return false;
     }
 };
+
+var Reflex = {
+    on: function(stimulus) {
+        var entities = stimulus.entities || [];
+        var intent = getIntent(stimulus.intent, entities);
+
+        if (intent) {
+            intent.exec(say);
+        } else {
+            say('Shame on me, I can\'t react on that yet');
+        }
+
+        intent = null;
+    }
+}
 
 module.exports = Reflex;

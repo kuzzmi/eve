@@ -1,0 +1,72 @@
+{
+    "temperature": {
+        "yes_no": {
+            "yes": [
+                "Yes",
+                "Yes, %0% degrees",
+                "Aha",
+                "Aha, %0% degrees",
+                "Yep",
+                "Yep, %0% degrees",
+                "Exactly",
+                "Exactly, %0% degrees",
+                "Definitely",
+                "Definitely, %0% degrees",
+                "Of course",
+                "Of course, %0% degrees",
+                "Sure",
+                "Sure, %0% degrees"
+            ],
+            "no": [
+                "No",
+                "No, %0% degrees",
+                "Not at all",
+                "Not at all, %0% degrees",
+                "Absolutely not",
+                "Absolutely not, %0% degrees",
+                "No way",
+                "No way, %0% degrees",
+                "I'm not sure",
+                "I'm not sure, just %0% degrees"
+            ]
+        }
+    },
+    "precipitation": {
+        "rain_and_snow": [
+            "It is going to rain and snow"
+        ],
+        "rain": [
+            "It is going to rain"
+        ],
+        "snow": [
+            "It is going to snow"
+        ],
+        "nothing": [
+            "I expect no precipitation"
+        ],
+        "yes_no": {
+            "yes": [
+                "Yes",
+                "Unfortunately, yes",
+                "Yep, %0%ing is expected",
+                "Yes, %0%ing is expected",
+                "I'm sorry but yes",
+                "I expecte some"
+            ],
+            "no": [
+                "No",
+                "Luckily no",
+                "Not at all",
+                "Absolutely not",
+                "No, fortunately no",
+                "I don't expect that",
+                "No way",
+                "Chances are really miserable"
+            ],
+            "both": [
+                "Yikes, i'd rather prepare for %0% and %1%",
+                "Yes, it's going to %0% and %1%. I'm sorry"
+            ]
+        }
+    }
+}

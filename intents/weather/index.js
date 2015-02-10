@@ -1,5 +1,7 @@
 var request = require('request');
 
+var getPhrase = require('./vocabulary');
+
 var dateToUT = function(date) {
     return (new Date(date).getTime()) / 1000;
 }
@@ -34,16 +36,17 @@ var getForecast = function(type, datetime, callback) {
         var data = JSON.parse(resp.body);
         var weather;
         switch (type) {
+            case 'second':
+                weather = [new ForecastItem(data)];
+                break;
             case 'day':
-                var utDay = dateToUT(datetime.value);
+                var msDay = new Date(datetime.value).setHours(12);
 
                 weather = data.list.filter(function(item) {
-                    return utDay >= item.dt && item.dt - utDay < 86400;
+                    return item.dt * 1000 - msDay === 0;
                 }).map(function(item) {
                     return new ForecastDailyItem(item);
                 });
-                console.log(JSON.stringify(weather, true, '  '));
-                console.log(utDay);
                 break;
 
             case 'hour':
@@ -68,8 +71,6 @@ var getForecast = function(type, datetime, callback) {
                 }).map(function(item) {
                     return new ForecastItem(item);
                 });
-
-                // console.log(JSON.stringify(weather, true, ' '));
                 break;
         }
         callback(weather);
@@ -106,8 +107,6 @@ ForecastDailyItem.prototype.toString = function(params) {
         case 'temperature':
             var askedPrecision = params.verbosity ?
                 params.verbosity.replace('yes_no_', '') : undefined;
-
-            console.log(askedPrecision);
 
             if (askedPrecision) {
                 var getPeek = function(peekType) {
@@ -149,37 +148,62 @@ ForecastDailyItem.prototype.toString = function(params) {
             }
             break;
         case 'precipitation':
-            var buildPrecipitationString = function() {
-                var askedPrecision = params.verbosity ?
-                    params.verbosity.replace('yes_no_', '') : undefined;
-                var anotherPrecision = askedPrecision === 'snow' ? 'rain' : 'snow';
+            return buildPrecipitationString(me, params);
+    }
+}
 
-                if (askedPrecision) {
-                    if (me.rain && me.snow) {
-                        return 'Yes, it is going to ' +
-                            askedPrecision + ' and ' +
-                            anotherPrecision + ' is also expected';
-                    } else if (me[askedPrecision]) {
-                        return 'Yes, it is going to ' + askedPrecision;
-                    } else if (me[anotherPrecision]) {
-                        return 'No, but it is going to ' + anotherPrecision;
-                    } else {
-                        return 'No';
-                    }
-                } else {
-                    if (me.rain && me.snow) {
-                        return 'It is going to rain and snow';
-                    } else if (me.rain) {
-                        return 'It is going to rain';
-                    } else if (me.snow) {
-                        return 'It is going to snow';
-                    } else {
-                        return 'I expect no precipitation';
-                    }
-                }
+var buildPrecipitationString = function(me, params) {
+    var askedPrecision = params.verbosity ?
+        params.verbosity.replace('yes_no_', '') : undefined;
+    var anotherPrecision = askedPrecision === 'snow' ? 'rain' : 'snow';
 
+    var _gp = function(what, params) {
+        return getPhrase('precipitation.' + what, params);
+    }
+
+    if (askedPrecision) {
+        if (me.rain && me.snow) {
+            return _gp('yes_no.both', [askedPrecision, anotherPrecision]);
+        } else if (me[askedPrecision]) {
+            return _gp('yes_no.yes', askedPrecision);
+        } else if (me[anotherPrecision]) {
+            return _gp('yes_no.yes', anotherPrecision);
+        } else {
+            return _gp('yes_no.no');
+        }
+    } else {
+        if (me.rain && me.snow) {
+            return _gp('rain_and_snow');
+        } else if (me.rain) {
+            return _gp('rain');
+        } else if (me.snow) {
+            return _gp('snow');
+        } else {
+            return _gp('nothing');
+        }
+    }
+};
+
+var buildTemperatureString = function(me, params) {
+    var askedPrecision = params.verbosity ?
+        params.verbosity.replace('yes_no_', '') : undefined;
+
+    switch (askedPrecision) {
+        case 'cold':
+            if (me.temp < 4) {
+                return getPhrase('temperature.yes_no.yes', me.temp);
+            } else {
+                return getPhrase('temperature.yes_no.no', me.temp);
             }
-            return buildPrecipitationString();
+        case 'warm':
+            if (me.temp < 4) {
+                return getPhrase('temperature.yes_no.no', me.temp);
+            } else {
+                return getPhrase('temperature.yes_no.yes', me.temp);
+            }
+        case 'default':
+            return dateFormat(me.datetime) +
+                ' it\'s going to be ' + me.temp + ' degrees outside';
     }
 }
 
@@ -216,18 +240,6 @@ ForecastItem.prototype.toString = function(params) {
         return 'At ' + timeToHR(date);
     };
 
-    var buildPrecipitationString = function() {
-        if (me.rain && me.snow) {
-            return 'Yes, it is going to rain and snow';
-        } else if (me.rain) {
-            return 'Yes, it is going to rain';
-        } else if (me.snow) {
-            return 'Yes, it is going to snow';
-        } else {
-            return 'No';
-        }
-    }
-
     switch (params.details) {
         case 'all':
             return dateFormat(me.datetime) +
@@ -235,7 +247,9 @@ ForecastItem.prototype.toString = function(params) {
                 'The wind is ' + me.wind + ' meters per second. ' +
                 'Overall condition is ' + me.description;
         case 'precipitation':
-            return buildPrecipitationString();
+            return buildPrecipitationString(me, params);
+        case 'temperature':
+            return buildTemperatureString(me, params);
         default:
             return params.details;
     }
@@ -250,9 +264,11 @@ function WeatherIntent(params) {
         params.weather_verbosity[0].value :
         undefined;
 
-    this.datetime = params.datetime[0];
-
-    console.log(this.verbosity);
+    this.datetime = params.datetime ? params.datetime[0] : {
+        type: 'value',
+        grain: 'second',
+        value: new Date()
+    };
 };
 
 WeatherIntent.prototype.exec = function(callback) {
@@ -278,8 +294,6 @@ WeatherIntent.prototype.exec = function(callback) {
     } else {
 
     }
-
-    // return this._getHumanLikeTime();
 }
 
 module.exports = function(params) {
