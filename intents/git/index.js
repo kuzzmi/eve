@@ -27,6 +27,10 @@ GitIntent.prototype.exec = function(callback) {
                         callback('Problem occured');
                     }
                 });
+            break;
+        default:
+            callback('Unrecognized command - ' + this.action);
+            break;
     }
 }
 
