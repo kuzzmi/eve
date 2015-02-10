@@ -35,7 +35,12 @@ GitIntent.prototype.exec = function(callback) {
                 cwd: '.'
             }, function(error, stdout, stderr) {
                 if (!error) {
-                    callback(stdout.trim() + ' in current state');
+                    var changes = stdout.trim();
+                    if (changes) {
+                        callback(stdout.trim() + ' in current state');
+                    } else {
+                        callback('Everything is up-to-date');
+                    }
                 } else {
                     callback('Problem occured');
                 }
