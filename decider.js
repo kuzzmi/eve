@@ -1,13 +1,4 @@
-var request = require('request');
-var Talker = require('./talker')();
-
-var MediaIntent = require('./intents/media');
-
-var say = function(what) {
-    Talker.say(what + ', sir');
-}
-
-// var apiUrl = 'http://192.168.0.4:3000';
+var Reflex = require('./brain/reflex');
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');

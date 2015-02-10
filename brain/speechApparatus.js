@@ -21,6 +21,15 @@ function SpeechAparatus(params) {
 SpeechAparatus.prototype.exec = function(what) {
     var sox = child.spawn('sox', ['-t', 'mp3', '-', '-d', '-q']);
 
+    setTimeout(function() {
+        sox.kill('SIGINT');
+        sox.kill('SIGTERM');
+    }, 5000);
+
+    // process.on("uncaughtException", killSox);
+    // process.on("SIGINT", killSox);
+    // process.on("SIGTERM", killSox);
+
     return ivona.createVoice(what, this.body).pipe(sox.stdin);
 }
 

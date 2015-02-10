@@ -104,25 +104,65 @@ ForecastDailyItem.prototype.toString = function(params) {
                 'The wind is ' + me.speed + ' meters per second. ' +
                 'I expect ' + me.description;
         case 'temperature':
-            return this.temp.morn + ' in the morning, ' +
-                this.temp.day + ' in the day, ' +
-                this.temp.eve + ' in the evening, ' +
-                this.temp.night + ' in the night.';
+            var askedPrecision = params.verbosity ?
+                params.verbosity.replace('yes_no_', '') : undefined;
+
+            console.log(askedPrecision);
+
+            if (askedPrecision) {
+                var getPeek = function(peekType) {
+                    for (var i in me.temp) {
+                        if (i !== peekType && me.temp[i] === me.temp[peekType]) {
+                            if (i === 'morn') {
+                                return 'morning';
+                            } else if (i === 'day') {
+                                return 'day';
+                            } else if (i === 'eve') {
+                                return 'evening';
+                            } else if (i === 'night') {
+                                return 'night';
+                            };
+                        }
+                    }
+                };
+
+                var minimumTime = getPeek('min');
+                var maximumTime = getPeek('max');
+
+                switch (askedPrecision) {
+                    case 'cold':
+                        return 'The lowest temperature tomorrow is in the ' +
+                            minimumTime + ', ' + this.temp.min + ' degrees and ' +
+                            'the highest is in the ' + maximumTime + ', ' +
+                            this.temp.max + ' degrees.';
+                    case 'warm':
+                        return 'The highest temperature tomorrow is in the ' +
+                            maximumTime + ', ' + this.temp.max + ' degrees and ' +
+                            'the lowest is in the ' + minimumTime + ', ' +
+                            this.temp.min + ' degrees.';
+                }
+            } else {
+                return this.temp.morn + ' in the morning, ' +
+                    this.temp.day + ' in the day, ' +
+                    this.temp.eve + ' in the evening, ' +
+                    this.temp.night + ' in the night.';
+            }
+            break;
         case 'precipitation':
             var buildPrecipitationString = function() {
-                var askedPrecip = params.verbosity ?
-                    params.verbosity.replace('yes_no', '') : undefined;
-                var anotherPrecip = askedPrecip === 'snow' ? 'rain' : 'snow';
+                var askedPrecision = params.verbosity ?
+                    params.verbosity.replace('yes_no_', '') : undefined;
+                var anotherPrecision = askedPrecision === 'snow' ? 'rain' : 'snow';
 
-                if (askedPrecip) {
+                if (askedPrecision) {
                     if (me.rain && me.snow) {
                         return 'Yes, it is going to ' +
-                            askedPrecip + ' and ' +
-                            anotherPrecip + ' is also expected';
-                    } else if (me[askedPrecip]) {
-                        return 'Yes, it is going to ' + askedPrecip;
-                    } else if (me[anotherPrecip]) {
-                        return 'No, but it is going to ' + anotherPrecip;
+                            askedPrecision + ' and ' +
+                            anotherPrecision + ' is also expected';
+                    } else if (me[askedPrecision]) {
+                        return 'Yes, it is going to ' + askedPrecision;
+                    } else if (me[anotherPrecision]) {
+                        return 'No, but it is going to ' + anotherPrecision;
                     } else {
                         return 'No';
                     }
