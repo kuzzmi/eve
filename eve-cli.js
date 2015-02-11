@@ -1,6 +1,8 @@
 var readline = require('readline');
 var color = require("ansi-color").set;
 var wit = require('node-wit');
+var fs = require('fs');
+var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'));
 
 var Reflex = require('./brain/reflex');
 
@@ -12,7 +14,7 @@ var rl = readline.createInterface({
 process.stdout.cursorTo(0, 0);
 process.stdout.clearScreenDown();
 
-output('I am online, sir');
+output('I am online, sir. (v.' + pkg.version + ')');
 
 function printFaceLines(line) {
     console.log(color(line, "black+bold+white_bg"));
@@ -21,7 +23,7 @@ function printFaceLines(line) {
 function output(msg) {
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    console.log(color(msg, "magenta"));
+    console.log(color('< ' + msg, "magenta"));
     rl.prompt(true);
 }
 

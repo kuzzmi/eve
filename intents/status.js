@@ -37,6 +37,13 @@ StatusIntent.prototype.exec = function(callback) {
                         callback('Good night');
                     }
                     break;
+                case 'athome':
+                    if (this.value === 'true') {
+                        callback('Welcome home');
+                    } else {
+                        callback('Have good times');
+                    }
+                    break;
             }
             break;
     }

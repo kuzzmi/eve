@@ -1,11 +1,17 @@
 function ReferenceIntent(params) {
-    this.phrase = params.greeting_phrase ?
-        params.greeting_phrase[0].value :
+    console.log(params);
+    this.type = params.reference_type ?
+        params.reference_type[0].value :
         undefined;
 };
 
 ReferenceIntent.prototype.exec = function(callback) {
-    callback(this.phrase);
+    console.log(this.type);
+    switch (this.type) {
+        case 'greeting':
+            callback('Hello to you too');
+            break;
+    }
 }
 
 module.exports = function(params) {
