@@ -16,8 +16,6 @@ var rl = readline.createInterface({
 process.stdout.cursorTo(0, 0);
 process.stdout.clearScreenDown();
 
-output('I am online, sir. (v.' + pkg.version + ')');
-
 function printFaceLines(line) {
     console.log(color(line, "black+bold+white_bg"));
 };
@@ -48,9 +46,14 @@ if (args[0] !== undefined) {
         function(err, res) {
             if (err) output("Error: ", err);
             if (!res) output("Result: ", res);
-            Reflex.on(res.outcomes[0], process.exit);
+            Reflex.on(res.outcomes[0], function(msg) {
+                output(msg);
+                process.exit();
+            });
         }
     );
+} else {
+    output('I am online, sir. (v.' + pkg.version + ')');
 }
 
 rl.on('line', function(msg) {
