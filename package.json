@@ -8,7 +8,7 @@
     },
     "author": "Igor Kuzmenko",
     "license": "ISC",
-    "repository": "git@bitbucket.org:kuzzmi/eve-2.git"
+    "repository": "git@bitbucket.org:kuzzmi/eve-2.git",
     "dependencies": {
         "ansi-color": "^0.2.1",
         "ivona-node": "^0.1.2",

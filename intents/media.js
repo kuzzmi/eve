@@ -46,7 +46,7 @@ MediaIntent.prototype._makeRequest = function(callback) {
     }
 
     request(buildUrl(), function(req, resp) {
-        console.log(buildUrl(), resp.body);
+//        console.log(buildUrl(), resp.body);
         var movies = JSON.parse(resp.body).video;
         callback(movies);
     });
