@@ -13,7 +13,7 @@ module.exports = function(phraseCode, args) {
     var random = getRandomInt(0, phrases.length - 1);
     var phrase = phrases[random];
 
-    var result = 'Phrse not found';
+    var result = 'Phrase not found';
 
     try {
         result = phrase.replace(/\{(\d+)\}/g, function(match, number) {

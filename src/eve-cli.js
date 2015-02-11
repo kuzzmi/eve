@@ -2,7 +2,7 @@ var readline = require('readline');
 var color = require("ansi-color").set;
 var wit = require('node-wit');
 var fs = require('fs');
-var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json'));
+var pkg = JSON.parse(fs.readFileSync('package.json'));
 
 var Reflex = require('./brain/reflex');
 

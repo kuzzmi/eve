@@ -1,0 +1,28 @@
+{
+    "greeting": [
+        "Hello",
+        "Hello to you",
+        "Good {0}",
+        "Hi",
+        "What's up",
+        "Bonjour"
+    ],
+    "farewell": [
+        "Bye bye",
+        "Bye",
+        "See you",
+        "See ya",
+        "Good bye",
+        "Bye bye, have a nice {0}",
+        "Bye, have a nice {0}",
+        "See you, have a nice {0}",
+        "See ya, have a nice {0}",
+        "Good bye, have a nice {0}"
+    ],
+    "attraction": [
+        "I'm here",
+        "I'm here to serve to you",
+        "Yes",
+        "Tell me what you want"
+    ]
+}

@@ -1,19 +1,25 @@
 {
-    "name": "eve",
-    "version": "1.0.5",
-    "description": "Personal Assistant",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Igor Kuzmenko",
-    "license": "ISC",
-    "repository": "git@bitbucket.org:kuzzmi/eve-2.git",
-    "dependencies": {
-        "ansi-color": "^0.2.1",
-        "ivona-node": "^0.1.2",
-        "node-wit": "^1.1.0",
-        "nodegit": "^0.2.7",
-        "request": "^2.53.0"
-    }
+  "name": "eve",
+  "version": "1.0.5",
+  "description": "Personal Assistant",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/eve-cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igor Kuzmenko",
+  "license": "ISC",
+  "repository": "git@bitbucket.org:kuzzmi/eve-2.git",
+  "dependencies": {
+    "ansi-color": "^0.2.1",
+    "google-translate": "^0.1.8",
+    "ivona-node": "^0.1.2",
+    "node-wit": "^1.1.0",
+    "nodegit": "^0.2.7",
+    "request": "^2.53.0"
+  },
+  "devDependencies": {
+    "load-grunt-tasks": "^3.1.0",
+    "time-grunt": "^1.0.0"
+  }
 }
