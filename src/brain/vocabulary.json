@@ -1,0 +1,63 @@
+/*
+http://en.wiktionary.org/wiki/your
+Number  Person  Type    Subject Objective   Reflexive   Possessive adjective    Possessive pronoun
+Singular    First   —   I   me  myself  my  mine
+Second  —   you you yourself    your    yours
+Archaic thou    thee    thyself,
+theeself    thy thine
+Third   Masculine   he  him himself,
+hisself (archaic)   his
+Feminine    she her herself her hers
+Neuter  it  itself  its its (rare)
+Indefinite  one oneself one's   —
+Plural  First   —   we  us  ourselves   our ours
+Second  —   you,
+ye (archaic)    you yourselves  your    yours
+Third   —   they    them    themselves  their   theirs
+
+ */
+
+{
+    "pronoun": {
+        "singular": {
+            "1": {
+                "i": [
+                    "I"
+                ]
+            },
+            "2": {
+                "you": [
+                    "you"
+                ]
+            },
+            "3": {
+                "he": [
+                    "he"
+                ],
+                "she": [
+                    "she"
+                ],
+                "it": [
+                    "it"
+                ]
+            }
+        },
+        "plural": {
+            "1": {
+                "we": [
+                    "we"
+                ]
+            },
+            "2": {
+                "you": [
+                    "You"
+                ]
+            },
+            "3": {
+                "they": [
+                    "he"
+                ]
+            }
+        }
+    }
+}
