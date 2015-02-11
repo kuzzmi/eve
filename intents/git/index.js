@@ -30,6 +30,15 @@ GitIntent.prototype.exec = function(callback) {
                     }
                 });
             break;
+        case 'pull':
+            child.exec('git commit -am "[Eve] Commit before pull" && ' +
+                'git pull origin master',
+                function(error, stdout, stderr) {
+                    if (!error) {
+                        callback('Completed. I need to be restarted');
+                    }
+                });
+            break;
         case 'status':
             child.exec('git diff --stat | tail -n 1', {
                 cwd: '.'

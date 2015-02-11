@@ -12,49 +12,6 @@ var rl = readline.createInterface({
 process.stdout.cursorTo(0, 0);
 process.stdout.clearScreenDown();
 
-{
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$P""*^^$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$*``$P          ""**^^$$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$*`    $                  `*^$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$P`      d`                      `^$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$P`      ,d`                          `T$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$P`     ,sP`                              T$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$P     -*`                                  T$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$P                                            `^$$$$$$$$$$');
-    printFaceLines('$$$$$$$$                                                T$$$$$$$$');
-    printFaceLines('$$$$$$$                                                   $$$$$$$');
-    printFaceLines('$$$$$$;                                                   :$$$$$$');
-    printFaceLines('$$$$$;    _.------._                        _.------._     :$$$$$');
-    printFaceLines('$$$$$  .*`          `*-.                .-*`          `*.   $$$$$');
-    printFaceLines('$$$$$ /    lg+=ggg+.    `.    _.._    .`    .+ggg=+gl    \\  $$$$$');
-    printFaceLines('$$$$$:     $;  $$  T$*.   \\,+*""""*+,/   .*$$  T$  :$     ;$$$$$$');
-    printFaceLines('$$$$$:     `b  `T$zP`  \\   ;        :   /  `T$zP`  d`     ; $$$$$');
-    printFaceLines('$$$$$ \\      *+.       `   ;        :   `       .+*      /  $$$$$');
-    printFaceLines('$$$$$  `.                 /          \\                 .`  :$$$$$');
-    printFaceLines('$$$$$    `*-._       _.-*`            `*-._       _.-*`    $$$$$$');
-    printFaceLines('$$$$$         """""""                      """""""         $$$$$$');
-    printFaceLines('$$$$$                                                      $$$$$$');
-    printFaceLines('$$$$$$                                                    $$$$$$$');
-    printFaceLines('$$$$$$;                                                  :$$$$$$$');
-    printFaceLines('$$$$$$$                    ;        :                    $$$$$$$$');
-    printFaceLines('$~~~~~$                    `*-.__.-*`                    $$$$$$$$');
-    printFaceLines('$~EVE~$b                                    #           d$$$$$$$$');
-    printFaceLines('$~CLI~$$b                  _.._   _.._                 d$$$$$$$$$');
-    printFaceLines('$~~~~~$$$b               .d$$$$$g$$$$$b.              d$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$b.           .d$$$$$$$$$$$$$$$b.          .d$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$b.          `^$$$$$$$$$$$$$^`         .d$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$b.           "*^$$$$$^*"          .d$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$b.                            .d$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$b.                        .d$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$b.                    .d$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$b.                .d$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$+.          .+$$$$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$$$$gggggggg$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-    printFaceLines('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-}
 output('I am online, sir');
 
 function printFaceLines(line) {
