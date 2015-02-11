@@ -25,9 +25,20 @@ SpeechAparatus.prototype.exec = function(what) {
 }
 
 module.exports = {
-    exec: function(what) {
+    exec: function(what, lang) {
         var sox = child.spawn('sox', ['-t', 'mp3', '-', '-d', '-q']);
 
-        return ivona.createVoice(what, this.body).pipe(sox.stdin);
+        lang = lang || 'en-US';
+
+        var body = {
+            body: {
+                voice: {
+                    language: lang,
+                    gender: 'Female'
+                }
+            }
+        };
+
+        return ivona.createVoice(what, body).pipe(sox.stdin);
     }
 };

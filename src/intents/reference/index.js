@@ -7,10 +7,10 @@ function ReferenceIntent(params) {
         undefined;
     this.nameType = params.reference_name_type ?
         params.reference_name_type[0].value :
-        undefined;
+        'neutral';
 };
 
-ReferenceIntent.prototype.exec = function(callback) {
+ReferenceIntent.prototype.toString = function() {
     var timeOfDay = function() {
         var now = new Date();
         var hours = now.getHours();
@@ -26,15 +26,16 @@ ReferenceIntent.prototype.exec = function(callback) {
     }();
     switch (this.type) {
         case 'greeting':
-            callback(getPhrase('greeting', timeOfDay));
-            break;
+            return getPhrase('greeting', timeOfDay);
         case 'farewell':
-            callback(getPhrase('farewell', timeOfDay));
-            break;
+            return getPhrase('farewell', timeOfDay);
         case 'attraction':
-            callback(getPhrase('attraction'));
-            break;
+            return getPhrase('attraction');
     }
+}
+
+ReferenceIntent.prototype.exec = function(callback) {
+    callback(this.toString());
 }
 
 module.exports = function(params) {

@@ -6,14 +6,30 @@ function TranslateIntent(params) {
         undefined;
     this.from = params.from ?
         params.from[0].value :
-        undefined;
+        'english';
     this.to = params.to ?
         params.to[0].value :
         'english';
 };
 
 TranslateIntent.prototype.exec = function(callback) {
-    callback('Trying to translate ' + this.phrase + ' to ' + this.to);
+    var getLangCode = function(value) {
+        switch (value) {
+            case 'french':
+                return 'fr-FR';
+            case 'russian':
+                return 'ru-RU';
+            case 'english':
+            default:
+                return 'en-US';
+        }
+    }
+    var from = getLangCode(this.from);
+    var to = getLangCode(this.to);
+
+    console.log(from, to);
+
+    callback(this.phrase, getLangCode(this.from));
 };
 
 module.exports = function(params) {
