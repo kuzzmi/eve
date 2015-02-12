@@ -1,8 +1,11 @@
 var speechApparatus = require('./speechApparatus');
 
-function say(phrase, callback, lang) {
+function say(phrase, callback, lang, quiteMode) {
     callback && callback(phrase + ', sir.');
-    return speechApparatus.exec(phrase + ', sir.', lang);
+    if (!quiteMode) {
+        return speechApparatus.exec(phrase + ', sir.', lang);
+    }
+    return;
 }
 
 function getIntent(name, params) {
@@ -15,13 +18,13 @@ function getIntent(name, params) {
 };
 
 var Reflex = {
-    on: function(stimulus, callback) {
+    on: function(stimulus, callback, quiteMode) {
         var entities = stimulus.entities || [];
         var intent = getIntent(stimulus.intent, entities);
 
         if (intent) {
             intent.exec(function(result, lang) {
-                say(result, callback, lang);
+                say(result, callback, lang, quiteMode);
             });
         } else {
             console.log(stimulus);

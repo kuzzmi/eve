@@ -4,7 +4,10 @@ var wit = require('node-wit');
 var fs = require('fs');
 var pkg = JSON.parse(fs.readFileSync('package.json'));
 
-var args = process.argv.slice(2);
+var argv = require('minimist')(process.argv.slice(2));
+
+var command = argv.c;
+var quiteMode = argv.q;
 
 var Reflex = require('./brain/reflex');
 
@@ -34,15 +37,15 @@ function send(msg) {
         function(err, res) {
             if (err) output("Error: ", err);
             if (!res) output("Result: ", res);
-            Reflex.on(res.outcomes[0], output);
+            Reflex.on(res.outcomes[0], output, quiteMode);
         }
     );
 }
 
-if (args[0] !== undefined) {
+if (command !== undefined) {
     wit.captureTextIntent(
         'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA',
-        args[0],
+        command,
         function(err, res) {
             if (err) output("Error: ", err);
             if (!res) output("Result: ", res);

@@ -74,13 +74,14 @@ var sentence2 = new Sentence({
     type: 'interrogative',
     structure: {
         // it
-        subject: {
+        subject: [{
             type: 'pronoun',
             attributes: {
+                role: 'subject',
                 number: 'singular',
-                person: 3
+                person: 'neuter'
             }
-        },
+        }],
         // is raining
         predicate: {
             type: 'simple',
@@ -97,22 +98,74 @@ var sentence2 = new Sentence({
     }
 });
 
+var I = new Pronoun({
+    role: 'subject',
+    number: 'singular',
+    person: 'first'
+});
+
+var me = new Pronoun({
+    role: 'objective',
+    number: 'singular',
+    person: 'first'
+});
+
+I.toString() === 'I'; // true;
+me.toString() === 'me'; // true;
+
+/*
+
+ I and my friend.
+ I  +  I  friend
+ p  +  p(n)
+
+ Who are you?
+    
+ Are you hungry?
+
+ ,_, you be hungry ?
+  ^   ^       ^
+  |   |    state of
+  |   |  hunger level
+  |   |
+  |  2nd <- Eve
+  |
+ No q. word + ? <- Yes/no q. 
+
+ [Eve, hunger level, _, ?] -> [No]
+
+
+*/
+
 var sentence3 = new Sentence({
-    type: 'imperative',
+    type: 'interrogative',
     structure: {
-        // clean room
+        // it
+        subject: [{
+            pos: 'pronoun',
+            attributes: {
+                role: 'subject',
+                number: 'singular',
+                type: 'neuter',
+                person: 'third'
+            }
+        }, {
+            pos: 'conjunction',
+            attributes: {
+                type: 'coordinating'
+            }
+        }],
+        // is raining
         predicate: {
-            type: 'compound',
+            type: 'simple',
             matrix: [{
-                // clean
-                verb: 'clean',
+                // is
+                verb: 'be',
                 form: 'present'
             }, {
-                // room
-                noun: 'room',
-                attributes: {
-                    number: 'singular'
-                }
+                // raining
+                verb: 'rain',
+                form: 'gerund'
             }]
         }
     }
@@ -120,4 +173,4 @@ var sentence3 = new Sentence({
 
 sentence1.toString(); // 'It is raining.'
 sentence2.toString(); // 'Is it raining?'
-sentence3.toString(); // 'Clean room.'
+sentence3.toString(); // 'I and my friend went to a party last night.'
