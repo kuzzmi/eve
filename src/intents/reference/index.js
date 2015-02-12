@@ -1,7 +1,6 @@
 var getPhrase = require('./vocabulary');
 
 function ReferenceIntent(params) {
-    console.log(params);
     this.type = params.reference_type ?
         params.reference_type[0].value :
         undefined;

@@ -22,20 +22,35 @@ Brain.prototype.reflex = function(params) {
 Brain.prototype.process = function(input, output) {
     var me = this;
 
-    wit.captureTextIntent(
-        'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA',
-        input,
-        function(err, res) {
-            if (err) output('Error: ', err);
-            if (!res) output('Result: ', res);
-            var stimulus = new Stimulus(res.outcomes[0]);
-            console.log(require('util').inspect(stimulus, true, 10, true))
+    switch (input.constructor.name) {
+
+        case 'String':
+            wit.captureTextIntent(
+                'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA',
+                input,
+                function(err, res) {
+                    if (err) output('Error: ', err);
+                    if (!res) {
+                        output('Result: ', res);
+                    } else {
+                        var stimulus = new Stimulus(res.outcomes[0]);
+
+                        me.emit('stimulus', {
+                            stimulus: stimulus,
+                            output: output
+                        });
+                    }
+                }
+            );
+            break;
+
+        case 'Stimulus':
             me.emit('stimulus', {
-                stimulus: stimulus,
+                stimulus: input,
                 output: output
             });
-        }
-    );
+            break;
+    }
 };
 
 Brain.prototype.init = function() {

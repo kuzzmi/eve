@@ -16,12 +16,22 @@ function CLI(argv, brain) {
         output: process.stdout
     });
 
-    this.rl.on('line', function(msg) {
+    function sendToBrain(msg) {
+        var me = this;
         me.brain.process(msg, function(result) {
-            me.output.call(me, result);
+            me.output(result);
         });
-        me.rl.prompt(true);
-    });
+    }
+
+
+    if (this.command) {
+        sendToBrain(this.command);
+    } else {
+        this.rl.on('line', function(msg) {
+            sendToBrain.call(me, msg);
+            me.rl.prompt(true);
+        });
+    }
 };
 
 CLI.prototype.output = function(msg) {
