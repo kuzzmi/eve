@@ -4,7 +4,13 @@ var readline = require('readline'),
     fs = require('fs'),
     pkg = JSON.parse(fs.readFileSync('package.json'));
 
-function CLI(argv, brain) {
+function CLI(brain, argv) {
+    argv = argv || {};
+
+    if (!brain) {
+        throw new Error('Brain is undefined');
+    }
+
     var me = this;
     this.brain = brain;
     /* Command line arguments */
@@ -17,15 +23,13 @@ function CLI(argv, brain) {
     });
 
     function sendToBrain(msg) {
-        var me = this;
         me.brain.process(msg, function(result) {
             me.output(result);
         });
     }
 
-
     if (this.command) {
-        sendToBrain(this.command);
+        sendToBrain.call(me, this.command);
     } else {
         this.rl.on('line', function(msg) {
             sendToBrain.call(me, msg);
@@ -42,7 +46,7 @@ CLI.prototype.output = function(msg) {
 };
 
 CLI.prototype.init = function() {
-    this.output(pkg.version);
+    return this;
 };
 
 module.exports = CLI;

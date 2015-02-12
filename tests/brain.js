@@ -4,8 +4,8 @@ var Brain = require('../src/brain/');
 var Stimulus = require('../src/brain/stimulus');
 
 describe('Brain', function() {
-    describe('#process', function() {
-        it('should process a string', function(done) {
+    describe('#process()', function() {
+        it.skip('should process a string', function(done) {
             Brain.process('Hello', function(result) {
                 assert.ok(result);
                 done();
@@ -30,7 +30,8 @@ describe('Brain', function() {
             });
         });
     });
-    describe('#reflex', function() {
+
+    describe('#reflex()', function() {
         it('should react on Object<Stimulus()>', function(done) {
             var stimulus = new Stimulus({
                 _text: 'Hello',

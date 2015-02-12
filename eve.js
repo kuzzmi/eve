@@ -1,7 +1,5 @@
-var Cli = require('./src/eve-cli-refactored'),
+var Cli = require('./src/cli'),
     Brain = require('./src/brain/'),
     argv = require('minimist')(process.argv.slice(2));
 
-var cli = new Cli(argv, Brain);
-
-cli.init();
+var cli = new Cli(Brain, argv).init();

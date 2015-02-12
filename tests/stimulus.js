@@ -2,7 +2,7 @@ var assert = require('assert');
 var Stimulus = require('../src/brain/stimulus');
 
 describe('Stimulus', function() {
-    describe('#constructor', function() {
+    describe('#constructor()', function() {
         it('should create an Object<Stimulus()> with all params', function() {
             var stimulus = new Stimulus({
                 _text: 'Hello',

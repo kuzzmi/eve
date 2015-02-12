@@ -18,7 +18,7 @@ Reflex.prototype.exec = function() {
             console.log(e);
             return false;
         }
-    })(this.stimulus.intent, this.stimulus.entities);
+    })(me.stimulus.intent, me.stimulus.entities);
 
 
     if (intent) {

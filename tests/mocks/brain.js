@@ -1,16 +1,9 @@
 var EventEmitter = require('events').EventEmitter;
-var wit = require('node-wit');
 var util = require('util');
-
-/* Parts of Eve */
-var Reflex = require('./reflex');
-var Stimulus = require('./stimulus');
-var Speech = require('./speech');
 
 function Brain() {
     EventEmitter.call(this);
 };
-
 util.inherits(Brain, EventEmitter);
 
 Brain.prototype.reflex = function(params) {
@@ -29,21 +22,15 @@ Brain.prototype.process = function(input, output) {
                 'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA',
                 input,
                 function(err, res) {
-                    if (err) {
-                        throw new Error('Error: ', err);
-                    }
-
+                    if (err) output('Error: ', err);
                     if (!res) {
-                        throw new Error('Result: ', res);
+                        output('Result: ', res);
                     } else {
                         var stimulus = new Stimulus(res.outcomes[0]);
 
                         me.emit('stimulus', {
                             stimulus: stimulus,
-                            output: function(result) {
-                                output(result);
-                                Speech.exec(result);
-                            }
+                            output: output
                         });
                     }
                 }
@@ -53,10 +40,7 @@ Brain.prototype.process = function(input, output) {
         case 'Stimulus':
             me.emit('stimulus', {
                 stimulus: input,
-                output: function(result) {
-                    output(result);
-                    Speech.exec(result);
-                }
+                output: output
             });
             break;
     }
