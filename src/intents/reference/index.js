@@ -1,5 +1,3 @@
-var getPhrase = require('./vocabulary');
-
 function ReferenceIntent(params) {
     this.type = params.reference_type ?
         params.reference_type[0].value :
@@ -7,6 +5,8 @@ function ReferenceIntent(params) {
     this.nameType = params.reference_name_type ?
         params.reference_name_type[0].value :
         'neutral';
+
+    this.vocabulary = __dirname + '/' + 'vocabulary.json';
 };
 
 ReferenceIntent.prototype.toString = function() {
@@ -25,11 +25,22 @@ ReferenceIntent.prototype.toString = function() {
     }();
     switch (this.type) {
         case 'greeting':
-            return getPhrase('greeting', timeOfDay);
+            return {
+                vocabulary: this.vocabulary,
+                code: 'greeting',
+                args: [timeOfDay]
+            };
         case 'farewell':
-            return getPhrase('farewell', timeOfDay);
+            return {
+                vocabulary: this.vocabulary,
+                code: 'farewell',
+                args: [timeOfDay]
+            };
         case 'attraction':
-            return getPhrase('attraction');
+            return {
+                vocabulary: this.vocabulary,
+                code: 'attraction'
+            };
     }
 }
 

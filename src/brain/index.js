@@ -22,6 +22,19 @@ Brain.prototype.reflex = function(params) {
 Brain.prototype.process = function(input, output) {
     var me = this;
 
+    function emit(input) {
+        me.emit('stimulus', {
+            stimulus: input,
+            output: function(result) {
+                if (result.vocabulary) {
+                    Speech.exec(result.vocabulary, result, function(phrase) {
+                        output(phrase);
+                    });
+                }
+            }
+        });
+    };
+
     switch (input.constructor.name) {
 
         case 'String':
@@ -37,27 +50,14 @@ Brain.prototype.process = function(input, output) {
                         throw new Error('Result: ', res);
                     } else {
                         var stimulus = new Stimulus(res.outcomes[0]);
-
-                        me.emit('stimulus', {
-                            stimulus: stimulus,
-                            output: function(result) {
-                                output(result);
-                                Speech.exec(result);
-                            }
-                        });
+                        emit(stimulus);
                     }
                 }
             );
             break;
 
         case 'Stimulus':
-            me.emit('stimulus', {
-                stimulus: input,
-                output: function(result) {
-                    output(result);
-                    Speech.exec(result);
-                }
-            });
+            emit(input);
             break;
     }
 };

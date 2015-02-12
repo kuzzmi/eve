@@ -52,5 +52,26 @@ describe('Brain', function() {
                 }
             })
         });
+
+        it('should react on Object<Stimulus()> and return string', function(done) {
+            var stimulus = new Stimulus({
+                _text: 'Hello',
+                intent: 'reference',
+                entities: {
+                    reference_type: [{
+                        value: 'greeting'
+                    }]
+                },
+                confidence: 0.724
+            });
+
+            Brain.reflex({
+                stimulus: stimulus,
+                output: function(result) {
+                    assert.ok('string', typeof result);
+                    done();
+                }
+            })
+        });
     });
 });
