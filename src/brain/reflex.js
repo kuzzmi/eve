@@ -1,38 +1,34 @@
-var speechApparatus = require('./speechApparatus');
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
 
-function say(phrase, callback, lang, quiteMode) {
-    callback && callback(phrase + ', sir.');
-    if (!quiteMode) {
-        return speechApparatus.exec(phrase + ', sir.', lang);
-    }
-    return;
-}
+function Reflex(stimulus) {
+    EventEmitter.call(this);
 
-function getIntent(name, params) {
-    try {
-        return require('../intents/' + name)(params);
-    } catch (e) {
-        console.log(e);
-        return false;
-    }
+    this.stimulus = stimulus;
 };
 
-var Reflex = {
-    on: function(stimulus, callback, quiteMode) {
-        var entities = stimulus.entities || [];
-        var intent = getIntent(stimulus.intent, entities);
+util.inherits(Reflex, EventEmitter);
 
-        if (intent) {
-            intent.exec(function(result, lang) {
-                say(result, callback, lang, quiteMode);
-            });
-        } else {
-            console.log(stimulus);
-            say('Shame on me, I can\'t react on that yet', callback);
+Reflex.prototype.exec = function() {
+    var me = this;
+    var intent = (function(name, params) {
+        try {
+            return require('../intents/' + name)(params);
+        } catch (e) {
+            console.log(e);
+            return false;
         }
+    })(this.stimulus.intent, this.stimulus.entities);
 
-        intent = null;
+
+    if (intent) {
+        intent.exec(function(result) {
+            me.emit('response', result);
+        });
+        return true;
     }
-}
+
+    return false;
+};
 
 module.exports = Reflex;
