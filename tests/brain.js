@@ -12,7 +12,7 @@ describe('Brain', function() {
             });
         });
 
-        it('should process a Object<Stimulus()>', function(done) {
+        it('should process a {Stimulus} object', function(done) {
             var stimulus = new Stimulus({
                 _text: 'Hello',
                 intent: 'reference',
@@ -32,7 +32,7 @@ describe('Brain', function() {
     });
 
     describe('#reflex()', function() {
-        it('should react on Object<Stimulus()>', function(done) {
+        it('should react on {Stimulus} object', function(done) {
             var stimulus = new Stimulus({
                 _text: 'Hello',
                 intent: 'reference',
@@ -53,7 +53,7 @@ describe('Brain', function() {
             })
         });
 
-        it('should react on Object<Stimulus()> and return string', function(done) {
+        it('should react on {Stimulus} object and return string', function(done) {
             var stimulus = new Stimulus({
                 _text: 'Hello',
                 intent: 'reference',

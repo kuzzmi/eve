@@ -6,6 +6,13 @@ module.exports = function(grunt) {
     require('time-grunt')(grunt);
 
     grunt.initConfig({
+        watch: {
+            scripts: {
+                files: ['tests/**/*.js'],
+                tasks: ['test']
+            },
+        },
+
         mochaTest: {
             test: {
                 options: {

@@ -10,7 +10,7 @@ describe('Command-line interface', function() {
             assert.ok(cli);
         });
 
-        it('should throw error if Brain is undefined', function() {
+        it('should throw Error if Brain is undefined', function() {
             assert.throws(
                 function() {
                     var cli = new Cli();
@@ -22,7 +22,7 @@ describe('Command-line interface', function() {
     describe('#output()', function() {
         var cli = new Cli(Brain).init();
 
-        it('should be able to output something', function() {
+        it('should exist', function() {
             assert.ok(cli.output);
         });
 

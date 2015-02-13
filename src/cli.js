@@ -25,6 +25,7 @@ function CLI(brain, argv) {
     function sendToBrain(msg) {
         me.brain.process(msg, function(result) {
             me.output(result);
+            process.exit();
         });
     }
 
