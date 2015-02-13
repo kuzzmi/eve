@@ -12,9 +12,11 @@ function exec() {
     var checkType = function(arg, types) {
         var matched = false;
 
-        console.log(arg);
+        // console.log(arg);
 
         for (var i = 0; i < types.length; i++) {
+            // console.log(arg.constructor.name + ' === ' + types[i])
+            // console.log(arg.constructor.name === types[i])
             if (arg.constructor.name === types[i]) {
                 matched = true;
                 break;
@@ -30,6 +32,9 @@ function exec() {
 
     var checkTypes = function(args, typesArray) {
         for (var i = 0; i < args.length; i++) {
+
+            // console.log('Checking: ' + args[i] + ' to be ' + typesArray[i]);
+
             checkType(args[i], typesArray[i]);
         };
     };
@@ -52,14 +57,14 @@ function exec() {
         case 3:
             checkTypes(args, [
                 ['String'],
-                ['String', 'Stream', 'Object'],
+                ['String', 'Object'],
                 ['Function']
             ]);
             break;
         case 4:
             checkTypes(args, [
                 ['String'],
-                ['String', 'Stream', 'Object'],
+                ['String', 'Object'],
                 ['Object'],
                 ['Function']
             ]);

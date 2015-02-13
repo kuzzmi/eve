@@ -54,86 +54,88 @@ describe('Speech', function() {
             }).to.throw(/arguments/);
         });
 
-        describe('checks arguments types', function() {
-            var func = function() {};
-            var stream = require('stream').Stream();
+        var func = function() {};
+        var stream = require('stream').PassThrough();
 
-            it('should throw Error if args[0] is not a {String}', function() {
-                expect(function() {
-                    Speech.exec(1);
-                }).to.throw(/Expected type/);
-            });
-
-            it('should not throw Error if args[0] is a {String}', function() {
-                expect(function() {
-                    Speech.exec('string');
-                }).not.to.throw(/Expected type/);
-            });
-
-            it('should throw Error if args[1] is not a {String|Stream|Object|Function}', function() {
-                expect(function() {
-                    Speech.exec('string', 1);
-                    Speech.exec('string', stream, 1);
-                    Speech.exec('string', stream, {}, 1);
-                }).to.throw(/Expected type/);
-            });
-
-            it('should not throw Error if args[1] is a {String|Stream|Object|Function}', function() {
-                expect(function() {
-                    Speech.exec('string', func);
-                    Speech.exec('string', stream, func);
-                    Speech.exec('string', 'string', {}, func);
-                    Speech.exec('string', {}, {}, func);
-                }).not.to.throw(/Expected type/);
-            });
-
-            it('should throw Error if args[2] is not a {Object|Function}', function() {
-                expect(function() {
-                    Speech.exec('string', stream, 1);
-                    Speech.exec('string', stream, 1, func);
-                }).to.throw(/Expected type/);
-            });
-
-            it('should not throw Error if args[2] is a {Object|Function}', function() {
-                expect(function() {
-                    Speech.exec('string', stream, func);
-                    Speech.exec('string', stream, {}, func);
-                }).not.to.throw(/Expected type/);
-            });
-
-            // it('should throw Error if args[1] is not a {String|Stream|Object}', function() {
-            //     expect(function() {
-            //         Speech.exec('string', 1);
-            //     }).to.throw(/Expected type/);
-            // });
-
-            // it('should throw Error if args[1] is a {String|Stream|Object}', function() {
-            //     expect(function() {
-            //         Speech.exec('string', 'filepath');
-            //         Speech.exec('string', stream);
-            //         Speech.exec('string', {});
-            //     }).to.throw(/Expected type/);
-            // });
-
-            // it('not throw Error if args[0] is a {String}', function() {
-            //     expect(function() {
-            //         Speech.exec('string');
-            //     }).not.to.throw(/Expected type/);
-            // });
-
-            // it('throw Error if args[1] is not a {Function}', function() {
-            //     expect(function() {
-            //         Speech.exec('string', 1);
-            //     }).to.throw(/Expected type/);
-            // });
-
-            // it('do not throw Error if args[1] is a {Function}', function() {
-            //     expect(function() {
-            //         Speech.exec('string', func);
-            //     }).not.to.throw(/Expected type/);
-            // });
-
+        it('should throw Error if args[0] is not a {String}', function() {
+            expect(function() {
+                Speech.exec(1);
+            }).to.throw(/Expected type/);
         });
+
+        it('should not throw Error if args[0] is a {String}', function() {
+            expect(function() {
+                Speech.exec('string');
+            }).not.to.throw(/Expected type/);
+        });
+
+        it('should throw Error if args[1] is not a {String|Object|Function}', function() {
+            expect(function() {
+                Speech.exec('string', 1);
+                Speech.exec('string', 1, 1);
+                Speech.exec('string', 1, {}, func);
+            }).to.throw(/Expected type/);
+        });
+
+        it('should not throw Error if args[1] is a {String|Object|Function}', function() {
+            expect(function() {
+                Speech.exec('string', func);
+                Speech.exec('string', stream, func);
+                Speech.exec('string', 'string', {}, func);
+                Speech.exec('string', {}, {}, func);
+            }).not.to.throw(/Expected type/);
+        });
+
+        it('should throw Error if args[2] is not a {Object|Function}', function() {
+
+            // console.log('__________________________________________________ stream instanceof Stream: ' + (stream instanceof Stream));
+
+            expect(function() {
+                Speech.exec('string', stream, 1);
+                Speech.exec('string', stream, 1, func);
+            }).to.throw(/Expected type/);
+        });
+
+        it('should not throw Error if args[2] is a {Object|Function}', function() {
+            expect(function() {
+                Speech.exec('string', stream, func);
+                Speech.exec('string', stream, {}, func);
+            }).not.to.throw(/Expected type/);
+        });
+
+        // it('should throw Error if args[1] is not a {String|Object}', function() {
+        //     expect(function() {
+        //         Speech.exec('string', 1);
+        //     }).to.throw(/Expected type/);
+        // });
+
+        // it('should throw Error if args[1] is a {String|Object}', function() {
+        //     expect(function() {
+        //         Speech.exec('string', 'filepath');
+        //         Speech.exec('string', stream);
+        //         Speech.exec('string', {});
+        //     }).to.throw(/Expected type/);
+        // });
+
+        // it('not throw Error if args[0] is a {String}', function() {
+        //     expect(function() {
+        //         Speech.exec('string');
+        //     }).not.to.throw(/Expected type/);
+        // });
+
+        // it('throw Error if args[1] is not a {Function}', function() {
+        //     expect(function() {
+        //         Speech.exec('string', 1);
+        //     }).to.throw(/Expected type/);
+        // });
+
+        // it('do not throw Error if args[1] is a {Function}', function() {
+        //     expect(function() {
+        //         Speech.exec('string', func);
+        //     }).not.to.throw(/Expected type/);
+        // });
+
+        // });
 
         // it('should throw Error if types of arguments are missmatching', function() {
         //     expect(function() {
