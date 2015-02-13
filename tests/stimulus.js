@@ -17,6 +17,10 @@ describe('Stimulus', function() {
             assert.ok(stimulus);
             assert.ok(stimulus.intent);
         });
+        it('should create an empty {Stimulus} with empty params', function() {
+            var stimulus = new Stimulus();
+            assert.ok(stimulus);
+        });
         it('should create an {Stimulus} with some params', function() {
             var stimulus = new Stimulus({
                 _text: 'Hello',

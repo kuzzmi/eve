@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         watch: {
             scripts: {
-                files: ['tests/**/*.js'],
+                files: ['tests/**/*.js', 'src/**/*.js'],
                 tasks: ['test']
             },
         },

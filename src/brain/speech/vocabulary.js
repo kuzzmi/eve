@@ -1,17 +1,20 @@
 var fs = require('fs');
+var Q = require('q');
 
-function pick(file, phraseObj, callback) {
+function pick(file, phraseObj) {
+    var deferred = Q.defer();
+
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    if (!file) throw new Error('Vocabulary file is `undefined`');
-    if (!phraseObj) throw new Error('Phrase object is `undefined`');
+    if (!file) deferred.reject(new Error('Vocabulary file is `undefined`'));
+    if (!phraseObj) deferred.reject(new Error('Phrase object is `undefined`'));
 
     if (typeof file === 'string') {
         fs.readFile(file, function(err, data) {
             if (err) {
-                throw new Error('Problem while loading a vocabulary.\r\n' + err);
+                deferred.reject(new Error('Problem while loading a vocabulary.\r\n' + err));
             }
 
             var vocabulary = JSON.parse(data);
@@ -32,9 +35,13 @@ function pick(file, phraseObj, callback) {
                 return typeof args[number] != 'undefined' ? args[number] : match;
             });
 
-            callback(result);
+            deferred.resolve(result);
         });
     }
+
+    return deferred.promise;
 };
 
-module.exports = pick;
+module.exports = {
+    pick: pick
+};
