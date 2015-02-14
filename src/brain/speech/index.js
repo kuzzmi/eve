@@ -1,12 +1,20 @@
+var Q = require('q');
+
 var Apparatus = require('./speechApparatus');
 var Vocabulary = require('./vocabulary');
 
 function exec() {
+    var deferred = Q.defer();
+
     var args = arguments;
 
+    console.log('Speech.exec is called with ' + JSON.stringify(args));
+
     if (args.length < 1 || args.length > 4) {
-        throw new Error('Speech.exec() was called with ' + args.length +
+        var er = new Error('Speech.exec() was called with ' + args.length +
             ' arguments, but expected amount is 1..4.');
+        deferred.reject(er);
+        throw er;
     }
 
     var checkType = function(arg, types) {
@@ -20,9 +28,12 @@ function exec() {
         };
 
         if (!matched) {
-            throw new Error('Expected type of argument was {' +
+            var er = new Error('Expected type of argument was {' +
                 types.join('|') + '}, but received argument is {' +
                 arg.constructor.name + '}.');
+            console.log(er.message);
+            deferred.reject(er);
+            throw er;
         }
     };
 
@@ -36,17 +47,25 @@ function exec() {
 
     var params = {
         phrase: undefined,
+        code: undefined,
+        args: undefined,
         vocabulary: undefined,
         options: undefined,
-        callback: undefined,
+        callback: undefined
     }
 
     switch (args.length) {
         case 1:
             checkTypes(args, [
-                ['String']
+                ['String', 'Object']
             ]);
-            params.phrase = args[0];
+            if (typeof args[0] === 'object') {
+                console.log(require('util').inspect(params, true, 10, true))
+                console.log(require('util').inspect(args[0], true, 10, true))
+                params = args[0];
+            } else {
+                params.phrase = args[0];
+            }
             break;
         case 2:
             checkTypes(args, [
@@ -83,15 +102,16 @@ function exec() {
             break;
     }
 
-    var promise = Vocabulary
+    Vocabulary
         .pick(params)
-        .then(Apparatus.exec);
+        .then(function(phrase) {
+            params.callback && params.callback(phrase);
+            return phrase;
+        })
+        .then(Apparatus.exec)
+        .then(deferred.resolve);
 
-    if (params.callback) {
-        promise.then(params.callback);
-    }
-
-    return promise;
+    return deferred.promise;
 };
 
 module.exports = {

@@ -1,38 +1,73 @@
 var EventEmitter = require('events').EventEmitter,
-    wit          = require('node-wit'),
-    util         = require('util'),
-    Q            = require('q');
+    wit = require('node-wit'),
+    util = require('util'),
+    Q = require('q');
 
 /* Parts of Eve */
-var Reflex   = require('./reflex'),
+var Reflex = require('./reflex'),
     Stimulus = require('./stimulus'),
-    Speech   = require('./speech');
+    Speech = require('./speech');
 
 function Brain() {
     EventEmitter.call(this);
+
+    this.on('stimulus', this.process);
 };
 
 util.inherits(Brain, EventEmitter);
 
-Brain.prototype.process = function(input) {
+Brain.prototype.process = function(stimulus) {
     if (arguments.length !== 1) {
         throw new Error('Brain.process() was called with ' + arguments.length +
             ' arguments, but expected amount is exectly 1.');
     }
 
-    if (input.constructor.name !== 'Stimulus' &&
-        input.constructor.name !== 'String') {
+    if (stimulus === undefined) {
         throw new Error('Expected type of argument was {String|Stimulus},' +
-            ' but received argument is {' + input.constructor.name + '}.');
+            ' but received argument is {undefined}.');
+    }
+
+    if (stimulus.constructor.name !== 'Stimulus' &&
+        stimulus.constructor.name !== 'String') {
+        throw new Error('Expected type of argument was {String|Stimulus},' +
+            ' but received argument is {' + stimulus.constructor.name + '}.');
     }
 
     var deferred = Q.defer();
 
-    
-    setTimeout(function() {
-    var reflex = new Reflex();
-        deferred.resolve('Response');
-    }, 10);
+    var resolveReflex = function(reflex) {
+        reflex.exec()
+            .then(Speech.exec, function(er) {
+                console.log(er);
+            })
+            .then(deferred.resolve);
+    };
+
+    if (stimulus.constructor.name !== 'Stimulus') {
+        wit.captureTextIntent(
+            'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA',
+            stimulus,
+            function(err, res) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    if (!res) {
+                        deferred.reject(new Error('Empty response from WIT'));
+                    } else {
+                        var stimulus = new Stimulus(res.outcomes[0]),
+                            reflex = new Reflex(stimulus);
+
+                        resolveReflex(reflex);
+                    }
+                }
+            });
+    } else {
+        var reflex = new Reflex(stimulus),
+            me = this;
+
+        resolveReflex(reflex);
+    }
+
 
     return deferred.promise;
 };

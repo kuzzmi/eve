@@ -1,10 +1,18 @@
-var sinon = require('sinon');
+var sinon = require('sinon'),
+    Q     = require('q');
 
 function ReflexMock () {
-    return sinon.spy();
 };
 
-ReflexMock.prototype.exec = sinon.spy();
+ReflexMock.prototype.exec = function() {
+    var deferred = Q.defer();
+
+    setTimeout(function() {
+        deferred.resolve('Hello');
+    }, 10);
+
+    return deferred.promise;
+};
 
 ReflexMock.prototype.on = function() {
     return this;

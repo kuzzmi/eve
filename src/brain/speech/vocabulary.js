@@ -1,25 +1,37 @@
 var fs = require('fs');
 var Q = require('q');
 
-function pick(file, phraseObj) {
+function pick(params) {
     var deferred = Q.defer();
 
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    if (!file) deferred.reject(new Error('Vocabulary file is `undefined`'));
-    if (!phraseObj) deferred.reject(new Error('Phrase object is `undefined`'));
+    console.log(require('util').inspect(params, true, 10, true))
 
-    if (typeof file === 'string') {
-        fs.readFile(file, function(err, data) {
+    if (!params.vocabulary && !params.phrase) {
+        var er = new Error('Vocabulary file is `undefined`');
+        throw er;
+    }
+
+    if (!params.code && !params.phrase) {
+        var er = new Error('Phrase code is `undefined`');
+        throw er;
+    }
+
+    if (params.phrase) {
+        deferred.resolve(params.phrase);
+    } else if (typeof params.vocabulary === 'string') {
+        fs.readFile(params.vocabulary, function(err, data) {
             if (err) {
-                deferred.reject(new Error('Problem while loading a vocabulary.\r\n' + err));
+                var er = new Error('Problem while loading a vocabulary.\r\n' + err);
+                throw er;
             }
 
             var vocabulary = JSON.parse(data);
-            var splittedCode = phraseObj.code.split('.');
-            var args = phraseObj.args;
+            var splittedCode = params.code.split('.');
+            var args = params.args;
 
             var phrases = vocabulary;
 
@@ -32,7 +44,7 @@ function pick(file, phraseObj) {
             var phrase = phrases[random];
 
             result = phrase.replace(/\{(\d+)\}/g, function(match, number) {
-                return typeof args[number] != 'undefined' ? args[number] : match;
+                return typeof args[number] !== 'undefined' ? args[number] : match;
             });
 
             deferred.resolve(result);

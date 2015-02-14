@@ -1,3 +1,4 @@
+var Q = require('q');
 var child = require('child_process');
 
 function GitIntent(params) {
@@ -6,7 +7,9 @@ function GitIntent(params) {
         undefined;
 };
 
-GitIntent.prototype.exec = function(callback) {
+GitIntent.prototype.exec = function() {
+    var deferred = Q.defer();
+
     switch (this.action) {
         case 'push':
             var date = new Date();
@@ -20,13 +23,13 @@ GitIntent.prototype.exec = function(callback) {
                             cwd: '.'
                         }, function(error, stdout, stderr) {
                             if (!error) {
-                                callback('Done');
+                                deferred.resolve('Done');
                             } else {
-                                callback('Problem occured');
+                                deferred.reject('Problem occured');
                             }
                         })
                     } else {
-                        callback('Problem occured');
+                        deferred.reject('Problem occured');
                     }
                 });
             break;
@@ -35,7 +38,7 @@ GitIntent.prototype.exec = function(callback) {
                 'git pull origin master',
                 function(error, stdout, stderr) {
                     if (!error) {
-                        callback('Completed. I need to be restarted');
+                        deferred.resolve('Completed. I need to be restarted');
                     }
                 });
             break;
@@ -46,19 +49,21 @@ GitIntent.prototype.exec = function(callback) {
                 if (!error) {
                     var changes = stdout.trim();
                     if (changes) {
-                        callback(stdout.trim() + ' in current state');
+                        deferred.resolve(stdout.trim() + ' in current state');
                     } else {
-                        callback('Everything is up-to-date');
+                        deferred.resolve('Everything is up-to-date');
                     }
                 } else {
-                    callback('Problem occured');
+                    deferred.reject('Problem occured');
                 }
             });
             break;
         default:
-            callback('Unrecognized command - ' + this.action);
+            deferred.resolve('Unrecognized command - ' + this.action);
             break;
     }
+
+    return deferred.promise;
 }
 
 module.exports = function(params) {

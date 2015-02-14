@@ -13,6 +13,12 @@ function CLI(brain, argv) {
 
     var me = this;
     this.brain = brain;
+
+    this.brain
+        .on('response', function(result) {
+            me.output.call(me, result);
+        });
+
     /* Command line arguments */
     this.command = argv.c;
     this.quiteMode = argv.q;
@@ -23,17 +29,18 @@ function CLI(brain, argv) {
     });
 
     function sendToBrain(msg) {
-        me.brain.process(msg, function(result) {
-            me.output(result);
-            process.exit();
-        });
+        me.brain.process(msg);
     }
 
     if (this.command) {
-        sendToBrain.call(me, this.command);
+        this.brain
+            .process(this.command)
+            .then(this.output);
     } else {
         this.rl.on('line', function(msg) {
-            sendToBrain.call(me, msg);
+            me.brain
+                .process(msg)
+                .then(me.output);
             me.rl.prompt(true);
         });
     }

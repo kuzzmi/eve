@@ -1,5 +1,5 @@
 
-function pick(file, phraseObj, callback) {
+function pick(params) {
     var deferred = require('q').defer();
     var phrase = 'Hello Tester';
 

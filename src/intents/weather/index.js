@@ -1,5 +1,6 @@
 var request = require('request');
 var Forecast = require('./forecast');
+var Q = require('q');
 
 var dateToUT = function(date) {
     return (new Date(date).getTime()) / 1000;
@@ -92,9 +93,11 @@ function WeatherIntent(params) {
     };
 };
 
-WeatherIntent.prototype.exec = function(callback) {
-    var me = this;
-    var forecastType;
+WeatherIntent.prototype.exec = function() {
+    var me = this,
+        forecastType,
+        deferred = Q.defer();
+
     if (me.datetime) {
         switch (me.datetime.type) {
             case 'value':
@@ -106,7 +109,7 @@ WeatherIntent.prototype.exec = function(callback) {
         }
         getForecast(forecastType, me.datetime, function(weather) {
             weather.map(function(item) {
-                callback(item.toString({
+                deferred.resolve(item.toString({
                     details: me.details,
                     verbosity: me.verbosity
                 }));

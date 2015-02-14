@@ -1,7 +1,5 @@
 'use strict';
 
-var getPhrase = require('./vocabulary');
-
 function Forecast(params) {
     this.datetime = new Date(params.dt * 1000);
     this.description = params.weather[0].description;
@@ -25,24 +23,39 @@ function Forecast(params) {
         this.clouds = params.clouds.all;
         this.windSpeed = params.wind.speed;
     }
+
+    this.vocabulary = __dirname + '/vocabulary.json';
 };
 
 Forecast.prototype.toString = function(params) {
-    var me = this;
+    var me = this,
+        phrase = {
+        vocabulary: this.vocabulary,
+        code: undefined,
+        args: undefined
+    };
+
     switch (params.details) {
         case 'all':
-            return getPhrase('all', [
+            code = 'all';
+            args = [
                 this.temp.max,
                 this.temp.min,
                 this.windSpeed,
                 this.description
-            ]);
+            ];
         case 'temperature':
             return this._tempString(params);
         case 'precipitation':
             return this._precString(params);
         default:
             break;
+    }
+ 
+    return {
+        vocabulary: this.vocabulary,
+        code: this.type,
+        args: [timeOfDay]
     }
 };
 

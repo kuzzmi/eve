@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                 },
                 src: ['tests/**/*.js']
             }
-        }
+        },
     });
 
     grunt.registerTask('test', 'mochaTest');

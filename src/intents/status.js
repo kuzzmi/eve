@@ -1,3 +1,5 @@
+var Q = require('q');
+
 function StatusIntent(params) {
     this.action = params.status_action ?
         params.status_action[0].value :
@@ -27,26 +29,30 @@ StatusIntent.prototype._getHumanLikeTime = function(date) {
 }
 
 StatusIntent.prototype.exec = function(callback) {
+    var deferred = Q.defer();
+
     switch (this.action) {
         case 'update':
             switch (this.type) {
                 case 'awake':
                     if (this.value === 'true') {
-                        callback('Good morning');
+                        deferred.resolve('Good morning');
                     } else {
-                        callback('Good night');
+                        deferred.resolve('Good night');
                     }
                     break;
                 case 'athome':
                     if (this.value === 'true') {
-                        callback('Welcome home');
+                        deferred.resolve('Welcome home');
                     } else {
-                        callback('Have good times');
+                        deferred.resolve('Have good times');
                     }
                     break;
             }
             break;
     }
+
+    return deferred.promise;
 }
 
 module.exports = function(params) {

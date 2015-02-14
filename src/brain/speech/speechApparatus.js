@@ -1,5 +1,6 @@
 var Ivona = require('ivona-node');
 var child = require('child_process');
+var Q = require('q');
 
 var ivona = new Ivona({
     accessKey: 'GDNAI76SALPR4SUR7M2Q',
@@ -26,6 +27,7 @@ SpeechAparatus.prototype.exec = function(what) {
 
 module.exports = {
     exec: function(what, lang) {
+
         var sox = child.spawn('sox', ['-t', 'mp3', '-', '-d', '-q']);
 
         lang = lang || 'en-US';
@@ -39,6 +41,8 @@ module.exports = {
             }
         };
 
-        return ivona.createVoice(what, body).pipe(sox.stdin);
+        ivona.createVoice(what, body).pipe(sox.stdin);
+
+        return what;
     }
 };

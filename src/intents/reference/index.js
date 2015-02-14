@@ -1,4 +1,4 @@
-var IIntent = require('../interface');
+var Q = require('q');
 
 function ReferenceIntent(params) {
     if (!params) {
@@ -14,8 +14,6 @@ function ReferenceIntent(params) {
 
     this.vocabulary = __dirname + '/' + 'vocabulary.json';
 };
-
-IIntent.implementOn(ReferenceIntent);
 
 ReferenceIntent.prototype.toString = function() {
     var timeOfDay = function() {
@@ -39,8 +37,16 @@ ReferenceIntent.prototype.toString = function() {
     };
 }
 
-ReferenceIntent.prototype.exec = function(callback) {
-    callback(this.toString());
+ReferenceIntent.prototype.exec = function() {
+    var deferred = Q.defer();
+
+    var result = this.toString();
+
+    setTimeout(function() {
+        deferred.resolve(result);
+    }, 100)
+
+    return deferred.promise;
 }
 
 module.exports = function(params) {
