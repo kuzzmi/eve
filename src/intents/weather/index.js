@@ -118,6 +118,8 @@ WeatherIntent.prototype.exec = function() {
     } else {
 
     }
+
+    return deferred.promise;
 }
 
 module.exports = function(params) {

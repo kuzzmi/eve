@@ -1,4 +1,5 @@
 // var googleTranslate = require('google-translate')(apiKey);
+var Q = require('q');
 
 function TranslateIntent(params) {
     this.phrase = params.phrase_to_translate ?
@@ -13,6 +14,8 @@ function TranslateIntent(params) {
 };
 
 TranslateIntent.prototype.exec = function(callback) {
+    var deferred = Q.defer();
+
     var getLangCode = function(value) {
         switch (value) {
             case 'french':
@@ -24,12 +27,13 @@ TranslateIntent.prototype.exec = function(callback) {
                 return 'en-US';
         }
     }
+    
     var from = getLangCode(this.from);
     var to = getLangCode(this.to);
 
-    console.log(from, to);
+    deferred.resolve(this.phrase, getLangCode(this.from));
 
-    callback(this.phrase, getLangCode(this.from));
+    return deferred.promise;
 };
 
 module.exports = function(params) {

@@ -48,7 +48,7 @@ Reflex.prototype.exec = function() {
     var intent = new Intent(this.stimulus.entities);
     var intentPromise = intent.exec();
 
-    if (!intentPromise.then) {
+    if (intentPromise && !intentPromise.then) {
         er = new Error('#exec() of intent module is not a {Promise}');
         deferred.reject(er);
         throw er;

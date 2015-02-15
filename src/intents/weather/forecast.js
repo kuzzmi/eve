@@ -30,20 +30,21 @@ function Forecast(params) {
 Forecast.prototype.toString = function(params) {
     var me = this,
         phrase = {
-        vocabulary: this.vocabulary,
-        code: undefined,
-        args: undefined
-    };
+            vocabulary: this.vocabulary,
+            code: undefined,
+            args: undefined
+        };
 
     switch (params.details) {
         case 'all':
-            code = 'all';
-            args = [
+            phrase.code = 'all';
+            phrase.args = [
                 this.temp.max,
                 this.temp.min,
                 this.windSpeed,
                 this.description
             ];
+            break;
         case 'temperature':
             return this._tempString(params);
         case 'precipitation':
@@ -51,12 +52,8 @@ Forecast.prototype.toString = function(params) {
         default:
             break;
     }
- 
-    return {
-        vocabulary: this.vocabulary,
-        code: this.type,
-        args: [timeOfDay]
-    }
+
+    return phrase;
 };
 
 Forecast.prototype._tempString = function(params) {
@@ -69,20 +66,23 @@ Forecast.prototype._tempString = function(params) {
         return getPhrase('temperature.' + what, params);
     }
 
+    var phrase = {
+        vocabulary: this.vocabulary,
+        code: 'temperature.yes_no.',
+        args: [this.temp.max]
+    };
+
     switch (asked) {
         case 'cold':
-            if (isItCold) {
-                return _gp('yes_no.yes', this.temp.max);
-            } else {
-                return _gp('yes_no.no', this.temp.max);
-            }
+            isItCold ? phrase.code += 'yes' : phrase.code += 'no';
+            console.log(phrase.code)
+            break;
         case 'warm':
-            if (isItCold) {
-                return _gp('yes_no.no', this.temp.max);
-            } else {
-                return _gp('yes_no.yes', this.temp.max);
-            }
+            !isItCold ? phrase.code += 'yes' : phrase.code += 'no';
+            break;
     }
+
+    return phrase;
 };
 
 Forecast.prototype._precString = function(params) {
@@ -90,31 +90,40 @@ Forecast.prototype._precString = function(params) {
         params.verbosity.replace('yes_no_', '') : undefined;
     var anotherPrecision = askedPrecision === 'snow' ? 'rain' : 'snow';
 
-    var _gp = function(what, params) {
-        return getPhrase('precipitation.' + what, params);
-    }
+    var phrase = {
+        vocabulary: this.vocabulary,
+        code: 'precipitation.',
+        args: undefined
+    };
 
     if (askedPrecision) {
+        phrase.code += 'yes_no.';
+
         if (this.rain && this.snow) {
-            return _gp('yes_no.both', [askedPrecision, anotherPrecision]);
+            phrase.code += 'both';
+            phrase.args = [askedPrecision, anotherPrecision];
         } else if (this[askedPrecision]) {
-            return _gp('yes_no.yes', askedPrecision);
+            phrase.code += 'yes';
+            phrase.args = [askedPrecision];
         } else if (this[anotherPrecision]) {
-            return _gp('yes_no.yes', anotherPrecision);
-        } else {
-            return _gp('yes_no.no');
+            phrase.code += 'yes';
+            phrase.args = [anotherPrecision];
+        } else {            
+            phrase.code += 'no';
         }
     } else {
         if (this.rain && this.snow) {
-            return _gp('rain_and_snow');
+            phrase.code += 'rain_and_snow';
         } else if (this.rain) {
-            return _gp('rain');
+            phrase.code += 'rain';
         } else if (this.snow) {
-            return _gp('snow');
+            phrase.code += 'snow';
         } else {
-            return _gp('nothing');
+            phrase.code += 'nothing';
         }
     }
+
+    return phrase;
 };
 
 module.exports = Forecast;

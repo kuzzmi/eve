@@ -12,7 +12,7 @@ function ReferenceIntent(params) {
         params.reference_name_type[0].value :
         'neutral';
 
-    this.vocabulary = __dirname + '/' + 'vocabulary.json';
+    this.vocabulary = __dirname + '/vocabulary.json';
 };
 
 ReferenceIntent.prototype.toString = function() {
@@ -33,7 +33,7 @@ ReferenceIntent.prototype.toString = function() {
     return {
         vocabulary: this.vocabulary,
         code: this.type,
-        args: [timeOfDay]
+        args: [timeOfDay, 'sir']
     };
 }
 

@@ -1,6 +1,6 @@
-function TimeIntent(params) {
+var Q = require('q');
 
-};
+function TimeIntent() {};
 
 TimeIntent.prototype._getHumanLikeTime = function(date) {
     date = date || new Date();
@@ -19,7 +19,9 @@ TimeIntent.prototype._getHumanLikeTime = function(date) {
 }
 
 TimeIntent.prototype.exec = function(callback) {
-    callback(this._getHumanLikeTime());
+    var deferred = Q.defer();
+    deferred.resolve(this._getHumanLikeTime());
+    return deferred.promise;
 }
 
 module.exports = function(params) {
