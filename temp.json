@@ -1,0 +1,236 @@
+{
+    "name": {
+        "type": "text",
+        "value": "Google Inc."
+    },
+    "logo": {
+        "type": "text",
+        "value": "Logo Google 2013 Official.svg"
+    },
+    "image": {
+        "type": "text",
+        "value": "Googleplex-Patio-Aug-2014.JPG"
+    },
+    "image_caption": {
+        "type": "text",
+        "value": "The Googleplex, Google's original and largest corporate campus"
+    },
+    "type": {
+        "type": "link",
+        "text": "Public",
+        "url": "http://en.wikipedia.org/wiki/Public company"
+    },
+    "traded_as": [
+        {
+            "type": "text",
+            "value": "Class A: {{NASDAQ|GOOGL}}<br>Class B supervoting: unlisted<br>Class C nonvoting: {{NASDAQ|GOOG}}<br>"
+        },
+        {
+            "type": "link",
+            "text": "NASDAQ-100 Components",
+            "url": "http://en.wikipedia.org/wiki/NASDAQ-100"
+        },
+        {
+            "type": "text",
+            "value": " (GOOGL and GOOG)<br>"
+        },
+        {
+            "type": "link",
+            "text": "S&P 500 Components",
+            "url": "http://en.wikipedia.org/wiki/S&P 500"
+        },
+        {
+            "type": "text",
+            "value": " (GOOGL and GOOG)"
+        }
+    ],
+    "industry": [
+        {
+            "type": "text",
+            "value": "Internet<br>"
+        },
+        {
+            "type": "link",
+            "text": "Computer software",
+            "url": "http://en.wikipedia.org/wiki/Software"
+        },
+        {
+            "type": "text",
+            "value": "<br>"
+        },
+        {
+            "type": "link",
+            "text": "Telecoms equipment",
+            "url": "http://en.wikipedia.org/wiki/Telecoms equipment"
+        }
+    ],
+    "foundation": [
+        {
+            "type": "text",
+            "value": "{{Start date|1998|09|4}}<!-- Do not change this to September 27: every year they celebrate at a different date, but the company was founded on September 4. Also, do not add that it is x years old as Google is, obviously, not a human and therefore the age is not very relevant. --><br>"
+        },
+        {
+            "type": "link",
+            "text": "Menlo Park, California",
+            "url": "http://en.wikipedia.org/wiki/Menlo Park, California"
+        },
+        {
+            "type": "text",
+            "value": "<ref>{{cite web|title"
+        }
+    ],
+    "founder": [
+        {
+            "type": "link",
+            "text": "Larry Page",
+            "url": "http://en.wikipedia.org/wiki/Larry Page"
+        },
+        {
+            "type": "link",
+            "text": "Sergey Brin",
+            "url": "http://en.wikipedia.org/wiki/Sergey Brin"
+        }
+    ],
+    "location_city": [
+        {
+            "type": "link",
+            "text": "Googleplex",
+            "url": "http://en.wikipedia.org/wiki/Googleplex"
+        },
+        {
+            "type": "link",
+            "text": "Mountain View",
+            "url": "http://en.wikipedia.org/wiki/Mountain View, California"
+        },
+        {
+            "type": "text",
+            "value": ", California, U.S.<ref>{{cite web|url"
+        }
+    ],
+    "location_country": {
+        "type": "text",
+        "value": ""
+    },
+    "area_served": {
+        "type": "text",
+        "value": "Worldwide"
+    },
+    "key_people": [
+        {
+            "type": "text",
+            "value": "{{unbulleted list|"
+        },
+        {
+            "type": "link",
+            "text": "Larry Page",
+            "url": "http://en.wikipedia.org/wiki/Larry Page"
+        },
+        {
+            "type": "text",
+            "value": " ("
+        },
+        {
+            "type": "link",
+            "text": "CEO",
+            "url": "http://en.wikipedia.org/wiki/CEO"
+        },
+        {
+            "type": "text",
+            "value": ")|"
+        },
+        {
+            "type": "link",
+            "text": "Eric Schmidt",
+            "url": "http://en.wikipedia.org/wiki/Eric Schmidt"
+        },
+        {
+            "type": "text",
+            "value": " ("
+        },
+        {
+            "type": "link",
+            "text": "Chairman",
+            "url": "http://en.wikipedia.org/wiki/Chairman"
+        },
+        {
+            "type": "text",
+            "value": ")|"
+        },
+        {
+            "type": "link",
+            "text": "Sergey Brin",
+            "url": "http://en.wikipedia.org/wiki/Sergey Brin"
+        },
+        {
+            "type": "text",
+            "value": " (Director of "
+        },
+        {
+            "type": "link",
+            "text": "Google X",
+            "url": "http://en.wikipedia.org/wiki/Google X"
+        },
+        {
+            "type": "text",
+            "value": " and Special Projects)<ref>{{cite web|url"
+        }
+    ],
+    "products": [
+        {
+            "type": "text",
+            "value": "''See'' "
+        },
+        {
+            "type": "link",
+            "text": "list of Google products",
+            "url": "http://en.wikipedia.org/wiki/list of Google products"
+        }
+    ],
+    "revenue": [
+        {
+            "type": "text",
+            "value": "{{nowrap|{{increase}} "
+        },
+        {
+            "type": "link",
+            "text": "US$",
+            "url": "http://en.wikipedia.org/wiki/US$"
+        },
+        {
+            "type": "text",
+            "value": " 66.001&nbsp;billion (2014)<ref name"
+        }
+    ],
+    "operating_income": {
+        "type": "text",
+        "value": "{{nowrap|{{increase}} US$ 16.496&nbsp;billion (2014)<ref name"
+    },
+    "net_income": {
+        "type": "text",
+        "value": "{{nowrap|{{increase}} US$ 14.444&nbsp;billion (2014)<ref name"
+    },
+    "assets": {
+        "type": "text",
+        "value": "{{nowrap|{{increase}} US$ 131.133&nbsp;billion (2014)<ref name"
+    },
+    "equity": {
+        "type": "text",
+        "value": "{{nowrap|{{increase}} US$ 104.5&nbsp;billion (2014)<ref name"
+    },
+    "num_employees": {
+        "type": "text",
+        "value": "53,600 (Q4 2014)<ref name"
+    },
+    "subsid": {
+        "type": "text",
+        "value": "{{#property:p355}}"
+    },
+    "homepage": {
+        "type": "text",
+        "value": "{{URL|https://www.google.com}}"
+    },
+    "footnotes": {
+        "type": "text",
+        "value": "<ref>{{cite web|url"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "screen": [
+        "display",
+        "screen size",
+        "display size",
+        "screen_size",
+        "display_size"
+    ],
+    "display": [
+        "screen",
+        "screen size",
+        "display size",
+        "screen_size",
+        "display_size"
+    ],
+    "front camera": [
+        "front_camera",
+        "frontal camera",
+        "camera"
+    ]
+}

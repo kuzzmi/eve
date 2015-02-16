@@ -8,8 +8,6 @@ function pick(params) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    console.log(require('util').inspect(params, true, 10, true))
-
     if (!params.vocabulary && !params.phrase) {
         var er = new Error('Vocabulary file is `undefined`');
         throw er;

@@ -16,7 +16,9 @@ function CLI(brain, argv) {
     this.brain = brain;
 
     this.brain
-        .on('processed', me.output);
+        .on('processed', function(data) {
+            me.output.call(me, data);
+        });
 
     /* Command line arguments */
     this.command = argv.c;

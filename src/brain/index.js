@@ -19,9 +19,16 @@ function Brain() {
             this.process(stimulus);
         }
     });
+
+    this.memory = [];
 };
 
 util.inherits(Brain, EventEmitter);
+
+Brain.prototype.remember = function(memory) {
+    this.memory.push(memory);
+    return memory;
+};
 
 Brain.prototype.process = function(stimulus) {
     if (arguments.length !== 1) {
@@ -43,14 +50,25 @@ Brain.prototype.process = function(stimulus) {
     var deferred = Q.defer();
     var me = this;
 
-    var resolveReflex = function(reflex) {
+    var execReflex = function(reflex, stimulus) {
         reflex.exec()
+            .then(function(response) {
+                me.remember.call(me, {
+                    stimulus: stimulus,
+                    response: response
+                });
+                return response;
+            })
             .then(Speech.exec)
             .then(function(result) {
                 me.emit('processed', result)
                 return result;
             })
             .then(deferred.resolve)
+            .catch(function(err) {
+                console.log(err.stack);
+            })
+            .done();
     };
 
     if (stimulus.constructor.name !== 'Stimulus') {
@@ -64,10 +82,10 @@ Brain.prototype.process = function(stimulus) {
                     if (!res) {
                         deferred.reject(new Error('Empty response from WIT'));
                     } else {
-                        var stimulus = new Stimulus(res.outcomes[0]),
-                            reflex = new Reflex(stimulus);
+                        var _stimulus = new Stimulus(res.outcomes[0]),
+                            reflex = new Reflex(_stimulus);
 
-                        resolveReflex(reflex);
+                        execReflex(reflex, _stimulus);
                     }
                 }
             });
@@ -75,7 +93,7 @@ Brain.prototype.process = function(stimulus) {
         var reflex = new Reflex(stimulus),
             me = this;
 
-        resolveReflex(reflex);
+        execReflex(reflex, stimulus);
     }
 
 

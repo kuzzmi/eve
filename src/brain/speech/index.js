@@ -8,8 +8,6 @@ function exec() {
 
     var args = arguments;
 
-    console.log('Speech.exec is called with ' + JSON.stringify(args));
-
     if (args.length < 1 || args.length > 4) {
         var er = new Error('Speech.exec() was called with ' + args.length +
             ' arguments, but expected amount is 1..4.');
