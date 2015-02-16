@@ -1,236 +1,203 @@
 {
     "name": {
         "type": "text",
-        "value": "Google Inc."
+        "value": "Moto 360"
     },
-    "logo": {
-        "type": "text",
-        "value": "Logo Google 2013 Official.svg"
-    },
-    "image": {
-        "type": "text",
-        "value": "Googleplex-Patio-Aug-2014.JPG"
-    },
-    "image_caption": {
-        "type": "text",
-        "value": "The Googleplex, Google's original and largest corporate campus"
-    },
-    "type": {
-        "type": "link",
-        "text": "Public",
-        "url": "http://en.wikipedia.org/wiki/Public company"
-    },
-    "traded_as": [
-        {
-            "type": "text",
-            "value": "Class A: {{NASDAQ|GOOGL}}<br>Class B supervoting: unlisted<br>Class C nonvoting: {{NASDAQ|GOOG}}<br>"
-        },
-        {
-            "type": "link",
-            "text": "NASDAQ-100 Components",
-            "url": "http://en.wikipedia.org/wiki/NASDAQ-100"
-        },
-        {
-            "type": "text",
-            "value": " (GOOGL and GOOG)<br>"
-        },
-        {
-            "type": "link",
-            "text": "S&P 500 Components",
-            "url": "http://en.wikipedia.org/wiki/S&P 500"
-        },
-        {
-            "type": "text",
-            "value": " (GOOGL and GOOG)"
-        }
-    ],
-    "industry": [
-        {
-            "type": "text",
-            "value": "Internet<br>"
-        },
-        {
-            "type": "link",
-            "text": "Computer software",
-            "url": "http://en.wikipedia.org/wiki/Software"
-        },
-        {
-            "type": "text",
-            "value": "<br>"
-        },
-        {
-            "type": "link",
-            "text": "Telecoms equipment",
-            "url": "http://en.wikipedia.org/wiki/Telecoms equipment"
-        }
-    ],
-    "foundation": [
-        {
-            "type": "text",
-            "value": "{{Start date|1998|09|4}}<!-- Do not change this to September 27: every year they celebrate at a different date, but the company was founded on September 4. Also, do not add that it is x years old as Google is, obviously, not a human and therefore the age is not very relevant. --><br>"
-        },
-        {
-            "type": "link",
-            "text": "Menlo Park, California",
-            "url": "http://en.wikipedia.org/wiki/Menlo Park, California"
-        },
-        {
-            "type": "text",
-            "value": "<ref>{{cite web|title"
-        }
-    ],
-    "founder": [
-        {
-            "type": "link",
-            "text": "Larry Page",
-            "url": "http://en.wikipedia.org/wiki/Larry Page"
-        },
-        {
-            "type": "link",
-            "text": "Sergey Brin",
-            "url": "http://en.wikipedia.org/wiki/Sergey Brin"
-        }
-    ],
-    "location_city": [
-        {
-            "type": "link",
-            "text": "Googleplex",
-            "url": "http://en.wikipedia.org/wiki/Googleplex"
-        },
-        {
-            "type": "link",
-            "text": "Mountain View",
-            "url": "http://en.wikipedia.org/wiki/Mountain View, California"
-        },
-        {
-            "type": "text",
-            "value": ", California, U.S.<ref>{{cite web|url"
-        }
-    ],
-    "location_country": {
+    "title": {
         "type": "text",
         "value": ""
     },
-    "area_served": {
+    "aka": {
         "type": "text",
-        "value": "Worldwide"
+        "value": ""
     },
-    "key_people": [
-        {
-            "type": "text",
-            "value": "{{unbulleted list|"
-        },
+    "logo": {
+        "type": "text",
+        "value": ""
+    },
+    "image": {
+        "type": "image",
+        "text": "300px",
+        "url": "http://en.wikipedia.org/wiki/File:Moto360Cropped.JPG"
+    },
+    "developer": {
+        "type": "link",
+        "text": "Motorola Mobility",
+        "url": "http://en.wikipedia.org/wiki/Motorola Mobility"
+    },
+    "manufacturer": {
+        "type": "text",
+        "value": ""
+    },
+    "family": {
+        "type": "text",
+        "value": ""
+    },
+    "type": {
+        "type": "link",
+        "text": "Smartwatch",
+        "url": "http://en.wikipedia.org/wiki/Smartwatch"
+    },
+    "generation": {
+        "type": "text",
+        "value": ""
+    },
+    "releasedate": {
+        "type": "text",
+        "value": "{{Start date|2014|09|05}}"
+    },
+    "lifespan": {
+        "type": "text",
+        "value": ""
+    },
+    "discontinued": {
+        "type": "text",
+        "value": ""
+    },
+    "unitssold": {
+        "type": "text",
+        "value": ""
+    },
+    "unitsshipped": {
+        "type": "text",
+        "value": ""
+    },
+    "media": {
+        "type": "text",
+        "value": ""
+    },
+    "os": [
         {
             "type": "link",
-            "text": "Larry Page",
-            "url": "http://en.wikipedia.org/wiki/Larry Page"
+            "text": "Android Wear",
+            "url": "http://en.wikipedia.org/wiki/Android Wear"
         },
         {
             "type": "text",
-            "value": " ("
-        },
-        {
-            "type": "link",
-            "text": "CEO",
-            "url": "http://en.wikipedia.org/wiki/CEO"
-        },
-        {
-            "type": "text",
-            "value": ")|"
-        },
-        {
-            "type": "link",
-            "text": "Eric Schmidt",
-            "url": "http://en.wikipedia.org/wiki/Eric Schmidt"
-        },
-        {
-            "type": "text",
-            "value": " ("
-        },
-        {
-            "type": "link",
-            "text": "Chairman",
-            "url": "http://en.wikipedia.org/wiki/Chairman"
-        },
-        {
-            "type": "text",
-            "value": ")|"
-        },
-        {
-            "type": "link",
-            "text": "Sergey Brin",
-            "url": "http://en.wikipedia.org/wiki/Sergey Brin"
-        },
-        {
-            "type": "text",
-            "value": " (Director of "
-        },
-        {
-            "type": "link",
-            "text": "Google X",
-            "url": "http://en.wikipedia.org/wiki/Google X"
-        },
-        {
-            "type": "text",
-            "value": " and Special Projects)<ref>{{cite web|url"
+            "value": " 5.0.1"
         }
     ],
-    "products": [
+    "power": [
         {
             "type": "text",
-            "value": "''See'' "
+            "value": "320 mAh<br>All day (mixed use)<br>"
         },
         {
             "type": "link",
-            "text": "list of Google products",
-            "url": "http://en.wikipedia.org/wiki/list of Google products"
-        }
-    ],
-    "revenue": [
+            "text": "wireless Qi",
+            "url": "http://en.wikipedia.org/wiki/Qi (inductive power standard)"
+        },
         {
             "type": "text",
-            "value": "{{nowrap|{{increase}} "
+            "value": " charging"
+        }
+    ],
+    "soc": [
+        {
+            "type": "link",
+            "text": "TI",
+            "url": "http://en.wikipedia.org/wiki/Texas Instruments"
         },
         {
             "type": "link",
-            "text": "US$",
-            "url": "http://en.wikipedia.org/wiki/US$"
+            "text": "OMAP",
+            "url": "http://en.wikipedia.org/wiki/OMAP"
         },
         {
             "type": "text",
-            "value": " 66.001&nbsp;billion (2014)<ref name"
+            "value": " 3"
         }
     ],
-    "operating_income": {
+    "cpu": {
         "type": "text",
-        "value": "{{nowrap|{{increase}} US$ 16.496&nbsp;billion (2014)<ref name"
+        "value": "1 GHz"
     },
-    "net_income": {
+    "storage": [
+        {
+            "type": "text",
+            "value": "4&nbsp;"
+        },
+        {
+            "type": "link",
+            "text": "GB",
+            "url": "http://en.wikipedia.org/wiki/Gigabyte"
+        }
+    ],
+    "memory": {
         "type": "text",
-        "value": "{{nowrap|{{increase}} US$ 14.444&nbsp;billion (2014)<ref name"
+        "value": "512&nbsp;MB"
     },
-    "assets": {
+    "size": {
         "type": "text",
-        "value": "{{nowrap|{{increase}} US$ 131.133&nbsp;billion (2014)<ref name"
+        "value": "46mm diameter by 11.5mm high"
     },
-    "equity": {
+    "display": {
         "type": "text",
-        "value": "{{nowrap|{{increase}} US$ 104.5&nbsp;billion (2014)<ref name"
+        "value": "{{convert|1.56|in|mm|abbr"
     },
-    "num_employees": {
+    "graphics": {
         "type": "text",
-        "value": "53,600 (Q4 2014)<ref name"
+        "value": ""
     },
-    "subsid": {
+    "sound": {
         "type": "text",
-        "value": "{{#property:p355}}"
+        "value": ""
     },
-    "homepage": {
+    "input": {
         "type": "text",
-        "value": "{{URL|https://www.google.com}}"
+        "value": "Pedometer (9-axis sensor)<br>Optical heart rate monitor (PPG)<br>Ambient light sensor<br>Dual microphones"
     },
-    "footnotes": {
+    "controllers": {
         "type": "text",
-        "value": "<ref>{{cite web|url"
+        "value": ""
+    },
+    "camera": {
+        "type": "text",
+        "value": ""
+    },
+    "touchpad": {
+        "type": "text",
+        "value": ""
+    },
+    "connectivity": {
+        "type": "link",
+        "text": "Bluetooth 4.0",
+        "url": "http://en.wikipedia.org/wiki/Bluetooth 4.0"
+    },
+    "service": [
+        {
+            "type": "link",
+            "text": "Google Play",
+            "url": "http://en.wikipedia.org/wiki/Google Play"
+        },
+        {
+            "type": "link",
+            "text": "Google Now",
+            "url": "http://en.wikipedia.org/wiki/Google Now"
+        }
+    ],
+    "dimensions": {
+        "type": "text",
+        "value": ""
+    },
+    "weight": {
+        "type": "text",
+        "value": "{{convert|49|g|oz|abbr"
+    },
+    "topgame": {
+        "type": "text",
+        "value": ""
+    },
+    "predecessor": {
+        "type": "text",
+        "value": ""
+    },
+    "successor": {
+        "type": "text",
+        "value": ""
+    },
+    "website": {
+        "type": "text",
+        "value": "{{URL|https://moto360.motorola.com/|Moto 360}} }}"
     }
 }

@@ -9,9 +9,9 @@ function WikiIntent(params) {
         params.wikipedia_search_query[0].value :
         undefined;
 
-    this.detail = params.search_query ?
-        params.search_query[0].value :
-        undefined;
+    if (this.query.indexOf('its ') === 0) {
+        this.query = this.query.replace('its ', '');
+    }
 
     this.action = params.wikipedia_action ?
         params.wikipedia_action[0].value :
@@ -38,23 +38,28 @@ WikiIntent.prototype.exec = function() {
 
             });
             break;
-        case 'read':
+        case 'read_details':
                 fs.readFile(
                     'temp.json',
                     function(err, data) {
                         if (err) {
                             deferred.resolve('I can\'t understand where to look info');
                         }
+
                         var info = JSON.parse(data);
+
+                        console.log(require('util').inspect(info, true, 10, true))
 
                         for(var key in info) {
                             var property = info[key];
 
-                            if (!!~key.indexOf(me.detail)) {
+                            if (!!~key.indexOf(me.query)) {
                                 console.log(property.value);
                                 deferred.resolve(property.value);
                             }
                         }
+
+                        deferred.resolve('Sorry, could not find information about ' + me.query);
                     });
 
             break;
