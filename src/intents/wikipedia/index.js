@@ -1,5 +1,6 @@
 var infobox = require('wiki-infobox'),
     fs = require('fs'),
+    request = require('request'),
     Q = require('q');
 
 function WikiIntent(params) {
@@ -9,7 +10,7 @@ function WikiIntent(params) {
         params.wikipedia_search_query[0].value :
         undefined;
 
-    if (this.query.indexOf('its ') === 0) {
+    if (this.query && this.query.indexOf('its ') === 0) {
         this.query = this.query.replace('its ', '');
     }
 
@@ -22,11 +23,15 @@ WikiIntent.prototype.exec = function() {
     var deferred = Q.defer();
     var me = this;
 
+    if (!this.query) {
+        deferred.resolve('Please specify your query');
+    }
+
     switch (me.action) {
         case 'get':
             infobox(this.query, 'en', function(err, data) {
                 if (err) {
-                    deferred.resolve('Error or the data you\'ve asked is not found');
+                    deferred.resolve('Oops, error');
                 }
 
                 fs.writeFile(
@@ -36,6 +41,42 @@ WikiIntent.prototype.exec = function() {
                         deferred.resolve('I have found some information about ' + me.query);
                     });
 
+            });
+            break;
+        case 'read':
+            var url = 'http://en.wikipedia.org/w/api.php';
+            /*?action=opensearch&search=google&limit=1&namespace=0&format=json*/
+            var params = {
+                action: 'opensearch',
+                search: me.query,
+                limit: 1,
+                namespace: 0,
+                format: 'json'
+            }
+
+            request({
+                url: url,
+                qs: params
+            }, function(err, data, body) {
+                if (err) {
+                    deferred.resolve('Oops, something happened');
+                }
+
+                console.log(require('util').inspect(JSON.parse(body), true, 10, true));
+                
+                var data = JSON.parse(body);
+                if (data[2].length === 0 ||
+                    data[2][0] === undefined) {
+                    deferred.resolve('Sorry, I found nothing about ' + me.query);
+                } else {
+                    var desription = data[2][0]
+                        .replace(/\/.+\//g, '')
+                        .split('.')
+                        .slice(0, 2)
+                        .join('.');
+                        
+                    deferred.resolve(desription);                    
+                }
             });
             break;
         case 'read_details':

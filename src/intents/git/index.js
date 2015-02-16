@@ -49,7 +49,7 @@ GitIntent.prototype.exec = function() {
                 if (!error) {
                     var changes = stdout.trim();
                     if (changes) {
-                        deferred.resolve(stdout.trim() + ' in current state');
+                        deferred.resolve(stdout.trim());
                     } else {
                         deferred.resolve('Everything is up-to-date');
                     }
