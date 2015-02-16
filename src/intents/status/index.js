@@ -33,10 +33,24 @@ StatusIntent.prototype._getHumanLikeTime = function(date) {
 StatusIntent.prototype.exec = function(callback) {
     var deferred = Q.defer();
 
+    var timeOfDay = function() {
+        var now = new Date();
+        var hours = now.getHours();
+        if (hours >= 4 && hours < 12) {
+            return 'morning';
+        } else if (hours >= 12 && hours < 18) {
+            return 'afternoon';
+        } else if (hours >= 18 && hours < 23) {
+            return 'evening';
+        } else {
+            return 'night';
+        }
+    }();
+
     var phrase = {
         vocabulary: this.vocabulary,
         code: [this.action, this.type, this.value].join('.'),
-        args: ['sir']
+        args: ['sir', timeOfDay]
     }
 
     // switch (this.action) {

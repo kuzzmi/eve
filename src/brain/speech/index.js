@@ -58,8 +58,6 @@ function exec() {
                 ['String', 'Object']
             ]);
             if (typeof args[0] === 'object') {
-                console.log(require('util').inspect(params, true, 10, true))
-                console.log(require('util').inspect(args[0], true, 10, true))
                 params = args[0];
             } else {
                 params.phrase = args[0];

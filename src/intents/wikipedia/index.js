@@ -4,8 +4,6 @@ var infobox = require('wiki-infobox'),
     Q = require('q');
 
 function WikiIntent(params) {
-    console.log(require('util').inspect(params, true, 10, true))
-
     this.query = params.wikipedia_search_query ?
         params.wikipedia_search_query[0].value :
         undefined;
@@ -45,14 +43,13 @@ WikiIntent.prototype.exec = function() {
             break;
         case 'read':
             var url = 'http://en.wikipedia.org/w/api.php';
-            /*?action=opensearch&search=google&limit=1&namespace=0&format=json*/
             var params = {
                 action: 'opensearch',
                 search: me.query,
                 limit: 1,
                 namespace: 0,
                 format: 'json'
-            }
+            };
 
             request({
                 url: url,
@@ -61,8 +58,6 @@ WikiIntent.prototype.exec = function() {
                 if (err) {
                     deferred.resolve('Oops, something happened');
                 }
-
-                console.log(require('util').inspect(JSON.parse(body), true, 10, true));
                 
                 var data = JSON.parse(body);
                 if (data[2].length === 0 ||
@@ -74,7 +69,7 @@ WikiIntent.prototype.exec = function() {
                         .split('.')
                         .slice(0, 2)
                         .join('.');
-                        
+
                     deferred.resolve(desription);                    
                 }
             });
