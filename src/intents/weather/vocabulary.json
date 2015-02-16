@@ -1,6 +1,6 @@
 {
     "all": [
-        "Maximum is {0} degrees and minimum is {1}. The wind is {2} meters per second. Overall: {3}"
+        "In {0} maximum is {1} degrees and minimum is {2}. The wind is {3} meters per second. Overall: {4}"
     ],
     "temperature": {
         "yes_no": {

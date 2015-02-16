@@ -2,6 +2,7 @@
 var readline = require('readline'),
     color = require("ansi-color").set,
     fs = require('fs'),
+    CronJob = require('cron').CronJob,
     pkg = JSON.parse(fs.readFileSync('package.json'));
 
 function CLI(brain, argv) {
@@ -15,9 +16,7 @@ function CLI(brain, argv) {
     this.brain = brain;
 
     this.brain
-        .on('response', function(result) {
-            me.output.call(me, result);
-        });
+        .on('processed', me.output);
 
     /* Command line arguments */
     this.command = argv.c;
@@ -35,15 +34,22 @@ function CLI(brain, argv) {
     if (this.command) {
         this.brain
             .process(this.command)
-            .then(this.output);
+            .then(function() {
+                process.exit();
+            });
     } else {
         this.rl.on('line', function(msg) {
             me.brain
-                .process(msg)
-                .then(me.output);
+                .process(msg);
             me.rl.prompt(true);
         });
-    }
+    };
+
+    new CronJob('00 00 * * * *', function() {
+        me.brain.emit('stimulus', {
+            intent: 'time'
+        });
+    }, null, true);
 };
 
 CLI.prototype.output = function(msg) {
@@ -51,10 +57,6 @@ CLI.prototype.output = function(msg) {
     process.stdout.cursorTo(0);
     console.log(color(msg, "magenta"));
     this.rl.prompt(true);
-};
-
-CLI.prototype.init = function() {
-    return this;
 };
 
 module.exports = CLI;

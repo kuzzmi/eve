@@ -11,7 +11,14 @@ var Reflex = require('./reflex'),
 function Brain() {
     EventEmitter.call(this);
 
-    this.on('stimulus', this.process);
+    var me = this;
+    this.on('stimulus', function(stimulus) {
+        if (typeof stimulus === 'object') {
+            this.process(new Stimulus(stimulus));
+        } else {
+            this.process(stimulus);
+        }
+    });
 };
 
 util.inherits(Brain, EventEmitter);
@@ -34,13 +41,16 @@ Brain.prototype.process = function(stimulus) {
     }
 
     var deferred = Q.defer();
+    var me = this;
 
     var resolveReflex = function(reflex) {
         reflex.exec()
-            .then(Speech.exec, function(er) {
-                console.log(er);
+            .then(Speech.exec)
+            .then(function(result) {
+                me.emit('processed', result)
+                return result;
             })
-            .then(deferred.resolve);
+            .then(deferred.resolve)
     };
 
     if (stimulus.constructor.name !== 'Stimulus') {

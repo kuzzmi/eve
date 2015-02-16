@@ -1,6 +1,8 @@
 'use strict';
 
 function Forecast(params) {
+    console.log(require('util').inspect(params, true, 10, true));
+    
     this.datetime = new Date(params.dt * 1000);
     this.description = params.weather[0].description;
 
@@ -24,6 +26,7 @@ function Forecast(params) {
         this.windSpeed = params.wind.speed;
     }
 
+    this.name = params.name;
     this.vocabulary = __dirname + '/vocabulary.json';
 };
 
@@ -39,6 +42,7 @@ Forecast.prototype.toString = function(params) {
         case 'all':
             phrase.code = 'all';
             phrase.args = [
+                this.name,
                 this.temp.max,
                 this.temp.min,
                 this.windSpeed,

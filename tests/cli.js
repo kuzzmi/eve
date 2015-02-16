@@ -5,7 +5,7 @@ var Cli = require('../src/cli');
 describe('Command-line interface', function() {
     describe('#constructor()', function() {
         it('should create an instance of CLI without argv', function() {
-            var cli = new Cli(Brain).init();
+            var cli = new Cli(Brain);
 
             assert.ok(cli);
         });
@@ -20,7 +20,7 @@ describe('Command-line interface', function() {
     });
 
     describe('#output()', function() {
-        var cli = new Cli(Brain).init();
+        var cli = new Cli(Brain);
 
         it('should exist', function() {
             assert.ok(cli.output);

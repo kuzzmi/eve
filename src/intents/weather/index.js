@@ -6,12 +6,12 @@ var dateToUT = function(date) {
     return (new Date(date).getTime()) / 1000;
 };
 
-var getForecast = function(type, datetime, callback) {
+var getForecast = function(type, datetime, location, callback) {
     var baseUrl = 'http://api.openweathermap.org/data/2.5/';
     var url = baseUrl;
 
     var params = {
-        q: 'basel,ch',
+        q: location,
         units: 'metric',
         cnt: '7'
     };
@@ -35,6 +35,9 @@ var getForecast = function(type, datetime, callback) {
     }, function(req, resp) {
         var data = JSON.parse(resp.body);
         var weather;
+
+        console.log(require('util').inspect(data, true, 10, true))
+
         switch (type) {
             case 'second':
                 weather = [new Forecast(data)];
@@ -47,6 +50,7 @@ var getForecast = function(type, datetime, callback) {
                 }).map(function(item) {
                     return new Forecast(item);
                 });
+
                 break;
 
             case 'hour':
@@ -78,6 +82,10 @@ var getForecast = function(type, datetime, callback) {
 };
 
 function WeatherIntent(params) {
+    this.location = params.location ?
+        params.location[0].value :
+        'Basel';
+
     this.details = params.weather_details ?
         params.weather_details[0].value :
         undefined;
@@ -98,6 +106,7 @@ WeatherIntent.prototype.exec = function() {
         forecastType,
         deferred = Q.defer();
 
+        
     if (me.datetime) {
         switch (me.datetime.type) {
             case 'value':
@@ -107,7 +116,8 @@ WeatherIntent.prototype.exec = function() {
                 forecastType = 'interval';
                 break;
         }
-        getForecast(forecastType, me.datetime, function(weather) {
+        getForecast(forecastType, me.datetime, me.location, function(weather) {
+            console.log(require('util').inspect(weather, true, 10, true))
             weather.map(function(item) {
                 deferred.resolve(item.toString({
                     details: me.details,
@@ -116,7 +126,6 @@ WeatherIntent.prototype.exec = function() {
             });
         });
     } else {
-
     }
 
     return deferred.promise;
