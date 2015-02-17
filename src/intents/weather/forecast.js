@@ -23,8 +23,7 @@ function GenericForecast(params, type) {
     //         min: Math.round(params.main.temp_min),
     //         max: Math.round(params.main.temp_max)
     //     }
-    //     this.snow = params.snow ? params.snow['3h'] > 0 : false;
-    //     this.rain = params.rain ? params.rain['3h'] > 0 : false;
+        
     //     this.clouds = params.clouds.all;
     //     this.windSpeed = params.wind.speed;
     // }
@@ -60,7 +59,7 @@ function GenericForecast(params, type) {
 
 GenericForecast.prototype.toString = function(params) {
 
-    var result = this.item.toString(params.details);
+    var result = this.item.toString(params);
     return {
         vocabulary: this.vocabulary,
         code: result.code,
