@@ -1,133 +1,162 @@
 'use strict';
 
-function Forecast(params) {
-    console.log(require('util').inspect(params, true, 10, true));
-    
-    this.datetime = new Date(params.dt * 1000);
-    this.description = params.weather[0].description;
+function GenericForecast(params, type) {
+    var SpecificForecast = require('./classes/' + type + 'Forecast');
 
-    if (params.temp && params.temp.min) {
-        this.temp = {
-            min: Math.round(params.temp.min),
-            max: Math.round(params.temp.max)
-        }
-        this.snow = params.snow > 0;
-        this.rain = params.rain > 0;
-        this.clouds = params.clouds;
-        this.windSpeed = params.speed;
-    } else {
-        this.temp = {
-            min: Math.round(params.main.temp_min),
-            max: Math.round(params.main.temp_max)
-        }
-        this.snow = params.snow ? params.snow['3h'] > 0 : false;
-        this.rain = params.rain ? params.rain['3h'] > 0 : false;
-        this.clouds = params.clouds.all;
-        this.windSpeed = params.wind.speed;
-    }
+    this.item = new SpecificForecast(params);
+    // console.log(require('util').inspect(params, true, 10, true));
 
-    this.name = params.name;
+    // this.datetime = new Date(params.dt * 1000);
+    // this.description = params.weather[0].description;
+
+    // if (params.temp && params.temp.min) {
+    //     this.temp = {
+    //         min: Math.round(params.temp.min),
+    //         max: Math.round(params.temp.max)
+    //     }
+    //     this.snow = params.snow > 0;
+    //     this.rain = params.rain > 0;
+    //     this.clouds = params.clouds;
+    //     this.windSpeed = params.speed;
+    // } else {
+    //     this.temp = {
+    //         min: Math.round(params.main.temp_min),
+    //         max: Math.round(params.main.temp_max)
+    //     }
+    //     this.snow = params.snow ? params.snow['3h'] > 0 : false;
+    //     this.rain = params.rain ? params.rain['3h'] > 0 : false;
+    //     this.clouds = params.clouds.all;
+    //     this.windSpeed = params.wind.speed;
+    // }
+
+    // this.name = params.name;
     this.vocabulary = __dirname + '/vocabulary.json';
 };
 
-Forecast.prototype.toString = function(params) {
-    var me = this,
-        phrase = {
-            vocabulary: this.vocabulary,
-            code: undefined,
-            args: undefined
-        };
+/*
+    // second
+    Is it cold in Kiev now? - No, 5 degrees.
+    // second
+    Is it cold in Kiev now? - Yes, 3 degrees.
+    
+    // second
+    Is it cold now? - No, 5 degrees.
+    // second
+    Is it cold now? - Yes, 3 degrees.
+    
+    // daily
+    Is it cold tomorrow? - Only in the morning and in the evening. 3 and -1 degrees accordingly.
+    // daily
+    Is it cold tomorrow? - Only in the morning, 3 degrees.
+    
+    // daily
+    What is the weather tomorrow in Paris? - Forecast for Paris. -2 in the morning, 2 in the day, 1 in the evening and -4 in the night. Sky is clear.
+    // daily
+    What is the weather tomorrow in Paris? - Forecast for Paris. -2 in the morning, 2 in the day, 1 in the evening and -4 in the night. Pr
 
-    switch (params.details) {
-        case 'all':
-            phrase.code = 'all';
-            phrase.args = [
-                this.name,
-                this.temp.max,
-                this.temp.min,
-                this.windSpeed,
-                this.description
-            ];
-            break;
-        case 'temperature':
-            return this._tempString(params);
-        case 'precipitation':
-            return this._precString(params);
-        default:
-            break;
-    }
+    // hourly
+    Is it cold tomorrow at 2 pm?
+ */
 
-    return phrase;
-};
+GenericForecast.prototype.toString = function(params) {
 
-Forecast.prototype._tempString = function(params) {
-    var asked = params.verbosity ?
-        params.verbosity.replace('yes_no_', '') : undefined;
-
-    var isItCold = this.temp.max < 4;
-
-    var _gp = function(what, params) {
-        return getPhrase('temperature.' + what, params);
-    }
-
-    var phrase = {
+    var result = this.item.toString(params.details);
+    return {
         vocabulary: this.vocabulary,
-        code: 'temperature.yes_no.',
-        args: [this.temp.max]
+        code: result.code,
+        args: result.args
     };
 
-    switch (asked) {
-        case 'cold':
-            isItCold ? phrase.code += 'yes' : phrase.code += 'no';
-            console.log(phrase.code)
-            break;
-        case 'warm':
-            !isItCold ? phrase.code += 'yes' : phrase.code += 'no';
-            break;
-    }
+    // switch (params.details) {
+    //     case 'all':
+    //         phrase.code = 'all';
+    //         phrase.args = [
+    //             this.name,
+    //             this.temp.max,
+    //             this.temp.min,
+    //             this.windSpeed,
+    //             this.description
+    //         ];
+    //         break;
+    //     case 'temperature':
+    //         return this._tempString(params);
+    //     case 'precipitation':
+    //         return this._precString(params);
+    //     default:
+    //         break;
+    // }
 
-    return phrase;
+    // return phrase;
 };
 
-Forecast.prototype._precString = function(params) {
-    var askedPrecision = params && params.verbosity ?
-        params.verbosity.replace('yes_no_', '') : undefined;
-    var anotherPrecision = askedPrecision === 'snow' ? 'rain' : 'snow';
+// Forecast.prototype._tempString = function(params) {
+//     var asked = params.verbosity ?
+//         params.verbosity.replace('yes_no_', '') : undefined;
 
-    var phrase = {
-        vocabulary: this.vocabulary,
-        code: 'precipitation.',
-        args: undefined
-    };
+//     var isItCold = this.temp.max < 4;
 
-    if (askedPrecision) {
-        phrase.code += 'yes_no.';
+//     var _gp = function(what, params) {
+//         return getPhrase('temperature.' + what, params);
+//     }
 
-        if (this.rain && this.snow) {
-            phrase.code += 'both';
-            phrase.args = [askedPrecision, anotherPrecision];
-        } else if (this[askedPrecision]) {
-            phrase.code += 'yes';
-            phrase.args = [askedPrecision];
-        } else if (this[anotherPrecision]) {
-            phrase.code += 'yes';
-            phrase.args = [anotherPrecision];
-        } else {            
-            phrase.code += 'no';
-        }
-    } else {
-        if (this.rain && this.snow) {
-            phrase.code += 'rain_and_snow';
-        } else if (this.rain) {
-            phrase.code += 'rain';
-        } else if (this.snow) {
-            phrase.code += 'snow';
-        } else {
-            phrase.code += 'nothing';
-        }
-    }
+//     var phrase = {
+//         vocabulary: this.vocabulary,
+//         code: 'temperature.yes_no.',
+//         args: [this.temp.max]
+//     };
 
-    return phrase;
-};
+//     switch (asked) {
+//         case 'cold':
+//             isItCold ? phrase.code += 'yes' : phrase.code += 'no';
+//             console.log(phrase.code)
+//             break;
+//         case 'warm':
+//             !isItCold ? phrase.code += 'yes' : phrase.code += 'no';
+//             break;
+//     }
 
-module.exports = Forecast;
+//     return phrase;
+// };
+
+// Forecast.prototype._precString = function(params) {
+//     var askedPrecision = params && params.verbosity ?
+//         params.verbosity.replace('yes_no_', '') : undefined;
+//     var anotherPrecision = askedPrecision === 'snow' ? 'rain' : 'snow';
+
+//     var phrase = {
+//         vocabulary: this.vocabulary,
+//         code: 'precipitation.',
+//         args: undefined
+//     };
+
+//     if (askedPrecision) {
+//         phrase.code += 'yes_no.';
+
+//         if (this.rain && this.snow) {
+//             phrase.code += 'both';
+//             phrase.args = [askedPrecision, anotherPrecision];
+//         } else if (this[askedPrecision]) {
+//             phrase.code += 'yes';
+//             phrase.args = [askedPrecision];
+//         } else if (this[anotherPrecision]) {
+//             phrase.code += 'yes';
+//             phrase.args = [anotherPrecision];
+//         } else {            
+//             phrase.code += 'no';
+//         }
+//     } else {
+//         if (this.rain && this.snow) {
+//             phrase.code += 'rain_and_snow';
+//         } else if (this.rain) {
+//             phrase.code += 'rain';
+//         } else if (this.snow) {
+//             phrase.code += 'snow';
+//         } else {
+//             phrase.code += 'nothing';
+//         }
+//     }
+
+//     return phrase;
+// };
+
+module.exports = GenericForecast;

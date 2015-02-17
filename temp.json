@@ -1,203 +1,199 @@
 {
     "name": {
         "type": "text",
-        "value": "Moto 360"
-    },
-    "title": {
-        "type": "text",
-        "value": ""
-    },
-    "aka": {
-        "type": "text",
-        "value": ""
+        "value": "LG G2"
     },
     "logo": {
         "type": "text",
-        "value": ""
+        "value": "LG G2 logo.jpg"
+    },
+    "logosize": {
+        "type": "text",
+        "value": "<!-- include \"px\" - defaults to 250px if omitted -->"
     },
     "image": {
-        "type": "image",
-        "text": "300px",
-        "url": "http://en.wikipedia.org/wiki/File:Moto360Cropped.JPG"
+        "type": "text",
+        "value": "LG G2 (Black).jpg"
     },
-    "developer": {
-        "type": "link",
-        "text": "Motorola Mobility",
-        "url": "http://en.wikipedia.org/wiki/Motorola Mobility"
+    "imagesize": {
+        "type": "text",
+        "value": "270"
+    },
+    "caption": {
+        "type": "text",
+        "value": ""
+    },
+    "slogan": {
+        "type": "text",
+        "value": "''Learning from you''"
     },
     "manufacturer": {
-        "type": "text",
-        "value": ""
-    },
-    "family": {
-        "type": "text",
-        "value": ""
-    },
-    "type": {
         "type": "link",
-        "text": "Smartwatch",
-        "url": "http://en.wikipedia.org/wiki/Smartwatch"
+        "text": "LG Electronics",
+        "url": "http://en.wikipedia.org/wiki/LG Electronics"
     },
-    "generation": {
+    "released": {
         "type": "text",
-        "value": ""
-    },
-    "releasedate": {
-        "type": "text",
-        "value": "{{Start date|2014|09|05}}"
-    },
-    "lifespan": {
-        "type": "text",
-        "value": ""
+        "value": "{{Start date and age|2013|09|12|df"
     },
     "discontinued": {
         "type": "text",
-        "value": ""
+        "value": "<!-- {{End date|YYYY|MM|DD}} -->"
     },
-    "unitssold": {
+    "predecessor": {
+        "type": "link",
+        "text": "LG Optimus G",
+        "url": "http://en.wikipedia.org/wiki/LG Optimus G"
+    },
+    "brand": {
+        "type": "link",
+        "text": "G series",
+        "url": "http://en.wikipedia.org/wiki/LG G series"
+    },
+    "successor": {
+        "type": "link",
+        "text": "LG G3",
+        "url": "http://en.wikipedia.org/wiki/LG G3"
+    },
+    "related": [
+        {
+            "type": "link",
+            "text": "LG G2 Mini",
+            "url": "http://en.wikipedia.org/wiki/LG G2 Mini"
+        },
+        {
+            "type": "text",
+            "value": "<br>"
+        },
+        {
+            "type": "link",
+            "text": "LG G Pro 2",
+            "url": "http://en.wikipedia.org/wiki/LG G Pro 2"
+        },
+        {
+            "type": "text",
+            "value": "<br>"
+        },
+        {
+            "type": "link",
+            "text": "LG G Flex",
+            "url": "http://en.wikipedia.org/wiki/LG G Flex"
+        },
+        {
+            "type": "text",
+            "value": "<br>"
+        },
+        {
+            "type": "link",
+            "text": "Nexus 5",
+            "url": "http://en.wikipedia.org/wiki/Nexus 5"
+        }
+    ],
+    "type": {
+        "type": "link",
+        "text": "Smartphone",
+        "url": "http://en.wikipedia.org/wiki/Smartphone"
+    },
+    "form": {
+        "type": "link",
+        "text": "Slate",
+        "url": "http://en.wikipedia.org/wiki/Slate phone"
+    },
+    "ext_display": {
         "type": "text",
         "value": ""
     },
-    "unitsshipped": {
+    "other": {
         "type": "text",
         "value": ""
     },
-    "media": {
+    "sar": {
         "type": "text",
         "value": ""
     },
-    "os": [
-        {
-            "type": "link",
-            "text": "Android Wear",
-            "url": "http://en.wikipedia.org/wiki/Android Wear"
-        },
-        {
-            "type": "text",
-            "value": " 5.0.1"
-        }
-    ],
-    "power": [
-        {
-            "type": "text",
-            "value": "320 mAh<br>All day (mixed use)<br>"
-        },
-        {
-            "type": "link",
-            "text": "wireless Qi",
-            "url": "http://en.wikipedia.org/wiki/Qi (inductive power standard)"
-        },
-        {
-            "type": "text",
-            "value": " charging"
-        }
-    ],
-    "soc": [
-        {
-            "type": "link",
-            "text": "TI",
-            "url": "http://en.wikipedia.org/wiki/Texas Instruments"
-        },
-        {
-            "type": "link",
-            "text": "OMAP",
-            "url": "http://en.wikipedia.org/wiki/OMAP"
-        },
-        {
-            "type": "text",
-            "value": " 3"
-        }
-    ],
+    "hac": {
+        "type": "text",
+        "value": ""
+    },
+    "homepage": {
+        "type": "text",
+        "value": "g2.lgmobile.com"
+    },
+    "battery": {
+        "type": "text",
+        "value": "Non-removable Li-Pol 3,000 mAh<br>Removable Li-Pol 2,610 mAh (South Korean variant)"
+    },
     "cpu": {
         "type": "text",
-        "value": "1 GHz"
-    },
-    "storage": [
-        {
-            "type": "text",
-            "value": "4&nbsp;"
-        },
-        {
-            "type": "link",
-            "text": "GB",
-            "url": "http://en.wikipedia.org/wiki/Gigabyte"
-        }
-    ],
-    "memory": {
-        "type": "text",
-        "value": "512&nbsp;MB"
-    },
-    "size": {
-        "type": "text",
-        "value": "46mm diameter by 11.5mm high"
+        "value": "2.26 GHz quad-core Qualcomm Krait 400"
     },
     "display": {
         "type": "text",
-        "value": "{{convert|1.56|in|mm|abbr"
+        "value": "{{convert|5.2|in|mm|abbr"
     },
-    "graphics": {
+    "front_camera": {
         "type": "text",
-        "value": ""
+        "value": "2.1 MP, F2.6"
     },
-    "sound": {
+    "gpu": {
         "type": "text",
-        "value": ""
+        "value": "Adreno 330"
     },
-    "input": {
+    "memory": {
         "type": "text",
-        "value": "Pedometer (9-axis sensor)<br>Optical heart rate monitor (PPG)<br>Ambient light sensor<br>Dual microphones"
+        "value": "2 GB RAM"
     },
-    "controllers": {
+    "memory_card": {
         "type": "text",
-        "value": ""
+        "value": "microSDXC up to 64GB (South Korean variant only)"
     },
-    "camera": {
-        "type": "text",
-        "value": ""
-    },
-    "touchpad": {
-        "type": "text",
-        "value": ""
-    },
-    "connectivity": {
-        "type": "link",
-        "text": "Bluetooth 4.0",
-        "url": "http://en.wikipedia.org/wiki/Bluetooth 4.0"
-    },
-    "service": [
+    "os": [
         {
-            "type": "link",
-            "text": "Google Play",
-            "url": "http://en.wikipedia.org/wiki/Google Play"
+            "type": "text",
+            "value": "'''Original:''' "
         },
         {
             "type": "link",
-            "text": "Google Now",
-            "url": "http://en.wikipedia.org/wiki/Google Now"
+            "text": "Android",
+            "url": "http://en.wikipedia.org/wiki/Android (operating system)"
+        },
+        {
+            "type": "link",
+            "text": "4.2.2 \"Jelly Bean\"",
+            "url": "http://en.wikipedia.org/wiki/Jelly Bean (operating system)"
+        },
+        {
+            "type": "text",
+            "value": "<br /> '''Current:''' Android "
+        },
+        {
+            "type": "link",
+            "text": "5.0.1 \"Lollipop\"",
+            "url": "http://en.wikipedia.org/wiki/Android Lollipop "
         }
     ],
-    "dimensions": {
+    "rear_camera": {
         "type": "text",
-        "value": ""
+        "value": "13 MP OIS, F2.4, LED flash"
+    },
+    "size": {
+        "type": "text",
+        "value": "{{convert|138.5|mm|in|abbr"
+    },
+    "soc": {
+        "type": "text",
+        "value": "Qualcomm Snapdragon 800 MSM8974"
+    },
+    "storage": {
+        "type": "text",
+        "value": "16 GB or 32 GB"
     },
     "weight": {
         "type": "text",
-        "value": "{{convert|49|g|oz|abbr"
+        "value": "{{convert|143|g|abbr"
     },
-    "topgame": {
+    "connectivity": {
         "type": "text",
-        "value": ""
-    },
-    "predecessor": {
-        "type": "text",
-        "value": ""
-    },
-    "successor": {
-        "type": "text",
-        "value": ""
-    },
-    "website": {
-        "type": "text",
-        "value": "{{URL|https://moto360.motorola.com/|Moto 360}} }}"
+        "value": "{{Collapsible list |title"
     }
 }

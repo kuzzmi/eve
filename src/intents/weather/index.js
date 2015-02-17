@@ -36,13 +36,13 @@ var getForecast = function(type, datetime, location, callback) {
         var data = JSON.parse(resp.body);
         var weather;
 
-        console.log(require('util').inspect(data, true, 10, true))
 
         switch (type) {
             case 'second':
-                weather = [new Forecast(data)];
+                weather = new Forecast(data, type);
                 break;
             case 'day':
+                console.log(require('util').inspect(data, true, 10, true))
                 var msDay = new Date(datetime.value).setHours(12);
 
                 weather = data.list.filter(function(item) {
@@ -116,14 +116,12 @@ WeatherIntent.prototype.exec = function() {
                 forecastType = 'interval';
                 break;
         }
-        getForecast(forecastType, me.datetime, me.location, function(weather) {
-            console.log(require('util').inspect(weather, true, 10, true))
-            weather.map(function(item) {
-                deferred.resolve(item.toString({
-                    details: me.details,
-                    verbosity: me.verbosity
-                }));
-            });
+        getForecast(forecastType, me.datetime, me.location, function(weather) {            
+            deferred.resolve(weather.toString({
+                details: me.details,
+                verbosity: me.verbosity
+            }));
+            
         });
     } else {
     }
