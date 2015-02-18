@@ -45,7 +45,7 @@ var extend = require('../../../common/utils').extend;
 function SecondForecast(params) {
     var model = {
         temp: +(params.main.temp).toFixed(0),
-        description: params.weather[0].description,
+        description: params.weather[0].description.toLowerCase(),
         humidity: params.main.humidity,
         wind: +(params.wind.speed).toFixed(0),
         cityName: params.name,
@@ -79,10 +79,12 @@ SecondForecast.prototype.toString = function(params) {
                     code += '.general';
                     break;
                 case 'cold':
-                    cold ? code += '.yes_no.yes' : code += '.yes_no.no';
+                    code += '.yes_no';
+                    cold ? code += '.yes' : code += '.no';
                     break;
                 case 'warm':
-                    !cold ? code += '.yes_no.yes' : code += '.yes_no.no';
+                    code += '.yes_no';
+                    !cold ? code += '.yes' : code += '.no';
                     break;
                 default:
                     console.log('Unfortunately...');

@@ -60,6 +60,7 @@ function GenericForecast(params, type) {
 GenericForecast.prototype.toString = function(params) {
 
     var result = this.item.toString(params);
+
     return {
         vocabulary: this.vocabulary,
         code: result.code,

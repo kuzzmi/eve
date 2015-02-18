@@ -36,23 +36,29 @@ var getForecast = function(type, datetime, location, callback) {
         var data = JSON.parse(resp.body);
         var weather;
 
-
         switch (type) {
             case 'second':
                 weather = new Forecast(data, type);
                 break;
             case 'day':
                 console.log(require('util').inspect(data, true, 10, true))
-                var msDay = new Date(datetime.value).setHours(12);
+                var today = new Date();
+                today.setHours(0);
+                today.setMinutes(0);
+                today.setSeconds(0);
+                today.setMilliseconds(0);
 
-                weather = data.list.filter(function(item) {
-                    return item.dt * 1000 - msDay === 0;
-                }).map(function(item) {
-                    return new Forecast(item);
-                });
+                var day = new Date(datetime.value);
+                var diff = new Date(day - today);
+                var daysFromToday = diff.getTime() / 1000 / 60 / 60 / 24;
 
+                weather = data.list.map(function(item) {
+                    item.city = data.city;
+                    return item;
+                })[daysFromToday];
+
+                weather = new Forecast(weather, type);
                 break;
-
             case 'hour':
                 var utHour = dateToUT(datetime.value);
 
