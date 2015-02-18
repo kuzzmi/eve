@@ -202,14 +202,50 @@ DayForecast.prototype.toString = function(params) {
             phrase.code = ['day', params.details].join('.');
             phrase.args = [
                 this.cityName,
-                this.temp.morning, 
-                this.temp.day, 
-                this.temp.evening, 
-                this.temp.night, 
+                this.temp.morning,
+                this.temp.day,
+                this.temp.evening,
+                this.temp.night,
                 this.description
             ];
             break;
         case 'temperature':
+            var threshold = 4;
+
+            var cold = [];
+
+            for (var i in this.temp) {
+                if (i !== 'min' && i !== 'max' &&
+                    this.temp[i] < threshold) {
+                    cold.push(i);
+                }
+            }
+
+            var verbosity = params.verbosity ?
+                params.verbosity.replace('yes_no_', '') : undefined;
+            var code = ['day', params.details].join('.');
+
+            switch (verbosity) {
+                case 'general':
+                    code += '.general';
+                    phrase.args = [this.temp.max, this.temp.min];
+                    break;
+                case 'cold':
+                case 'warm':
+                    code += '.yes_no';
+                    cold.length > 0 ? code += '.yes' : code += '.no';
+                    var temps = [];
+                    for (var t in cold) {
+                        temps.push(this.temp[cold[t]]);
+                    }
+                    phrase.args = [cold.join(', '), temps.join(', ')];
+                    break;
+                default:
+                    console.log('Unfortunately...');
+                    break;
+            }
+
+            phrase.code = code;
             break;
         case 'precipitation':
             var code = ['day', params.details, 'yes_no'].join('.');

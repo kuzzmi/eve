@@ -82,7 +82,30 @@
         "all": [
             "Forecast for {0}. In the morning it is {1} degrees, in the afternoon it's {2} degrees, in the evening {3} degrees, in the night {4} degrees. {5}."
         ],
-        "temperature": [],
+        "temperature": {
+            "general": [
+                "Maximum is {0} degrees and minimum is {1}",
+                "{0} and {1}"
+            ],
+            "yes_no": {
+                "yes": [
+                    "Yes, in the {0}. {1} respectively",
+                    "Aha, in the {0}. {1} respectively",
+                    "Yep, in the {0}. {1} respectively",
+                    "Exactly, in the {0}. {1} respectively",
+                    "Definitely, in the {0}. {1} respectively",
+                    "Of course, in the {0}. {1} respectively",
+                    "Sure, in the {0}. {1} respectively"
+                ],
+                "no": [
+                    "No",
+                    "Nope",
+                    "Not at all",
+                    "Absolutely not",
+                    "No way"
+                ]
+            }
+        },
         "precipitation": {
             "yes_no": {
                 "yes": [
