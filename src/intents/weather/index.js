@@ -57,10 +57,9 @@ var getForecast = function(type, datetime, location, callback) {
                 })[daysFromToday];
 
                 weather = new Forecast(weather, type);
-                
+
                 break;
             case 'hour':
-                // console.log(require('util').inspect(data, true, 10, true))
                 var utHour = dateToUT(datetime.value);
 
                 weather = data.list.filter(function(item) {
@@ -71,7 +70,6 @@ var getForecast = function(type, datetime, location, callback) {
 
                 break;
             case 'interval':
-                // console.log(require('util').inspect(data, true, 10, true))
                 var utInterval = {
                     from: dateToUT(datetime.from.value),
                     to: dateToUT(datetime.to.value)
@@ -80,7 +78,7 @@ var getForecast = function(type, datetime, location, callback) {
                 weather = data.list.filter(function(item) {
                     return item.dt > utInterval.from && item.dt < utInterval.to;
                 })[0];
-                
+
                 weather = new Forecast(weather, 'hour');
                 break;
         }
@@ -113,25 +111,24 @@ WeatherIntent.prototype.exec = function() {
         forecastType,
         deferred = Q.defer();
 
-        
-    if (me.datetime) {
-        switch (me.datetime.type) {
-            case 'value':
-                forecastType = me.datetime.grain;
-                break;
-            case 'interval':
-                forecastType = 'interval';
-                break;
-        }
-        getForecast(forecastType, me.datetime, me.location, function(weather) {            
+    switch (me.datetime.type) {
+        case 'value':
+            forecastType = me.datetime.grain;
+            break;
+        case 'interval':
+            forecastType = 'interval';
+            break;
+    }
+    getForecast(
+        forecastType,
+        me.datetime,
+        me.location,
+        function(weather) {
             deferred.resolve(weather.toString({
                 details: me.details,
                 verbosity: me.verbosity
             }));
-            
         });
-    } else {
-    }
 
     return deferred.promise;
 }

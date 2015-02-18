@@ -70,6 +70,8 @@ WikiIntent.prototype.exec = function() {
                         .slice(0, 2)
                         .join('.');
 
+                    console.log(desription)
+
                     deferred.resolve(desription);                    
                 }
             });
