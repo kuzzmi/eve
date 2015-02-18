@@ -1,0 +1,20 @@
+{
+    "eve": {
+        "path": [
+            "C:\\Users\\kuzmeig1\\Projects\\eve-2"
+        ]
+    },
+    "portal": {
+        "path": [
+            "C:\\Users\\kuzmeig1\\Projects\\PULSE\\portal"
+        ],
+        "custom_comands": {
+            "build": {
+
+            },
+            "deploy": {
+                
+            }
+        }
+    }
+}
