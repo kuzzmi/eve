@@ -38,7 +38,6 @@ WikiIntent.prototype.exec = function() {
                     function(err) {
                         deferred.resolve('I have found some information about ' + me.query);
                     });
-
             });
             break;
         case 'read':
@@ -65,7 +64,8 @@ WikiIntent.prototype.exec = function() {
                     deferred.resolve('Sorry, I found nothing about ' + me.query);
                 } else {
                     var desription = data[2][0]
-                        .replace(/\/.+\//g, '')
+                        .replace(/(\([^)]*\) ?)/g, '')
+                        .replace(/\/.+\/ ?/g, '')
                         .split('.')
                         .slice(0, 2)
                         .join('.');
@@ -100,8 +100,6 @@ WikiIntent.prototype.exec = function() {
 
             break;
     }
-
-
 
     return deferred.promise;
 };

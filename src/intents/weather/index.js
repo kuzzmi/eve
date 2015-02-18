@@ -41,7 +41,6 @@ var getForecast = function(type, datetime, location, callback) {
                 weather = new Forecast(data, type);
                 break;
             case 'day':
-                console.log(require('util').inspect(data, true, 10, true))
                 var today = new Date();
                 today.setHours(0);
                 today.setMinutes(0);
@@ -58,19 +57,21 @@ var getForecast = function(type, datetime, location, callback) {
                 })[daysFromToday];
 
                 weather = new Forecast(weather, type);
+                
                 break;
             case 'hour':
+                // console.log(require('util').inspect(data, true, 10, true))
                 var utHour = dateToUT(datetime.value);
 
                 weather = data.list.filter(function(item) {
                     return item.dt <= utHour && utHour - item.dt < 10800;
-                }).map(function(item) {
-                    return new Forecast(item);
-                });
+                })[0];
+
+                weather = new Forecast(weather, type);
 
                 break;
-
             case 'interval':
+                // console.log(require('util').inspect(data, true, 10, true))
                 var utInterval = {
                     from: dateToUT(datetime.from.value),
                     to: dateToUT(datetime.to.value)
@@ -78,9 +79,9 @@ var getForecast = function(type, datetime, location, callback) {
 
                 weather = data.list.filter(function(item) {
                     return item.dt > utInterval.from && item.dt < utInterval.to;
-                }).map(function(item) {
-                    return new Forecast(item);
-                });
+                })[0];
+                
+                weather = new Forecast(weather, 'hour');
                 break;
         }
         callback(weather);

@@ -32,7 +32,12 @@
         "Yes, sir?"
     ],
     "thanks": [
+        "No problem",
         "No problem, sir",
-        "You are welcome"
+        "No problem, Igor",
+        "You are welcome",
+        "You are welcome, sir",
+        "You are welcome, Igor",
+        "Welcome"
     ]
 }
