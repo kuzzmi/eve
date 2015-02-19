@@ -1,6 +1,7 @@
 var EventEmitter = require('events').EventEmitter,
     wit = require('node-wit'),
     util = require('util'),
+    fs = require('fs'),
     Q = require('q');
 
 /* Parts of Eve */
@@ -11,7 +12,10 @@ var Reflex = require('./reflex'),
 function Brain() {
     EventEmitter.call(this);
 
+    this.memoryFile = __dirname + '/memory.json';
+
     var me = this;
+    
     this.on('stimulus', function(stimulus) {
         if (typeof stimulus === 'object') {
             this.process(new Stimulus(stimulus));
@@ -19,14 +23,11 @@ function Brain() {
             this.process(stimulus);
         }
     });
-
-    this.memory = [];
 };
 
 util.inherits(Brain, EventEmitter);
 
 Brain.prototype.remember = function(memory) {
-    this.memory.push(memory);
     return memory;
 };
 

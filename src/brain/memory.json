@@ -1,0 +1,555 @@
+[
+  {},
+  {
+    "stimulus": {
+      "_text": "Hello",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "greeting"
+          }
+        ]
+      },
+      "confidence": 0.584
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "greeting",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Thank you",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "thanks"
+          }
+        ],
+        "reference_name_type": [
+          {
+            "value": "you"
+          }
+        ]
+      },
+      "confidence": 0.747
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "thanks",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Hello",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "greeting"
+          }
+        ]
+      },
+      "confidence": 0.584
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "greeting",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  },
+  {
+    "stimulus": {
+      "_text": "Hello",
+      "intent": "reference",
+      "entities": {
+        "reference_type": [
+          {
+            "value": "greeting"
+          }
+        ]
+      },
+      "confidence": 0.584
+    },
+    "response": {
+      "vocabulary": "C:\\Users\\kuzmeig1\\Projects\\eve-2\\src\\intents\\reference/vocabulary.json",
+      "code": "greeting",
+      "args": [
+        "afternoon",
+        "sir"
+      ]
+    }
+  }
+]

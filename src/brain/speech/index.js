@@ -8,6 +8,8 @@ function exec() {
 
     var args = arguments;
 
+    console.log(arguments)
+
     if (args.length < 1 || args.length > 4) {
         var er = new Error('Speech.exec() was called with ' + args.length +
             ' arguments, but expected amount is 1..4.');
@@ -44,12 +46,13 @@ function exec() {
     var isUndefined = function() {};
 
     var params = {
-        phrase: undefined,
-        code: undefined,
-        args: undefined,
-        vocabulary: undefined,
-        options: undefined,
-        callback: undefined
+        code       : undefined,
+        args       : undefined,
+        phrase     : undefined,
+        silent     : undefined,
+        options    : undefined,
+        callback   : undefined,
+        vocabulary : undefined
     }
 
     switch (args.length) {
@@ -68,7 +71,7 @@ function exec() {
                 ['String'],
                 ['Function']
             ]);
-            params.phrase = args[0];
+            params.phrase   = args[0];
             params.callback = args[1];
 
             break;
@@ -78,9 +81,9 @@ function exec() {
                 ['String', 'Object'],
                 ['Function']
             ]);
-            params.phrase = args[0];
+            params.phrase     = args[0];
             params.vocabulary = args[1];
-            params.callback = args[2];
+            params.callback   = args[2];
 
             break;
         case 4:
@@ -90,10 +93,10 @@ function exec() {
                 ['Object'],
                 ['Function']
             ]);
-            params.phrase = args[0];
+            params.phrase     = args[0];
             params.vocabulary = args[1];
-            params.options = args[2];
-            params.callback = args[3];
+            params.options    = args[2];
+            params.callback   = args[3];
 
             break;
     }
@@ -104,7 +107,13 @@ function exec() {
             params.callback && params.callback(phrase);
             return phrase;
         })
-        .then(Apparatus.exec)
+        .then(function(phrase) {
+            if (!params.silent) {
+                Apparatus.exec(phrase);
+            }
+
+            return phrase;
+        })
         .then(deferred.resolve);
 
     return deferred.promise;

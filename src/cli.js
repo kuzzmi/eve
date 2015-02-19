@@ -29,6 +29,8 @@ function CLI(brain, argv) {
         output: process.stdout
     });
 
+    this.rl.setPrompt('Igor: ');
+
     function sendToBrain(msg) {
         me.brain.process(msg);
     }
@@ -52,12 +54,14 @@ function CLI(brain, argv) {
             intent: 'time'
         });
     }, null, true);
+
+    this.rl.prompt(true);
 };
 
 CLI.prototype.output = function(msg) {
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    console.log(color(msg, "magenta"));
+    console.log(color(' Eve: ' + msg, "magenta"));
     this.rl.prompt(true);
 };
 

@@ -23,13 +23,6 @@
     "request": "^2.53.0",
     "wiki-infobox": "^0.4.0"
   },
-  "config": {
-    "blanket": {
-      "pattern": [
-        "src"
-      ]
-    }
-  },
   "devDependencies": {
     "chai": "^2.0.0",
     "grunt": "^0.4.5",

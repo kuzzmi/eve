@@ -1,7 +1,7 @@
 Bugs:
-    [ ] If an intent couldn't be loaded don't throw an Error but say about an error
 
 Improvements:
     [ ] Remember last command and behave depending on it
 
 Archive:
+    [√] If an intent couldn't be loaded don't throw an Error but say about an error @done (15-02-19 13:27)

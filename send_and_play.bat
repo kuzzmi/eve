@@ -1,1 +1,0 @@
-node ivona.js %1 | sox -t mp3 - -d -q

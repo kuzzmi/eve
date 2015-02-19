@@ -16,8 +16,6 @@ function WebServer(brain, port) {
 
     app.listen(port);
 
-    console.log('Eve listens on port ' + port);
-
     return app;
 };
 

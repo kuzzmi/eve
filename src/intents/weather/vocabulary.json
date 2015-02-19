@@ -2,7 +2,7 @@
     "second": {
         "all": [
             "In {0} now it is {1} degrees and {2}",
-            "It is {1} degrees and {2} now"
+            "It is {1} degrees and {2} now in {0}"
         ],
         "temperature": {
             "general": [
@@ -50,7 +50,8 @@
     },
     "hour": {
         "all": [
-            "Forecast for {0}. In the morning it is {1} degrees, in the afternoon it's {2} degrees, in the evening {3} degrees, in the night {4} degrees. {5}. {6}."
+            "Forecast for {0}. In the morning it is {1} degrees, in the afternoon it's {2} degrees, in the evening {3} degrees, in the night {4} degrees. {5}. {6}.",
+            "Forecast for {0}. Morning: {1}°, day: {2}°, evening: {3}°, night: {4}°. {5}. {6}"
         ],
         "temperature": {
             "general": [
@@ -80,7 +81,8 @@
     },
     "day": {
         "all": [
-            "Forecast for {0}. In the morning it is {1} degrees, in the afternoon it's {2} degrees, in the evening {3} degrees, in the night {4} degrees. {5}."
+            "Forecast for {0}. In the morning it is {1} degrees, in the afternoon it's {2} degrees, in the evening {3} degrees, in the night {4} degrees. {5}.",
+            "Forecast for {0}. Morning: {1}°, day: {2}°, evening: {3}°, night: {4}°. {5}"
         ],
         "temperature": {
             "general": [

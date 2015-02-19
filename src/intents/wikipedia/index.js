@@ -36,6 +36,7 @@ WikiIntent.prototype.exec = function() {
                     'temp.json',
                     JSON.stringify(data, data, 4),
                     function(err) {
+                        console.log(Object.keys(data));
                         deferred.resolve('I have found some information about ' + me.query);
                     });
             });
@@ -70,8 +71,6 @@ WikiIntent.prototype.exec = function() {
                         .slice(0, 2)
                         .join('.');
 
-                    console.log(desription)
-
                     deferred.resolve(desription);                    
                 }
             });
@@ -86,13 +85,10 @@ WikiIntent.prototype.exec = function() {
 
                         var info = JSON.parse(data);
 
-                        console.log(require('util').inspect(info, true, 10, true))
-
                         for(var key in info) {
                             var property = info[key];
 
                             if (!!~key.indexOf(me.query)) {
-                                console.log(property.value);
                                 deferred.resolve(property.value);
                             }
                         }
