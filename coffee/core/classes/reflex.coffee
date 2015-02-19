@@ -12,7 +12,7 @@ class Reflex
             console.log e
             deferred.reject e
         
-        action = new Action @stimulus.entities
+        action = new Action @stimulus
 
         action
             .exec()
@@ -20,4 +20,4 @@ class Reflex
 
         deferred.promise
     
-module.export = Reflex
+module.exports = Reflex

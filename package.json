@@ -12,6 +12,7 @@
   "repository": "git@bitbucket.org:kuzzmi/eve-2.git",
   "dependencies": {
     "ansi-color": "^0.2.1",
+    "colors": "^1.0.3",
     "cron": "^1.0.6",
     "express": "^4.11.2",
     "google-translate": "^0.1.8",

@@ -8,4 +8,4 @@ class Stimulus
         @confidence = params.confidence
 
     
-module.export = Stimulus
+module.exports = Stimulus
