@@ -169,7 +169,7 @@
 }*/
 
 function DayForecast(params) {
-    
+    console.log(params)
     this.dt = new Date(params.dt * 1000);
     this.temp = {
         morning: +(params.temp.morn).toFixed(0),

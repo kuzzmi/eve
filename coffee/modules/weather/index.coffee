@@ -62,7 +62,7 @@ class Weather extends BaseModule
                     weather = data.list.map((item) ->
                         item.city = data.city;
                         item;
-                    )[daysFromNow];
+                    )[daysFromNow + 1];
 
                     weather = new Forecast weather, type;
 

@@ -31,7 +31,7 @@ class CLI
     print: (data) ->
         process.stdout.clearLine();
         process.stdout.cursorTo(0);
-        console.log 'Eve: ' + data
+        console.log 'Eve: '.cyan + data
 
         @rl.prompt true
     

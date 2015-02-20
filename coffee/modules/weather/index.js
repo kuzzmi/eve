@@ -74,7 +74,7 @@ Weather = (function(_super) {
             weather = data.list.map(function(item) {
               item.city = data.city;
               return item;
-            })[daysFromNow];
+            })[daysFromNow + 1];
             weather = new Forecast(weather, type);
             break;
           case 'hour':
