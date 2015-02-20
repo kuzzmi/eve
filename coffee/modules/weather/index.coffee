@@ -8,9 +8,9 @@ class Weather extends BaseModule
         super @params
 
         @location = @getEntity 'location', 'Basel'
-        @details = @getEntity 'weather_details', null
+        @details = @getEntity 'weather_details', 'all'
         @verbosity =  @getEntity 'weather_verbosity', null
-        if @entities.datetime         
+        if @entities and @entities.datetime         
             @datetime = @entities.datetime[0]
         else 
             @datetime = {
@@ -62,7 +62,7 @@ class Weather extends BaseModule
                     weather = data.list.map((item) ->
                         item.city = data.city;
                         item;
-                    )[daysFromToday];
+                    )[daysFromNow];
 
                     weather = new Forecast weather, type;
 
@@ -101,9 +101,7 @@ class Weather extends BaseModule
                 verbosity: @verbosity
             }
 
-            BaseModule.pickPhrase output
-                .then (result) ->
-                    super result
+            super output
                 .then deferred.resolve
 
         deferred.promise

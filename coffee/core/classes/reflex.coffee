@@ -3,18 +3,18 @@ Q = require 'q'
 class Reflex
     constructor: (@stimulus) ->
         
-    exec: ->
+    exec: (action) ->
         deferred = Q.defer()
 
         try
-            Action = require '../../modules/' + @stimulus.intent
+            IntentModule = require '../../modules/' + @stimulus.intent
         catch e
             console.log e
             deferred.reject e
         
-        action = new Action @stimulus
+        intentModule = new IntentModule @stimulus, action
 
-        action
+        intentModule
             .exec()
             .then deferred.resolve
 

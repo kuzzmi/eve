@@ -12,12 +12,13 @@ GenericForecast.prototype.toString = function(params) {
 
     var result = this.item.toString(params);
 
-    console.log(result);
-
     return {
-        vocabulary: this.vocabulary,
-        code: result.code,
-        args: result.args
+        voice: {
+            vocabulary: this.vocabulary,
+            code: result[0].code,
+            args: result[0].args
+        },
+        text: result[1]
     };
 };
 

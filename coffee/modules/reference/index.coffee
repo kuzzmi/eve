@@ -16,15 +16,12 @@ class Reference extends BaseModule
             when hours >= 18 and hours < 23 then 'evening'
             else 'night'
 
-
-        phrase = BaseModule.pickPhrase {
-            vocabulary: @vocabulary,
-            code: @type,
-            args: [timeOfDay, 'sir']
+        super {
+            voice: {
+                vocabulary: @vocabulary,
+                code: @type,
+                args: [timeOfDay, 'sir']
+            }
         }
-
-        phrase
-            .then (result) ->
-                super result
 
 module.exports = Reference

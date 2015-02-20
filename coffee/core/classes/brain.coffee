@@ -13,11 +13,22 @@ class Brain extends EventEmitter
         @subscribe()
 
     subscribe: ->
-        @on 'input', (stimulus) ->
-            if stimulus instanceof Object
-                @process new Stimulus stimulus
-            else
-                @process stimulus
+        @on 'input', (stimulus) =>
+            if @memory and @memory.length > 0
+                reflex = @memory.pop()
+                @process reflex, stimulus
+                return
+
+            @understand stimulus
+                .then (reflex) =>
+                    @process reflex
+                .fail (e) ->
+                    console.log e
+                    console.log e.stack
+                .catch (e) ->
+                    console.log e
+                    console.log e.stack
+                .done()
 
     understand: (stimulus) ->
         deferred = Q.defer()
@@ -26,30 +37,35 @@ class Brain extends EventEmitter
             wit.captureTextIntent 'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA', stimulus, (err, res) ->
                 if err
                     deferred.reject err
-
-                if not res
+                else if not res
                     deferred.reject new Error 'Empty response'
-
-                deferred.resolve new Reflex new Stimulus res.outcomes[0]
+                else if res.outcomes is undefined
+                    deferred.reject new Error 'Empty outcomes array'
+                else
+                    deferred.resolve new Reflex new Stimulus res.outcomes[0]
 
         else
             deferred.resolve new Reflex stimulus
 
         deferred.promise
 
-    process: (stimulus) ->
-        @understand stimulus
-            .then (reflex) ->
-                reflex.exec()
+    process: (reflex, action) ->
+        reflex.exec(action)
             .then (response) =>
-                if response then @emit 'output', response
+                if response 
+                    @emit 'output', response
+
+                if (response.actions)
+                    @memory = [reflex]
 
                 response
-
-            .fail (e) ->
-                console.log e.stack
-            .catch (e) ->
-                console.log e.stack
-            .done()
+        .fail (e) ->
+            console.log e
+            console.log e.stack
+        .catch (e) ->
+            console.log e
+            console.log e.stack
+        .done()
+        
 
 module.exports = Brain

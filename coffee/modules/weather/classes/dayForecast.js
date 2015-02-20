@@ -194,6 +194,8 @@ DayForecast.prototype.toString = function(params) {
         args: undefined
     };
 
+    var textReport = undefined;
+
     switch (params.details) {
         case 'all':
             phrase.code = ['day', params.details].join('.');
@@ -205,6 +207,17 @@ DayForecast.prototype.toString = function(params) {
                 this.temp.night,
                 this.description
             ];
+
+            textReport = [
+                '',
+                'Forecast for ' + this.cityName,
+                '    morning: ' + this.temp.morning,
+                '        day: ' + this.temp.day,
+                '    evening: ' + this.temp.evening,
+                '      night: ' + this.temp.night,
+                'description: ' + this.description
+            ].join('\r\n');
+
             break;
         case 'temperature':
             var threshold = 4;
@@ -255,7 +268,7 @@ DayForecast.prototype.toString = function(params) {
             break;
     }
 
-    return phrase;
+    return [phrase, textReport];
 };
 
 module.exports = DayForecast;

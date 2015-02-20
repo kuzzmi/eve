@@ -9,17 +9,22 @@ function SecondForecast(params) {
 };
 
 SecondForecast.prototype.toString = function(params) {
-    console.log(params);
-
     var phrase = {
         code: undefined,
         args: undefined
     };
 
+    var textReport = undefined;
+
     switch (params.details) {
         case 'all':
             phrase.code = ['second', params.details].join('.');
             phrase.args = [this.cityName, this.temp, this.description];
+
+            textReport = [
+                this.cityName + ': ' + this.temp + '°C, ' + this.description
+            ].join('\r\n');
+
             break;
         case 'temperature':
             var threshold = 4;
@@ -59,7 +64,7 @@ SecondForecast.prototype.toString = function(params) {
             break;
     }
 
-    return phrase;
+    return [phrase, textReport];
 };
 
 module.exports = SecondForecast;
