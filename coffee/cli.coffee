@@ -6,7 +6,7 @@ class CLI
         @core.brain.on 'output', (output) =>
             if output.text
                 @print output.text
-            if output.voice
+            if output.voice and @argv.speak
                 @say output.voice
         
         @rl = readline.createInterface 

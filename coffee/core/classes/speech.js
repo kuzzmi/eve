@@ -13,9 +13,34 @@ ivona = new Ivona({
 });
 
 module.exports = {
-  exec: function(phrase) {
-    var sox;
+  exec: function(params) {
+    var body, lang, phrase, sox;
     sox = child.spawn('sox', ['-t', 'mp3', '-', '-d', '-q']);
-    return ivona.createVoice(phrase).pipe(sox.stdin);
+    if (typeof params === 'string') {
+      phrase = params;
+    } else {
+      phrase = params.phrase;
+      lang = (function() {
+        switch (params.lang) {
+          case 'en':
+            return 'en-US';
+          case 'fr':
+            return 'fr-FR';
+          case 'ru':
+            return 'ru-RU';
+          case 'de':
+            return 'de-DE';
+        }
+      })();
+    }
+    body = {
+      body: {
+        voice: {
+          language: lang,
+          gender: 'Female'
+        }
+      }
+    };
+    return ivona.createVoice(phrase, body).pipe(sox.stdin);
   }
 };

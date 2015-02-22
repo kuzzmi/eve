@@ -1,22 +1,23 @@
-request = require 'request'
+request    = require 'request'
+q          = require 'q'
 BaseModule = require '../base'
-Forecast = require './forecast'
-q = require 'q'
+Forecast   = require './forecast'
 
 class Weather extends BaseModule
     constructor: (@params) ->
         super @params
 
-        @location = @getEntity 'location', 'Basel'
-        @details = @getEntity 'weather_details', 'all'
+        @location  = @getEntity 'location', 'Basel'
+        @details   = @getEntity 'weather_details', 'all'
         @verbosity =  @getEntity 'weather_verbosity', null
+        
         if @entities and @entities.datetime         
             @datetime = @entities.datetime[0]
         else 
             @datetime = {
-                type: 'value',
-                grain: 'second',
-                value: new Date()
+                type  : 'value',
+                grain : 'second',
+                value : new Date()
             }
 
     forecast: (callback) ->

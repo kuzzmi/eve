@@ -18,7 +18,9 @@ function pick(params) {
         throw er;
     }
 
-    if (params.phrase) {
+    if (params.phrase && params.lang) {
+        deferred.resolve({phrase: params.phrase, lang: params.lang});
+    } else if (params.phrase) {
         deferred.resolve(params.phrase);
     } else if (typeof params.vocabulary === 'string') {
         fs.readFile(params.vocabulary, function(err, data) {

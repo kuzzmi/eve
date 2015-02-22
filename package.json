@@ -18,11 +18,13 @@
     "google-translate": "^0.1.8",
     "ivona-node": "^0.1.2",
     "minimist": "^1.1.0",
+    "node-todoist": "^0.3.2",
     "node-wit": "^1.1.0",
     "nodegit": "^0.2.7",
     "q": "^1.1.2",
     "request": "^2.53.0",
-    "wiki-infobox": "^0.4.0"
+    "wiki-infobox": "^0.4.0",
+    "wikiscraper": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^2.0.0",
