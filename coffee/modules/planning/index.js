@@ -48,7 +48,7 @@ Planning = (function(superClass) {
         _this.token = user.api_token;
         return user;
       };
-    })(this)).then(deferred.resolve);
+    })(this)).then(deferred.resolveТа);
     return deferred.promise;
   };
 
@@ -59,16 +59,20 @@ Planning = (function(superClass) {
     return deferred.promise;
   };
 
-  Planning.prototype.addTask = function() {
+  Planning.prototype.addItem = function() {
     var deferred, item;
     deferred = Q.defer();
-    item = {
-      content: this.item,
-      token: this.token,
-      priority: this.priority,
-      date_string: this.datetime.value
-    };
-    todoist.request('addItem', item).then(deferred.resolve);
+    if (typeof this.item === 'string') {
+      item = {
+        content: this.item,
+        token: this.token,
+        priority: this.priority,
+        date_string: this.datetime.value
+      };
+      todoist.request('addItem', item).then(deferred.resolve);
+    } else {
+
+    }
     return deferred.promise;
   };
 
@@ -78,11 +82,10 @@ Planning = (function(superClass) {
     if (!this.loggedIn) {
       this.login().then((function(_this) {
         return function() {
-          return _this.addTask();
+          return _this.addItem();
         };
       })(this)).then(function(response) {
         return Planning.__super__.exec.call(this, {
-          text: 'Done',
           voice: {
             phrase: 'Reminder added'
           }

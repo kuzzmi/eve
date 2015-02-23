@@ -20,9 +20,6 @@ module.exports =
                 when 'fr' then 'fr-FR'
                 when 'ru' then 'ru-RU'
                 when 'de' then 'de-DE'
-            
-
-        
 
         body = {
             body: {

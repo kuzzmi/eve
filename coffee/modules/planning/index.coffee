@@ -36,7 +36,7 @@ class Planning extends BaseModule
             .then (user) =>
                 @token = user.api_token
                 user
-            .then deferred.resolve
+            .then deferred.resolveТа
 
         deferred.promise
 
@@ -46,18 +46,23 @@ class Planning extends BaseModule
             .then deferred.resolve
         deferred.promise
 
-    addTask: ->
+    addItem: ->
         deferred = Q.defer()
 
-        item = {
-            content: @item,
-            token: @token,
-            priority: @priority,
-            date_string: @datetime.value
-        }
+        if typeof @item is 'string'
+            item = 
+                content: @item
+                token: @token
+                priority: @priority
+                date_string: @datetime.value
+            
 
-        todoist.request 'addItem', item
-            .then deferred.resolve
+            todoist.request 'addItem', item
+                .then deferred.resolve
+            
+        else
+            
+
         deferred.promise
 
     exec: ->
@@ -66,10 +71,9 @@ class Planning extends BaseModule
         if not @loggedIn
             @login()
                 .then =>
-                    @addTask()
+                    @addItem()
                 .then (response) ->
                     super {
-                        text: 'Done',
                         voice: {
                             phrase: 'Reminder added'
                         }

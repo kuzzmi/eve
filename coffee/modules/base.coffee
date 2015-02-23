@@ -9,8 +9,12 @@ class BaseModule
         @vocabulary = null
 
     getEntity: (name, def) ->
-        if @entities and @entities[name] 
-            @entities[name][0].value 
+        if @entities and @entities[name]
+            if (@entities[name].length > 1)
+                @entities[name].map (entity) ->
+                    entity.value
+            else
+                @entities[name][0].value 
         else 
             def
 
