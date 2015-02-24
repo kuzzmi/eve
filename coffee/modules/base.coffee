@@ -2,8 +2,6 @@ q = require 'q'
 vocabulary = require '../core/classes/vocabulary'
 
 class BaseModule
-    @pickPhrase: vocabulary.pick
-
     constructor: (@stimulus, @action) ->
         @entities = @stimulus.entities
         @vocabulary = null
@@ -27,11 +25,11 @@ class BaseModule
             actions: undefined
         }
 
-        if result.constructor is String
+        if typeof result is 'string'
             response.text = response.voice = result
             deferred.resolve response
 
-        if result.constructor is Object
+        if typeof result is 'object'
             if (result.voice)
                 vocabulary.pick result.voice
                     .then (phrase) ->
@@ -45,6 +43,9 @@ class BaseModule
                 response.text = result.text
                 response.actions = result.actions
                 deferred.resolve response
+
+        if result is undefined
+            deferred.reject 'Result is undefined'
 
         deferred.promise
 

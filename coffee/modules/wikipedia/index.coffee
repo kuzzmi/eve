@@ -52,13 +52,12 @@ class Wiki extends BaseModule
 
         url = 'http://en.wikipedia.org/w/api.php'
 
-        qs = {
-            action    : 'opensearch',
-            search    : @query,
-            limit     : 1,
-            namespace : 0,
+        qs =
+            action    : 'opensearch'
+            search    : @query
+            limit     : 1
+            namespace : 0
             format    : 'json'
-        }
 
         request {
             url: url,
@@ -84,6 +83,7 @@ class Wiki extends BaseModule
                 response.text = @reportFromJson properName, description, element
                 response.voice = {
                     phrase: description
+                        .replace /(\s*\([^)]*\))/g, ''
                 }
             
                 super response

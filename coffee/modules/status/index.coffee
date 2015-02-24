@@ -2,6 +2,8 @@ BaseModule = require '../base'
 Q          = require 'q'
 colors     = require 'colors'
 
+Weather    = require '../weather'
+
 class Status extends BaseModule
     constructor: (@params) ->
         super @params
@@ -21,14 +23,45 @@ class Status extends BaseModule
             when hours >= 18 and hours < 23 then 'evening'
             else 'night'
 
-        response = {
-            voice: {
-                vocabulary: this.vocabulary,
-                code: [this.action, this.type, this.value].join('.'),
-                args: ['sir', timeOfDay]
-            }
-        }
 
-        super response
+        if @action is 'update' and @type is 'awake' and @value is 'true'
+            deferred = Q.defer()
+            
+            response = 
+                voice: 
+                    vocabulary: @vocabulary
+                    code: [@action, @type, @value].join('.')
+                    args: ['sir', timeOfDay]
+                
+        
+            weather = new Weather({
+                datetime: [{
+                    type: 'value',
+                    grain: 'day',
+                    value: new Date()
+                }]
+            })
+
+            weather.exec()
+                .then (forecast) =>
+                    super response
+                        .then (res) ->
+                            res.text = res.text + '. ' + forecast.text
+                            res.voice = res.voice + '. ' + forecast.voice
+                            res
+                    .then deferred.resolve
+
+            deferred.promise
+
+        else
+            response = {
+                voice: {
+                    vocabulary: this.vocabulary,
+                    code: [this.action, this.type, this.value].join('.'),
+                    args: ['sir', timeOfDay]
+                }
+            }
+
+            super response
 
 module.exports = Status

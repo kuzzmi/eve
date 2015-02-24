@@ -20,7 +20,7 @@ class Weather extends BaseModule
                 value : new Date()
             }
 
-    forecast: (callback) ->
+    forecast: (successCallback, errorCallback) ->
 
         if @datetime.type is 'value' 
             type = @datetime.grain
@@ -46,7 +46,12 @@ class Weather extends BaseModule
             url: url,
             qs: params
         }, (err, resp, data) =>
-            data = JSON.parse resp.body
+
+            try
+                data = JSON.parse resp.body
+            catch e
+                errorCallback e
+            
 
             switch type
                 when 'second'
@@ -91,7 +96,7 @@ class Weather extends BaseModule
 
                     weather = new Forecast weather, 'second';
 
-            callback weather
+            successCallback weather
 
     exec: ->
         deferred = q.defer()
@@ -104,6 +109,8 @@ class Weather extends BaseModule
 
             super output
                 .then deferred.resolve
+        , (error) ->
+            deferred.reject error
 
         deferred.promise
         
