@@ -7,6 +7,8 @@ config      = require './config'
 moment      = require 'moment'
 utils       = require '../../common/utils'
 
+API         = require './todoist-api'
+
 class Planning extends BaseModule
     constructor: (@params, @selection) ->
         super @params
@@ -34,12 +36,8 @@ class Planning extends BaseModule
 
     login: ->
         deferred = Q.defer()
-
-        credentials =
-            email    : config.email
-            password : config.password
-
-        todoist.login credentials
+        
+        API.login()
             .then (user) =>
                 @token = user.api_token
                 user
@@ -49,46 +47,21 @@ class Planning extends BaseModule
 
     getProjects: ->
         deferred = Q.defer()
-        todoist.request 'getProjects'
+
+        API.getProjects()
             .then (result) ->
                 console.log result
                 deferred.resolve
                     voice:
                         phrase: 'Reminder added'
-        deferred.promise
-
-    getUncompletedItems: ->
-        deferred = Q.defer()
-
-        params =
-            project_id: config.projects.PROJECTS
-
-
-        todoist.request 'getUncompletedItems', params
-            .then (response) ->
-                console.log response
-                deferred.resolve 
-                    voice: 
-                        phrase: 'You have ' + response.length + ' tasks'
 
         deferred.promise
 
     query: (query) ->
         deferred = Q.defer()
 
-        queries = query.split ','
-            .map (q) ->
-                q.trim()
-
-        params = 
-            queries: JSON.stringify(queries)
-
-        # console.log params
-
-        todoist.request 'query', params
-            .then (response) ->
-                # console.log response
-                deferred.resolve response
+        API.query query
+            .then (response) -> deferred.resolve response
 
         deferred.promise
 
@@ -102,18 +75,21 @@ class Planning extends BaseModule
                 token       : @token
                 priority    : @priority
                 date_string : @datetime
-            
 
-            todoist.request 'addItem', item
-                .then ->
-                    deferred.resolve
-                        voice:
-                            phrase: 'Reminder added'
+            API.addItem item
+                .then -> deferred.resolve
+                    voice:
+                        phrase: 'Reminder added'
             
         else
             console.log @item
 
         deferred.promise
+
+    count: (response) ->
+        response.reduce (a, b) -> 
+                a + b.data.length
+            , 0
 
     exec: ->
         deferred = Q.defer()
@@ -126,10 +102,8 @@ class Planning extends BaseModule
                             @addItem()
                         when 'count'
                             @query 'overdue, today'
-                                .then (response) ->
-                                    response.reduce (a, b) ->
-                                        a + b.data.length
-                                    , 0
+                                .then (response) =>
+                                    @count response
                                 .then (amount) ->
                                     voice: 
                                         phrase: 'You have ' + amount + ' tasks'
@@ -138,6 +112,7 @@ class Planning extends BaseModule
                         .then deferred.resolve
                 .catch (e) ->
                     console.log e
+                    deferred.reject e
 
         deferred.promise
 
