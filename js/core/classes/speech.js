@@ -1,5 +1,5 @@
 (function() {
-  var Ivona, Q, child, ivona;
+  var Ivona, Q, child, ivona, sox;
 
   Ivona = require('ivona-node');
 
@@ -12,10 +12,20 @@
     secretKey: 'T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp'
   });
 
+  sox = null;
+
   module.exports = {
     exec: function(params) {
-      var body, lang, phrase, sox;
+      var body, lang, phrase;
+      if (sox && sox.kill) {
+        sox.kill('SIGKILL');
+      }
       sox = child.spawn('sox', ['-t', 'mp3', '-', '-d', '-q']);
+      sox.stdin.on('error', function(error) {
+        if (error.code === 'EPIPE') {
+          return function() {};
+        }
+      });
       if (typeof params === 'string') {
         phrase = params;
       } else {

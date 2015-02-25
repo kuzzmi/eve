@@ -26,7 +26,7 @@
     }
 
     Status.prototype.exec = function() {
-      var deferred, hours, response, timeOfDay;
+      var deferred, hours, response, timeOfDay, weather;
       hours = new Date().getHours();
       timeOfDay = (function() {
         switch (false) {
@@ -49,7 +49,7 @@
       };
       if (this.action === 'update' && this.type === 'awake' && this.value === 'true') {
         deferred = Q.defer();
-        new Weather({
+        weather = new Weather({
           entities: {
             datetime: [
               {
@@ -59,16 +59,19 @@
               }
             ]
           }
-        }).exec().then((function(_this) {
-          return function(forecast) {
-            return Status.__super__.exec.call(_this, response).then(function(res) {
-              res.text = res.text + '. ' + forecast.text;
-              res.voice = res.voice + '. ' + forecast.voice;
-              return res;
-            });
-          };
-        })(this)).then(deferred.resolve);
-        deferred.promise;
+        });
+        Status.__super__.exec.call(this, response).then(function(res) {
+          return weather.exec().then((function(_this) {
+            return function(forecast) {
+              var result;
+              result = {};
+              result.text = res.text + '. ' + forecast.text;
+              result.voice = res.voice + '. ' + forecast.voice;
+              return deferred.resolve(result);
+            };
+          })(this));
+        });
+        return deferred.promise;
       }
       if (this.action === 'update' && this.type === 'athome' && this.value === 'true') {
         deferred = Q.defer();

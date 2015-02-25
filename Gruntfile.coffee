@@ -6,11 +6,15 @@ module.exports = (grunt) ->
     require('time-grunt')(grunt);
 
     grunt.initConfig
-        watch: 
+        watch:
+            src: 
+                files: [
+                    'coffee/**/*.coffee'
+                ]
+                tasks: ['coffee:compile']
             tests: 
                 files: [
-                    'tests/**/*.js', 
-                    'src/**/*.js'
+                    'tests/**/*.js'
                 ]
                 tasks: ['test']
             
@@ -37,16 +41,21 @@ module.exports = (grunt) ->
                     cwd: 'coffee/',
                     dest: 'js/',
                     src: [
-                        '**/*.json',
-                        '**/*.js'
+                        '**/*.json'
                     ]
                 }]
 
         clean:
+            src: 
+                files: [{
+                    dot: true,
+                    src: ['coffee/**/*.js']
+                }]
             dist:
                 files: [{
                     dot: true,
                     src: ['js/**/*']
                 }]
 
+    grunt.registerTask 'default', ['clean', 'coffee', 'copy']
     grunt.registerTask 'test', 'mochaTest'
