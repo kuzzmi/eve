@@ -36,7 +36,7 @@ exports.pick = (params) ->
             phrase = phrases[random]
 
             result = phrase.replace /\{(\d+)\}/g, (match, number) ->
-                if typeof args[number] is not 'undefined' 
+                if typeof args[number] isnt 'undefined'
                     return args[number] 
                 else 
                     return match
