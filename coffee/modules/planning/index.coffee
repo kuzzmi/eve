@@ -112,8 +112,11 @@ class Planning extends BaseModule
         if not @loggedIn
             @login()
                 .then () =>
-                    console.log @action + ' ? count_at_home'
                     switch @action
+                        when 'print'
+                            @query '(@datetime, &home)'
+                                .then (response) =>
+                                        console.log response
                         when 'count_at_home'
                             @query '(overdue, today) & @home'
                                 .then (response) =>
