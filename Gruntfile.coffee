@@ -41,7 +41,8 @@ module.exports = (grunt) ->
                     cwd: 'coffee/',
                     dest: 'js/',
                     src: [
-                        '**/*.json'
+                        '**/*.json',
+                        '**/*.html'
                     ]
                 }]
 
