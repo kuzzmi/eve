@@ -35,23 +35,25 @@ class Status extends BaseModule
         if @action is 'update' and @type is 'awake' and @value is 'true'
             deferred = Q.defer()
         
-            new Weather
+            weather = new Weather
                 entities:
                     datetime: [{
                         type: 'value',
                         grain: 'day',
                         value: new Date()
                     }]
-            .exec()
-                .then (forecast) =>
-                    super response
-                        .then (res) ->
-                            res.text = res.text + '. ' + forecast.text
-                            res.voice = res.voice + '. ' + forecast.voice
-                            res
-                .then deferred.resolve
+            
+            super response
+                .then (res) ->
+                    weather.exec()
+                        .then (forecast) =>
+                            result = {}
+                            result.text = res.text + '. ' + forecast.text
+                            result.voice = res.voice + '. ' + forecast.voice
 
-            deferred.promise
+                            deferred.resolve result
+
+            return deferred.promise
 
         if @action is 'update' and @type is 'athome' and @value is 'true'
             deferred = Q.defer()
@@ -71,7 +73,7 @@ class Status extends BaseModule
                             res
                 .then deferred.resolve
 
-            deferred.promise
+            return deferred.promise
 
         else
             super response
