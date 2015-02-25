@@ -5,21 +5,24 @@ Q       = require 'q'
 exports.query = (query) ->
     deferred = Q.defer()
 
-    queries = query.split ',' 
-        .map (q) -> q.trim()
-
     params = 
-        queries: JSON.stringify(queries)
+        queries: JSON.stringify([query])
 
     todoist.request 'query', params
         .then (response) -> deferred.resolve response
 
     deferred.promise
 
-exports.getProjects: ->
+exports.getProjects = ->
     deferred = Q.defer()
     todoist.request 'getProjects'
-        .then (result) -> deferred.resolve
+        .then (result) -> deferred.resolve result
+    deferred.promise
+
+exports.getLabels = ->
+    deferred = Q.defer()
+    todoist.request 'getLabels'
+        .then (result) -> deferred.resolve result
     deferred.promise
 
 exports.login = ->
