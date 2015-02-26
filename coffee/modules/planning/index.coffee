@@ -37,7 +37,7 @@ class Planning extends BaseModule
                         .format 'MMM Do h:mm a'
                 when 'day' 
                     @datetime = moment @datetime.value
-                        .format 'MMM Do'
+                        .format 'DD MMM'
             
         else
             @datetime = 'tomorrow'
@@ -92,9 +92,10 @@ class Planning extends BaseModule
 
 
             API.addItem item
-                .then -> deferred.resolve
-                    voice:
-                        phrase: 'Reminder added'
+                .then (item) ->
+                    deferred.resolve
+                        voice:
+                            phrase: 'Reminder added'
             
         else
             console.log @item
