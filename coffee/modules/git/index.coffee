@@ -1,5 +1,6 @@
 BaseModule = require '../base'
 git        = require 'git-promise'
+gitUtils   = require 'git-promise/util'
 
 class Git extends BaseModule
     constructor: (@params) ->
@@ -10,21 +11,19 @@ class Git extends BaseModule
         # @vocabulary = __dirname + '/vocabulary.json'
 
     exec: ->
-        # now = new Date()
-        # hours = now.getHours()
-        # timeOfDay = switch
-        #     when hours >= 4 and hours < 12 then 'morning'
-        #     when hours >= 12 and hours < 18 then 'afternoon'
-        #     when hours >= 18 and hours < 23 then 'evening'
-        #     else 'night'
         params = 
             cwd: process.cwd()
 
         switch @action
             when 'status'
-                git 'status -sb'
+                git 'status --porcelain'
                     .then (output) ->
-                        super output
+                        parsedOutput = gitUtils.extractStatus output
+
+                        console.log JSON.stringify parsedOutput, null, 4
+
+                        super 
+                            text: parsedOutput
 
             when 'push'
                 git 'add -A'
@@ -35,13 +34,4 @@ class Git extends BaseModule
                     .then (output) ->
                         super output
                 
-
-        # {
-        #     text: {
-        #         vocabulary: @vocabulary,
-        #         code: @type,
-        #         args: [timeOfDay, 'sir']
-        #     }
-        # }
-
 module.exports = Git
