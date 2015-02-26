@@ -31,7 +31,7 @@ class Git extends BaseModule
                     .then ->
                         git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
                     .then ->
-                        git 'push origin/master'
+                        git 'push origin master'
                     .then (output) ->
                         super output
                 
