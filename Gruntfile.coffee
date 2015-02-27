@@ -11,7 +11,11 @@ module.exports = (grunt) ->
                 files: [
                     'coffee/**/*.coffee'
                 ]
-                tasks: ['coffee:compile']
+
+                options:
+                  interrupt: true
+
+                tasks: ['coffee:compile', 'execute']
             tests: 
                 files: [
                     'tests/**/*.js'
@@ -23,6 +27,13 @@ module.exports = (grunt) ->
                 options:
                     reporter: 'spec'
                 src: ['tests/**/*.js']
+
+        execute:
+            eve:
+                src: ['js/eve.js']
+
+        concurrent:
+            eve: ['watch']                
 
         coffee:
             compile:
@@ -58,5 +69,13 @@ module.exports = (grunt) ->
                     src: ['js/**/*']
                 }]
 
-    grunt.registerTask 'default', ['clean', 'coffee', 'copy']
+    grunt.registerTask 'default', [
+        'clean', 
+        'coffee', 
+        'copy',
+        # 'concurrent:eve',
+        # 'watch'
+    ]
+
+    grunt.registerTask 'start', 'execute:eve'
     grunt.registerTask 'test', 'mochaTest'

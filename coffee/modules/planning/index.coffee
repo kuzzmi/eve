@@ -2,11 +2,11 @@ BaseModule  = require '../base'
 request     = require 'request'
 Q           = require 'q'
 colors      = require 'colors'
+fs          = require 'fs'
 todoist     = require 'node-todoist'
 config      = require './config'
 moment      = require 'moment'
 utils       = require '../../common/utils'
-
 API         = require './todoist-api'
 
 class Planning extends BaseModule
@@ -26,15 +26,12 @@ class Planning extends BaseModule
                 type = 'interval'
 
             switch type
-                when 'second' 
+                when 'second' || 'hour'
                     @datetime = moment @datetime.value
-                        .format 'MMM Do h:mm a'
-                when 'hour'
-                    @datetime = moment @datetime.value
-                        .format 'MMM Do h:mm a'
+                        .format 'MMM DD h:mm a'
                 when 'interval'
                     @datetime = moment @datetime.to.value
-                        .format 'MMM Do h:mm a'
+                        .format 'MMM DD h:mm a'
                 when 'day' 
                     @datetime = moment @datetime.value
                         .format 'DD MMM'
@@ -42,17 +39,20 @@ class Planning extends BaseModule
         else
             @datetime = 'tomorrow'
 
-
-        @loggedIn = no
-
     login: ->
         deferred = Q.defer()
-        
-        API.login()
-            .then (user) =>
-                @token = user.api_token
-                user
-            .then deferred.resolve
+
+        filename = __dirname + '/todoist_token'
+
+        if fs.exists filename
+            @token = fs.readFileSync filename
+            deferred.resolve()
+        else 
+            API.login()
+                .then (user) ->
+                    fs.writeFileSync filename, user.api_token
+                    @token = user.api_token
+                .then deferred.resolve
 
         deferred.promise
 
@@ -134,7 +134,7 @@ class Planning extends BaseModule
                                     @count response
                                 .then (amount) ->
                                     voice: 
-                                        phrase: 'You have ' + amount + ' tasks'
+                                        phrase: 'Today you have ' + amount + ' tasks'
                 .then (response) ->
                     super 
                         .then deferred.resolve

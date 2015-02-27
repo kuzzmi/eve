@@ -19,11 +19,56 @@ class Git extends BaseModule
                 git 'status --porcelain'
                     .then (output) ->
                         parsedOutput = gitUtils.extractStatus output
+                        tree = parsedOutput.workingTree
 
-                        console.log JSON.stringify parsedOutput, null, 4
+                        # console.log JSON.stringify parsedOutput, null, 4
+
+                        modified = tree.modified.length
+                        added    = tree.added.length
+                        deleted  = tree.deleted.length
+                        renamed  = tree.renamed.length
+                        copied   = tree.copied.length
+
+                        report = '';
+
+                        if modified > 0
+                            report += 'Modified ' + modified + ' file'
+                            if added > 1 
+                                report += 's'
+                            report += '. '
+
+                        if added > 0
+                            report += 'Added ' + added + ' file'
+                            if added > 1 
+                                report += 's'
+                            report += '. '
+
+                        if deleted > 0
+                            report += 'Deleted ' + deleted + ' file'
+                            if added > 1 
+                                report += 's'
+                            report += '. '
+                        
+                        if renamed > 0
+                            report += 'Renamed ' + renamed + ' file'
+                            if added > 1 
+                                report += 's'
+                            report += '. '
+                        
+                        if copied > 0
+                            report += 'Copied ' + copied + ' file'
+                            if added > 1 
+                                report += 's'
+                            report += '. '
 
                         super 
-                            text: parsedOutput
+                            text: report
+
+            when 'pull'
+                git 'pull origin master'
+                    .then (output) ->
+                        super 
+                            text: output
 
             when 'push'
                 git 'add -A'

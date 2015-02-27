@@ -1,6 +1,7 @@
 wit          = require 'node-wit' 
 Q            = require 'q'
 EventEmitter = require('events').EventEmitter
+moment       = require 'moment'
 
 ### EVE PARTS ###
 Stimulus     = require '../models/stimulus'
@@ -19,6 +20,7 @@ class Brain extends EventEmitter
                 @process reflex, stimulus
                 return
 
+            @start = moment()
             @understand stimulus
                 .then (reflex) =>
                     @process reflex
@@ -65,6 +67,13 @@ class Brain extends EventEmitter
         .catch (e) ->
             console.log e
             console.log e.stack
+        # .fin =>
+        #     @end = moment()
+
+        #     diff = moment(@end - @start)
+
+        #     console.log diff.format 'x'
+
         .done()
         
 
