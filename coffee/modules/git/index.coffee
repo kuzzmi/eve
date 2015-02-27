@@ -21,8 +21,6 @@ class Git extends BaseModule
                         parsedOutput = gitUtils.extractStatus output
                         tree = parsedOutput.workingTree
 
-                        # console.log JSON.stringify parsedOutput, null, 4
-
                         modified = tree.modified.length
                         added    = tree.added.length
                         deleted  = tree.deleted.length
@@ -74,9 +72,9 @@ class Git extends BaseModule
                 git 'add -A'
                     .then ->
                         git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
-                    .then ->
-                        git 'push origin master'
-                    .then (output) ->
-                        super output
+                            .then ->
+                                git 'push origin master'
+                                    .then (output) ->
+                                        super text: output
                 
 module.exports = Git
