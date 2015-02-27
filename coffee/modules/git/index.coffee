@@ -75,6 +75,6 @@ class Git extends BaseModule
                     .then ->
                         git 'push origin master'
                     .then ->
-                        super text: 'Uploading completed'
+                        super text: 'Upload completed'
                 
 module.exports = Git
