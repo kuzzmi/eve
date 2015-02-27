@@ -72,9 +72,9 @@ class Git extends BaseModule
                 git 'add -A'
                     .then ->
                         git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
-                            .then ->
-                                git 'push origin master'
-                                    .then (output) ->
-                                        super text: output
+                    .then ->
+                        git 'push origin master'
+                    .then ->
+                        super text: 'Uploading completed'
                 
 module.exports = Git
