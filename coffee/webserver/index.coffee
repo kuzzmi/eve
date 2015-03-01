@@ -33,13 +33,13 @@ class Server
         
         if notification.list
             list = notification.list
-            command = 'eve_list' #test1,test2,test3=:=eve_list
+            command = 'eve_resp_list' #test1,test2,test3=:=eve_list
             message = list.join(',') + '=:=' + command
 
             request(url + message)
 
         if notification.text
-            command = 'eve_text'
+            command = 'eve_resp_text'
             message = notification.text + '=:=' + command
             
             request(url + message)

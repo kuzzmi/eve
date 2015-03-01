@@ -111,8 +111,12 @@ class Planning extends BaseModule
                         a + b.data.length
                     , 0
             .then (amount) ->
-                voice: 
-                    phrase: 'You have ' + amount + ' tasks'
+                if amount is 0
+                    voice:
+                        phrase: 'You have no tasks, sir'
+                else
+                    voice: 
+                        phrase: 'You have ' + amount + ' tasks'
 
     report: ->
         query = []
