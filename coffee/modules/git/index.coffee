@@ -59,7 +59,10 @@ class Git extends BaseModule
                                 report += 's'
                             report += '. '
 
-                        super report
+                        if report.length is 0
+                            super 'Everything is up-to-date, sir'
+                        else 
+                            super report
 
             when 'pull'
                 git 'pull origin master'

@@ -96,6 +96,8 @@ class Planning extends BaseModule
                     deferred.resolve
                         voice:
                             phrase: 'Reminder added'
+                        notification:
+                            text: 'Task "' + utils.capitalize(@item) + '" added'
             
         else
             console.log @item
@@ -134,6 +136,10 @@ class Planning extends BaseModule
                 response.map (item) ->
                     tasks = tasks.concat item.data
 
+                if tasks.length is 0
+                    return voice:
+                            phrase: 'You have no tasks'
+
                 tasks.map (task) ->
                     taskString = ''
 
@@ -161,7 +167,7 @@ class Planning extends BaseModule
                     report.join '\r\n'
                 voice:
                     phrase: 'Here is a list of your tasks, sir'
-                notification: 
+                notification:
                     list: list
 
     exec: ->

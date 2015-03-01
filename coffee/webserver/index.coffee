@@ -29,16 +29,19 @@ class Server
         app
 
     sendNotification: (notification) ->
+        url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
+        
         if notification.list
             list = notification.list
-
-            url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
             command = 'eve_list' #test1,test2,test3=:=eve_list
-            # JSON.stringify output.notification
-            message = list.map((l) -> '"' + l + '"').join(',') + '=:=' + command
+            message = list.join(',') + '=:=' + command
 
-            console.log message
+            request(url + message)
 
-            request(url + list.join(',') + '=:=' + command)
+        if notification.text
+            command = 'eve_text'
+            message = notification.text + '=:=' + command
+            
+            request(url + message)
 
 module.exports = Server
