@@ -63,6 +63,8 @@ class Git extends BaseModule
                             super 'Everything is up-to-date, sir'
                         else 
                             super report
+                    , (er) ->
+                        console.log er
 
             when 'pull'
                 git 'pull origin master'
