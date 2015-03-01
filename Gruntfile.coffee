@@ -15,7 +15,7 @@ module.exports = (grunt) ->
                 options:
                   interrupt: true
 
-                tasks: ['coffee:compile', 'execute']
+                tasks: ['coffee:compile']
             tests: 
                 files: [
                     'tests/**/*.js'

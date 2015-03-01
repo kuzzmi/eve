@@ -4,17 +4,14 @@
             "true": [
                 "Good morning, {0}",
                 "Good morning",
-                "Wake up, {0}. It is going to be a great day today",
                 "Good morning. What a lovely morning, isn't it?",
-                "Good morning, {0}. What a lovely morning, isn't it?",
-                "Wake up {0}"
+                "Good morning, {0}. What a lovely morning, isn't it?"
             ], 
             "false": [
                 "Good night, {0}",
                 "I wish you a good night, {0}",
-                "Have a nice dream, {0}",
-                "I hope you will have great dreams tonight, {0}"
-            ]
+                "Have a nice dream, {0}"
+           ]
         },
         "athome": {
             "true": [

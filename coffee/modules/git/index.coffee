@@ -31,7 +31,7 @@ class Git extends BaseModule
 
                         if modified > 0
                             report += 'Modified ' + modified + ' file'
-                            if added > 1 
+                            if modified > 1 
                                 report += 's'
                             report += '. '
 
@@ -43,24 +43,23 @@ class Git extends BaseModule
 
                         if deleted > 0
                             report += 'Deleted ' + deleted + ' file'
-                            if added > 1 
+                            if deleted > 1 
                                 report += 's'
                             report += '. '
                         
                         if renamed > 0
                             report += 'Renamed ' + renamed + ' file'
-                            if added > 1 
+                            if renamed > 1 
                                 report += 's'
                             report += '. '
                         
                         if copied > 0
                             report += 'Copied ' + copied + ' file'
-                            if added > 1 
+                            if copied > 1 
                                 report += 's'
                             report += '. '
 
-                        super 
-                            text: report
+                        super report
 
             when 'pull'
                 git 'pull origin master'
@@ -75,6 +74,6 @@ class Git extends BaseModule
                     .then ->
                         git 'push origin master'
                     .then ->
-                        super text: 'Upload completed'
+                        super 'Upload completed'
                 
 module.exports = Git

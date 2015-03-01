@@ -5,11 +5,12 @@ Q       = require 'q'
 exports.query = (query) ->
     deferred = Q.defer()
 
-    params = 
-        queries: JSON.stringify([query])
+    convertedQuery = JSON.stringify(query)
 
+    params = 
+        queries: convertedQuery
     todoist.request 'query', params
-        .then (response) -> deferred.resolve response
+        .then (result) -> deferred.resolve result
 
     deferred.promise
 

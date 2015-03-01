@@ -1,12 +1,15 @@
 app = require('express')()
+request = require 'request'
 http = require('http').Server(app)
 io = require('socket.io')(http)
 
 class Server
     constructor: (core, port = 3000) ->
-        core.brain.on 'output', (output) ->
+        core.brain.on 'output', (output) =>
             # io.emit 'output', output.text
-            # core.speech.exec output.voice
+            core.speech.exec output.voice
+            if output.notification
+                @sendNotification output.notification
 
         app.get '/', (req, res) ->
             res.sendFile __dirname + '/index.html'
@@ -24,5 +27,18 @@ class Server
         http.listen port
 
         app
+
+    sendNotification: (notification) ->
+        if notification.list
+            list = notification.list
+
+            url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
+            command = 'eve_list' #test1,test2,test3=:=eve_list
+            # JSON.stringify output.notification
+            message = list.map((l) -> '"' + l + '"').join(',') + '=:=' + command
+
+            console.log message
+
+            request(url + list.join(',') + '=:=' + command)
 
 module.exports = Server

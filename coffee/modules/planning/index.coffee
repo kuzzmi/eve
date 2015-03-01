@@ -102,10 +102,67 @@ class Planning extends BaseModule
 
         deferred.promise
 
-    count: (response) ->
-        response.reduce (a, b) -> 
-                a + b.data.length
-            , 0
+    count: (query) ->
+        @query query
+            .then (response) =>
+                response.reduce (a, b) -> 
+                        a + b.data.length
+                    , 0
+            .then (amount) ->
+                voice: 
+                    phrase: 'You have ' + amount + ' tasks'
+
+    report: ->
+        query = []
+
+        if @datetime is 'tomorrow'
+            query.push 'today'
+        else
+            query.push @datetime
+
+        query.push 'overdue'
+
+        if @tag
+            query.push '@' + @tag
+
+        @query query
+            .then (response) =>
+                list = []
+                tasks = []
+                report = ['']
+
+                response.map (item) ->
+                    tasks = tasks.concat item.data
+
+                tasks.map (task) ->
+                    taskString = ''
+
+                    if task.due_date
+                        duedate = moment new Date(task.due_date)
+
+                        if task.has_notification
+                            taskString += duedate.format 'MM/DD h:mm a' + ' '
+                        else
+                            taskString += duedate.format 'MM/DD' + ' '
+                        
+                        if duedate < new Date()
+                            taskString = taskString.red
+                        else
+                            taskString = taskString.green
+
+                    taskString += task.content
+
+                    report.push '    ' + taskString
+                    list.push task.content
+
+                report.push '    Total: '.yellow + tasks.length.toString().yellow.bold
+
+                text:
+                    report.join '\r\n'
+                voice:
+                    phrase: 'Here is a list of your tasks, sir'
+                notification: 
+                    list: list
 
     exec: ->
         deferred = Q.defer()
@@ -114,27 +171,14 @@ class Planning extends BaseModule
             @login()
                 .then () =>
                     switch @action
-                        when 'print'
-                            @query '(@datetime, &home)'
-                                .then (response) =>
-                                        console.log response
+                        when 'report'
+                            @report()
                         when 'count_at_home'
-                            @query '(overdue, today) & @home'
-                                .then (response) =>
-                                    console.log response
-                                    @count response
-                                .then (amount) ->
-                                    voice: 
-                                        phrase: 'You have ' + amount + ' tasks'
+                            @count ['overdue', 'today', '@home']
                         when 'remind'
                             @addItem()
                         when 'count'
-                            @query 'overdue, today'
-                                .then (response) =>
-                                    @count response
-                                .then (amount) ->
-                                    voice: 
-                                        phrase: 'Today you have ' + amount + ' tasks'
+                            @count ['overdue', 'today']
                 .then (response) ->
                     super 
                         .then deferred.resolve
