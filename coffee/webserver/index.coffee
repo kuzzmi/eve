@@ -41,8 +41,6 @@ class Server
         if notification.text
             command = 'eve_resp_text'
             message = notification.text + '=:=' + command
-
-            console.log message
             
             request(url + message)
 
