@@ -32,6 +32,8 @@ class Brain extends EventEmitter
                     console.log e.stack
                 .done()
 
+    # Normalizing stimulus object to a Stimulus object
+    # to be able to handle it with Reflex object
     understand: (stimulus) ->
         deferred = Q.defer()
 
@@ -54,24 +56,19 @@ class Brain extends EventEmitter
     process: (reflex, action) ->
         reflex.exec(action)
             .then (response) =>
-                if response 
-                    @emit 'output', response
-
-                if (response.actions)
-                    @memory = [reflex]
-
-                response
+                if response then @emit 'output', response
+                if response.actions then @memory = [reflex]
         .fail (e) ->
             console.log e
             console.log e.stack
+
         .catch (e) ->
             console.log e
             console.log e.stack
+            
         # .fin =>
         #     @end = moment()
-
         #     diff = moment(@end - @start)
-
         #     console.log diff.format 'x'
 
         .done()
