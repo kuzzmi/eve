@@ -13,6 +13,7 @@
   "dependencies": {
     "colors": "^1.0.3",
     "cron": "^1.0.6",
+    "ebay-api": "^0.1.1",
     "express": "^4.11.2",
     "git-promise": "^0.2.0",
     "google-translate": "^0.1.8",

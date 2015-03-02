@@ -7,15 +7,19 @@ module.exports = (grunt) ->
 
     grunt.initConfig
         watch:
-            src: 
+            coffee: 
                 files: [
                     'coffee/**/*.coffee'
                 ]
-
                 options:
-                  interrupt: true
-
+                    interrupt: true
                 tasks: ['coffee:compile']
+            static:
+                files: [
+                    'coffee/**/*.json',
+                    'coffee/**/*.html'
+                ]
+                tasks: ['copy']
             tests: 
                 files: [
                     'tests/**/*.js'
@@ -45,7 +49,7 @@ module.exports = (grunt) ->
                 ext: '.js'
 
         copy:
-            dist:
+            static:
                 files: [{
                     expand: true,
                     dot: true,
@@ -74,7 +78,7 @@ module.exports = (grunt) ->
         'coffee', 
         'copy',
         # 'concurrent:eve',
-        # 'watch'
+        'watch'
     ]
 
     grunt.registerTask 'start', 'execute:eve'
