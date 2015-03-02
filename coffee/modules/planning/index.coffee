@@ -26,15 +26,18 @@ class Planning extends BaseModule
                 type = 'interval'
 
             switch type
-                when 'second' || 'hour'
+                when 'second'
                     @datetime = moment @datetime.value
-                        .format 'MMM DD h:mm a'
+                        .format 'YYYY-M-DDTHH:mm'
+                when 'hour'
+                    @datetime = moment @datetime.value
+                        .format 'YYYY-M-DDTHH:mm'
                 when 'interval'
                     @datetime = moment @datetime.to.value
-                        .format 'MMM DD h:mm a'
+                        .format 'YYYY-M-DDTHH:mm'
                 when 'day' 
                     @datetime = moment @datetime.value
-                        .format 'DD MMM'
+                        .format 'DD MM'
             
         else
             @datetime = 'tomorrow'
@@ -90,14 +93,16 @@ class Planning extends BaseModule
             if @tag
                 item.labels = JSON.stringify [config.labels[@tag].id]
 
-
             API.addItem item
-                .then (item) ->
-                    deferred.resolve
+                .then (item) =>
+                    console.log item
+                    response = 
+                        text: 'Task "' + utils.capitalize(@item) + '" added'
                         voice:
                             phrase: 'Reminder added'
                         notification:
                             text: 'Task "' + utils.capitalize(@item) + '" added'
+                    deferred.resolve response
             
         else
             console.log @item
@@ -141,8 +146,11 @@ class Planning extends BaseModule
                     tasks = tasks.concat item.data
 
                 if tasks.length is 0
+                    phrase = 'You have no tasks'
                     return voice:
-                            phrase: 'You have no tasks'
+                            phrase: phrase
+                        notification:
+                            text: phrase
 
                 tasks.map (task) ->
                     taskString = ''
