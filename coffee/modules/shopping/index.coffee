@@ -19,9 +19,9 @@ class Shopping extends BaseModule
             
             'paginationInput.entriesPerPage' : 10
 
-        filters = {}
+        filters =
             # itemFilter   : [ new ebay.ItemFilter 'FreeShippingOnly', true ]
-            # domainFilter : [ new ebay.ItemFilter 'domainName', 'Digital_Cameras' ]
+            domainFilter : [ new ebay.ItemFilter 'domainName', 'Electronics' ]
 
         request = 
             serviceName : 'FindingService'
@@ -45,16 +45,22 @@ class Shopping extends BaseModule
                 for item in items
                     modelName = Categories[item.primaryCategory.categoryName]
 
-                    Model = require './models/' + modelName
-
+                    try
+                        Model = require './models/' + modelName                        
+                    catch e
+                        console.log item.title
+                        console.log item.primaryCategory.categoryName
+                        continue
+                    
                     model = new Model item
 
-                    console.log()
-                    console.log '         Color: '.yellow + model.parsed.color
-                    console.log '       Storage: '.yellow + model.parsed.storage
-                    console.log '  Subscription: '.yellow + model.parsed.subscr
-                    console.log '         Price: '.yellow + model.price.bold
-                    console.log '          Link: '.yellow + model.link
+                    console.log model.summarize()
+                    # console.log()
+                    # console.log '      Color: '.yellow + model.parsed.color
+                    # console.log '    Storage: '.yellow + model.parsed.storage
+                    # console.log '   Unlocked: '.yellow + model.parsed.unlocked
+                    # console.log '      Price: '.yellow + model.price.yellow.bold
+                    # console.log '       Link: '.yellow + model.link
 
                     # if item.sellingStatus.convertedCurrentPrice
                     #     currency = Object.keys(item.sellingStatus.convertedCurrentPrice)[0]

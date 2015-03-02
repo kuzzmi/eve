@@ -40,31 +40,47 @@ itemId: '331487549500',
 
 ###
 
-Base = require './base'
+colors = require 'colors'
+Base   = require './base'
 
 class Smartphone extends Base
     parse: (title) ->
         colorRegex  = /blue|green|gold|white|yellow|black|silver|gray|grey|cyan|pink|fuchsia/ig
         storageRegex   = /[0-9]{2,3}gb/ig
-        subscrRegex = /at&t|verizon/ig
+        unlockedRegex = /at&?t|verizon/ig
 
-        color   = title.match(colorRegex)
-        storage = title.match(storageRegex)
-        subscr  = title.match(subscrRegex)
+        color    = title.match(colorRegex)
+        storage  = title.match(storageRegex)
+        unlocked = title.match(unlockedRegex)
 
         if color
             color = color[0]
+        else
+            color = 'Unknown'
         if storage
             storage = storage[0]
-        if subscr
-            subscr = subscr[0]
         else
-            subscr = 'unlocked'
+            storage = 'Unknown'
+        if unlocked
+            unlocked = 'No'
+        else
+            unlocked = 'Yes'
 
         {
-            color   : color
-            storage : storage
-            subscr  : subscr.toUpperCase()
+            color    : color
+            storage  : storage
+            unlocked : unlocked
         }
+
+    summarize: ->
+        report = ['']
+
+        report.push '      Color: '.yellow + @parsed.color
+        report.push '    Storage: '.yellow + @parsed.storage
+        report.push '   Unlocked: '.yellow + @parsed.unlocked
+        report.push '      Price: '.yellow + @price.yellow.bold
+        report.push '       Link: '.yellow + @link
+
+        report.join '\r\n'
 
 module.exports = Smartphone
