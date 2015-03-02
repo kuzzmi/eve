@@ -14,6 +14,10 @@ SecondForecast.prototype.toString = function(params) {
         args: undefined
     };
 
+    var notification = {
+        text: undefined
+    }
+
     var textReport = undefined;
 
     switch (params.details) {
@@ -24,6 +28,8 @@ SecondForecast.prototype.toString = function(params) {
             textReport = [
                 this.cityName + ': ' + this.temp + '°C, ' + this.description
             ].join('\r\n');
+
+            notification.text = textReport
 
             break;
         case 'temperature':
@@ -64,7 +70,7 @@ SecondForecast.prototype.toString = function(params) {
             break;
     }
 
-    return [phrase, textReport];
+    return [phrase, textReport, notification];
 };
 
 module.exports = SecondForecast;`

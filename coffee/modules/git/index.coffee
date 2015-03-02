@@ -67,8 +67,12 @@ class Git extends BaseModule
             when 'pull'
                 git 'pull origin master'
                     .then (output) ->
+                        phrase = 'Download completed'
                         super 
-                            text: output
+                            voice: 
+                                phrase: phrase
+                            notification:
+                                text: phrase
 
             when 'push'
                 git 'add -A'

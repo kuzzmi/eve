@@ -26,6 +26,10 @@ DayForecast.prototype.toString = function(params) {
     };
 
     var textReport = undefined;
+    var notification = {
+        list: undefined,
+        text: undefined
+    }
 
     switch (params.details) {
         case 'all':
