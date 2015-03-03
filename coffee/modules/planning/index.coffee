@@ -95,7 +95,6 @@ class Planning extends BaseModule
 
             API.addItem item
                 .then (item) =>
-                    console.log item
                     response = 
                         text: 'Task "' + utils.capitalize(@item) + '" added'
                         voice:
