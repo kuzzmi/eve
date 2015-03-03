@@ -16,11 +16,12 @@ class Shopping extends BaseModule
         params =
             keywords        : [ @query ]
             outputSelector  : [ 'AspectHistogram' ]
+            # sortOrder       : [ 'PricePlusShippingLowest' ]
             
-            'paginationInput.entriesPerPage' : 10
+            'paginationInput.entriesPerPage' : 5
 
         filters =
-            # itemFilter   : [ new ebay.ItemFilter 'FreeShippingOnly', true ]
+            itemFilter   : [ new ebay.ItemFilter 'AvailableTo', 'CH' ]
             domainFilter : [ new ebay.ItemFilter 'domainName', 'Electronics' ]
 
         request = 
@@ -35,23 +36,17 @@ class Shopping extends BaseModule
             , (error, items) =>
                 if error then deferred.reject error
 
-                # console.log()
-                # console.log items.length + ' items found:'
-
-                items = items.sort (a, b) ->
-                    a.sellingStatus.convertedCurrentPrice - 
-                        b.sellingStatus.convertedCurrentPrice
-
                 phrase = 'I\'ve found some good deals about ' + @query
 
                 response =
                     text: phrase + '\r\n',
                     voice: 
                         phrase: phrase
-                
 
                 for item in items
                     modelName = Categories[item.primaryCategory.categoryName]
+
+                    # console.log item
 
                     try
                         Model = require './models/' + modelName

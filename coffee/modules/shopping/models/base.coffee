@@ -7,14 +7,30 @@ class BaseModel
         @parsed = @parse obj.title
         @condition = obj.condition.conditionDisplayName
         @link = obj.viewItemURL
-        if obj.sellingStatus.convertedCurrentPrice
-            currency = Object.keys(obj.sellingStatus.convertedCurrentPrice)[0]
-            @price = obj.sellingStatus.convertedCurrentPrice[currency] + ' ' + currency
+
+        @listingType = obj.listingInfo.listingType
+        
+        @type = 'Other'
+        @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
+
+        switch @listingType
+            when 'Auction'
+                @type = @listingType
+                @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
+            when 'AuctionWithBIN'
+                @type = 'Auction with Buy It Now'
+                @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
+                @BINprice = '$' + obj.listingInfo.convertedBuyItNowPrice.USD
+            when 'FixedPrice'
+                @type = 'Fixed price'
+                @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
+            when 'StoreInventory'
+                @type = 'Store inventory'
+                @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
         
     parse: ->
 
     formatProperty: (key, value) ->
-
         prependWithSpaces = (string, total) ->
             if total - string.length + 1 < 0
                 return
@@ -34,8 +50,12 @@ class BaseModel
 
         if details
             report = report.concat details
-
+        
+        report.push @formatProperty ': : : : ', ''
+        report.push @formatProperty 'Type', @type.bold
         report.push @formatProperty 'Price', @price.yellow.bold
+        if @BINprice
+            report.push @formatProperty 'Buy It Now', @BINprice.green.bold
         report.push @formatProperty 'Link', @link
 
         report.push ''

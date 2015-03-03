@@ -15,6 +15,8 @@ class Wiki extends BaseModule
         reportData = data.infobox.fields;
 
         prependWithSpaces = (string, total) ->
+            if total - string.length + 1 < 0
+                return ''
             spaces = new Array(total - string.length + 1)
                 .join ' '
             spaces + string
@@ -31,6 +33,9 @@ class Wiki extends BaseModule
         strings.push '';
 
         for k, v of reportData
+            if not k or not v 
+                continue
+
             desc = prependWithSpaces k.replace(/\n/g, ''), longest
             strings.push (desc + ': ').yellow + 
                 (v.replace /\n\nList\n\n/g, ''
@@ -67,7 +72,7 @@ class Wiki extends BaseModule
 
             data = JSON.parse body
 
-            if data[2].length is 0 then deferred.reject 'Sorry, nothing found about' + @query
+            if data[2].length is 0 then deferred.reject 'Sorry, I\'ve found nothing about' + @query
 
             properName = data[1]
 
@@ -81,10 +86,13 @@ class Wiki extends BaseModule
                     deferred.reject err
 
                 response.text = @reportFromJson properName, description, element
-                response.voice = {
-                    phrase: description
-                        .replace /(\s*\([^)]*\))/g, ''
-                }
+                if description
+                    response.voice = {
+                        phrase: description
+                            .replace /(\s*\([^)]*\))/g, ''
+                    }
+                else
+                    response = 'Sorry, I\'ve found nothing'
             
                 super response
                     .then deferred.resolve

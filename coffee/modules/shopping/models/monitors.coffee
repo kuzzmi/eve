@@ -18,36 +18,22 @@ colors = require 'colors'
 Base   = require './base'
 
 class Monitor extends Base
+    
     parse: (title) ->
-        sizeRegex = /[0-9]{2}"/ig
-        colorRegex  = /blue|green|gold|white|yellow|black|silver|gray|grey|cyan|pink|fuchsia/ig
-        manufRegex = /samsung|asus|aoc|dell|lg|philips/ig
-        resRegex = /fullhd|4k|[0-9]{4}x[0-9]{4}/ig
+        sizeRegex    = /[0-9]{2}("|[- ]?inch(es)?)/ig
+        colorRegex   = /blue|green|gold|white|yellow|black|silver|gray|grey|cyan|pink|fuchsia/ig
+        manufRegex   = /samsung|asus|aoc|dell|lg|philips/ig
+        resRegex     = /fullhd|4k|[0-9]{4}x[0-9]{4}/ig
 
         color        = title.match colorRegex
         size         = title.match sizeRegex
         manufacturer = title.match manufRegex
         resolution   = title.match resRegex
 
-        if color
-            color = color[0]
-        else
-            color = 'Unknown'
-
-        if resolution
-            resolution = resolution[0]
-        else
-            resolution = 'Unknown'
-
-        if size
-            size = size[0]
-        else
-            size = 'Unknown'
-
-        if manufacturer
-            manufacturer = manufacturer[0]
-        else
-            manufacturer = 'Unknown'
+        if size         then size = size[0]                 else size         = 'Unknown'
+        if color        then color = color[0]               else color        = 'Unknown'       
+        if resolution   then resolution = resolution[0]     else resolution   = 'Unknown'  
+        if manufacturer then manufacturer = manufacturer[0] else manufacturer = 'Unknown'
 
         {
             color        : color
@@ -59,10 +45,15 @@ class Monitor extends Base
     summarize: ->
         report = []
         
-        report.push @formatProperty 'Color', @parsed.color
-        report.push @formatProperty 'Size', @parsed.size
-        report.push @formatProperty 'Resolution', @parsed.resolution
-        report.push @formatProperty 'Manufacturer', @parsed.manufacturer
+        props = [
+            [       'Color', @parsed.color       ],
+            [        'Size', @parsed.size        ],
+            [  'Resolution', @parsed.resolution  ],
+            ['Manufacturer', @parsed.manufacturer]
+        ]
+
+        for i in props
+            report.push @formatProperty i[0], i[1]
 
         super report
 
