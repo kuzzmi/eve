@@ -32,43 +32,35 @@ class Shopping extends BaseModule
             parser      : ebay.parseItemsFromResponse
 
         ebay.ebayApiGetRequest request
-            , (error, items) ->
+            , (error, items) =>
                 if error then deferred.reject error
 
-                console.log()
-                console.log items.length + ' items found:'
+                # console.log()
+                # console.log items.length + ' items found:'
 
                 items = items.sort (a, b) ->
                     a.sellingStatus.convertedCurrentPrice - 
                         b.sellingStatus.convertedCurrentPrice
 
+                response =
+                    text: '',
+                    voice: 
+                        phrase: 'I\'ve found some good deals for ' + @query
+                
+
                 for item in items
                     modelName = Categories[item.primaryCategory.categoryName]
 
                     try
-                        Model = require './models/' + modelName                        
+                        Model = require './models/' + modelName
                     catch e
-                        console.log item.title
-                        console.log item.primaryCategory.categoryName
-                        continue
+                        Model = require './models/base'
                     
                     model = new Model item
 
-                    console.log model.summarize()
-                    # console.log()
-                    # console.log '      Color: '.yellow + model.parsed.color
-                    # console.log '    Storage: '.yellow + model.parsed.storage
-                    # console.log '   Unlocked: '.yellow + model.parsed.unlocked
-                    # console.log '      Price: '.yellow + model.price.yellow.bold
-                    # console.log '       Link: '.yellow + model.link
+                    response.text += model.summarize()
 
-                    # if item.sellingStatus.convertedCurrentPrice
-                    #     currency = Object.keys(item.sellingStatus.convertedCurrentPrice)[0]
-                    #     price = item.sellingStatus.convertedCurrentPrice[currency] + ' ' + currency
-
-                    #     console.log '- (' + price + ') ' + item.title
-
-                super 'Done'
+                super response
                     .then deferred.resolve
 
         deferred.promise

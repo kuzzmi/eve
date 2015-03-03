@@ -73,14 +73,12 @@ class Smartphone extends Base
         }
 
     summarize: ->
-        report = ['']
+        report = []
+        
+        report.push '        Color: '.yellow + @parsed.color
+        report.push '      Storage: '.yellow + @parsed.storage
+        report.push '     Unlocked: '.yellow + @parsed.unlocked
 
-        report.push '      Color: '.yellow + @parsed.color
-        report.push '    Storage: '.yellow + @parsed.storage
-        report.push '   Unlocked: '.yellow + @parsed.unlocked
-        report.push '      Price: '.yellow + @price.yellow.bold
-        report.push '       Link: '.yellow + @link
-
-        report.join '\r\n'
+        super report
 
 module.exports = Smartphone

@@ -57,15 +57,13 @@ class Monitor extends Base
         }
 
     summarize: ->
-        report = ['']
-
+        report = []
+        
         report.push '        Color: '.yellow + @parsed.color
         report.push '         Size: '.yellow + @parsed.size
         report.push '   Resolution: '.yellow + @parsed.resolution
         report.push ' Manufacturer: '.yellow + @parsed.manufacturer
-        report.push '        Price: '.yellow + @price.yellow.bold
-        report.push '         Link: '.yellow + @link
 
-        report.join '\r\n'
+        super report
 
 module.exports = Monitor

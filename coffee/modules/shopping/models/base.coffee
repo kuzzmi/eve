@@ -10,11 +10,13 @@ class BaseModel
         
     parse: ->
 
-    summarize: ->
+    summarize: (details) ->
         report = ['']
 
-        report.push ' Price: '.yellow + @price.yellow.bold
-        report.push '  Link: '.yellow + @link
+        report.push '        Price: '.yellow + @price.yellow.bold
+        report.push '         Link: '.yellow + @link
+
+        report = report.concat details
 
         report.join '\r\n'
 
