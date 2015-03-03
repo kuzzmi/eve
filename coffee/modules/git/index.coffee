@@ -130,6 +130,7 @@ class Git extends BaseModule
                     versiony
                         .from 'package.json'
                         .minor modulesDirs.length
+                        .patch 0
                         .to 'package.json'
                 else 
                     versiony
