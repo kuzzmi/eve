@@ -12,9 +12,9 @@ class SystemTools extends BaseModule
                 super 'Done'
                 
             when 'version'
-                package = require 'package.json'
+                pkg = require process.cwd() + '/package.json'
 
-                super package.version
+                super pkg.version
 
 
 module.exports = SystemTools
