@@ -18,7 +18,7 @@ colors = require 'colors'
 Base   = require './base'
 
 class Monitor extends Base
-    
+
     parse: (title) ->
         sizeRegex    = /[0-9]{2}("|[- ]?inch(es)?)/ig
         colorRegex   = /blue|green|gold|white|yellow|black|silver|gray|grey|cyan|pink|fuchsia/ig
@@ -30,9 +30,9 @@ class Monitor extends Base
         manufacturer = title.match manufRegex
         resolution   = title.match resRegex
 
-        if size         then size = size[0]                 else size         = 'Unknown'
-        if color        then color = color[0]               else color        = 'Unknown'       
-        if resolution   then resolution = resolution[0]     else resolution   = 'Unknown'  
+        if size         then size         = size[0]         else size         = 'Unknown'
+        if color        then color        = color[0]        else color        = 'Unknown'       
+        if resolution   then resolution   = resolution[0]   else resolution   = 'Unknown'  
         if manufacturer then manufacturer = manufacturer[0] else manufacturer = 'Unknown'
 
         {
@@ -52,8 +52,8 @@ class Monitor extends Base
             ['Manufacturer', @parsed.manufacturer]
         ]
 
-        for i in props
-            report.push @formatProperty i[0], i[1]
+        for prop in props
+            report.push @formatProperty prop[0], prop[1]
 
         super report
 
