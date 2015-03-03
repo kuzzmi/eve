@@ -4,7 +4,7 @@
   "description": "Personal Assistant",
   "main": "index.js",
   "scripts": {
-    "start": "node js/eve",
+    "start": "nodemon js/eve",
     "test": "grunt test"
   },
   "author": "Igor Kuzmenko",

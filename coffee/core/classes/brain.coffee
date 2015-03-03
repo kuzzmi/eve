@@ -49,9 +49,9 @@ class Brain extends EventEmitter
                     deferred.resolve new Reflex new Stimulus res.outcomes[0]
 
         else
-            if stimulus[0] isnt '/' or stimulus[0] isnt '!'
+            if stimulus[0] is '/' or stimulus[0] is '!'
                 stimulus = 
-                    intent: 'core',
+                    intent: 'clitools',
                     entities:
                         action: [{
                             value: stimulus.slice 1
