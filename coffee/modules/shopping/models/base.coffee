@@ -16,6 +16,9 @@ class BaseModel
     formatProperty: (key, value) ->
 
         prependWithSpaces = (string, total) ->
+            if total - string.length + 1 < 0
+                return
+                
             spaces = new Array(total - string.length + 1)
                 .join ' '
             spaces + string

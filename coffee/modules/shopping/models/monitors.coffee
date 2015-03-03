@@ -59,10 +59,10 @@ class Monitor extends Base
     summarize: ->
         report = []
         
-        report.push @formatProperty 'Color' + @parsed.color
-        report.push @formatProperty 'Size' + @parsed.size
-        report.push @formatProperty 'Resolution' + @parsed.resolution
-        report.push @formatProperty 'Manufacturer' + @parsed.manufacturer
+        report.push @formatProperty 'Color', @parsed.color
+        report.push @formatProperty 'Size', @parsed.size
+        report.push @formatProperty 'Resolution', @parsed.resolution
+        report.push @formatProperty 'Manufacturer', @parsed.manufacturer
 
         super report
 

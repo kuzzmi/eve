@@ -42,10 +42,12 @@ class Shopping extends BaseModule
                     a.sellingStatus.convertedCurrentPrice - 
                         b.sellingStatus.convertedCurrentPrice
 
+                phrase = 'I\'ve found some good deals about ' + @query
+
                 response =
-                    text: '',
+                    text: phrase + '\r\n',
                     voice: 
-                        phrase: 'I\'ve found some good deals for ' + @query
+                        phrase: phrase
                 
 
                 for item in items
