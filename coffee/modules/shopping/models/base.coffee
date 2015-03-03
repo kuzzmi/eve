@@ -5,6 +5,7 @@ class BaseModel
         @title = obj.title
         @category = obj.primaryCategory.categoryName
         @parsed = @parse obj.title
+        @condition = obj.condition.conditionDisplayName
         @link = obj.viewItemURL
         if obj.sellingStatus.convertedCurrentPrice
             currency = Object.keys(obj.sellingStatus.convertedCurrentPrice)[0]
@@ -26,6 +27,7 @@ class BaseModel
 
         report.push @formatProperty 'Title', @title
         report.push @formatProperty 'Category', @category
+        report.push @formatProperty 'Condition', @condition
 
         if details
             report = report.concat details

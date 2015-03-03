@@ -37,7 +37,7 @@ class Brain extends EventEmitter
     understand: (stimulus) ->
         deferred = Q.defer()
 
-        if stimulus.constructor is String
+        if stimulus.constructor is String and stimulus[0] isnt '/' and stimulus[0] isnt '!'
             wit.captureTextIntent 'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA', stimulus, (err, res) ->
                 if err
                     deferred.reject err
@@ -49,6 +49,13 @@ class Brain extends EventEmitter
                     deferred.resolve new Reflex new Stimulus res.outcomes[0]
 
         else
+            if stimulus[0] isnt '/' or stimulus[0] isnt '!'
+                stimulus = 
+                    intent: 'core',
+                    entities:
+                        action: [{
+                            value: stimulus.slice 1
+                        }]
             deferred.resolve new Reflex stimulus
 
         deferred.promise
