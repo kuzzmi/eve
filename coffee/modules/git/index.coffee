@@ -2,6 +2,7 @@ BaseModule = require '../base'
 git        = require 'git-promise'
 gitUtils   = require 'git-promise/util'
 versiony   = require 'versiony'
+fs         = require 'fs'
 
 class Git extends BaseModule
     constructor: (@params) ->
@@ -10,6 +11,20 @@ class Git extends BaseModule
         @repo   = @getEntity 'git_repo',   'eve'
         # @name = @getEntity 'reference_name_type', 'neutral'
         # @vocabulary = __dirname + '/vocabulary.json'
+
+    getDirs = (rootDir) ->
+        files = fs.readdirSync(rootDir)
+        dirs = []
+
+        for file in files
+            if file[0] != '.'
+                filePath = "#{rootDir}/#{file}"
+                stat = fs.statSync(filePath)
+
+                if stat.isDirectory()
+                    dirs.push(file)
+
+        return dirs
 
     exec: ->
         params = 
@@ -84,9 +99,12 @@ class Git extends BaseModule
                                 text: phrase
 
             when 'push'
+                modulesCount = getDirs(process.cwd() + '/coffee/modules').length
+
                 versiony
                     .from 'package.json'
                     .patch()
+                    .minor(modulesCount)
                     .to 'package.json'
 
                 git 'add -A'
