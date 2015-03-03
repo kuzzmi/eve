@@ -75,9 +75,9 @@ class Smartphone extends Base
     summarize: ->
         report = []
         
-        report.push '        Color: '.yellow + @parsed.color
-        report.push '      Storage: '.yellow + @parsed.storage
-        report.push '     Unlocked: '.yellow + @parsed.unlocked
+        report.push @formatProperty 'Color', @parsed.color
+        report.push @formatProperty 'Storage', @parsed.storage
+        report.push @formatProperty 'Unlocked', @parsed.unlocked
 
         super report
 
