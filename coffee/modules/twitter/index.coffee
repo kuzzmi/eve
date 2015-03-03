@@ -18,7 +18,7 @@ class TwitterModule extends BaseModule
 
         client.post 'statuses/update', 
             status: '#hooray! I\'m getting smarter. Now I can ' + moduleJSON.skill + '. Exciting!'
-
+        , ->
     exec: ->
 
 module.exports = TwitterModule
