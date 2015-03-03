@@ -1,6 +1,7 @@
 BaseModule = require '../base'
 git        = require 'git-promise'
 gitUtils   = require 'git-promise/util'
+versiony   = require 'versiony'
 
 class Git extends BaseModule
     constructor: (@params) ->
@@ -68,7 +69,7 @@ class Git extends BaseModule
                 git 'pull origin master'
                     .then (output) ->
                         pkg = require process.cwd() + '/package.json'
-                        phrase = 'Updated to ' + pkg.version
+                        phrase = 'Updated to v.' + pkg.version
                         super
                             text: phrase
                             voice: 
@@ -77,16 +78,23 @@ class Git extends BaseModule
                                 text: phrase
 
             when 'push'
+                versiony
+                    .from 'package.json'
+                    .patch()
+                    .to 'package.json'
+
                 git 'add -A'
                     .then ->
                         git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
                     .then ->
                         git 'push origin master'
                     .then ->
-                        phrase = 'Upload completed'
+                        pkg = require process.cwd() + '/package.json'
+                        phrase = 'Uploaded v.' + pkg.version
                         super 
+                            text: phrase
                             voice: 
-                                phrase: phrase
+                                phrase: 'Upload completed'
                             notification:
                                 text: phrase
                 
