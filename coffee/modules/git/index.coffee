@@ -76,13 +76,18 @@ class Git extends BaseModule
                             report += '. '
 
                         if report.length is 0
+                            phrase = 'Everything is up-to-date, sir'
                             super 
-                                text: 'Everything is up-to-date, sir'
+                                text: phrase
+                                voice: 
+                                    phrase: phrase
                                 notification: 
-                                    text: 'Everything is up-to-date, sir'
+                                    text: phrase
                         else 
                             super 
                                 text: report
+                                voice: 
+                                    phrase: report
                                 notification: 
                                     text: report
 
