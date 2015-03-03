@@ -9,7 +9,12 @@ class SystemTools extends BaseModule
         switch @action
             when 'clear'
                 `process.stdout.write('\033c')`
+                super 'Done'
+                
+            when 'version'
+                package = require 'package.json'
 
-        super 'Done'
+                super package.version
+
 
 module.exports = SystemTools
