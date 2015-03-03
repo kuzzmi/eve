@@ -67,10 +67,12 @@ class Git extends BaseModule
             when 'pull'
                 git 'pull origin master'
                     .then (output) ->
-                        phrase = 'Download completed'
-                        super 
+                        pkg = require process.cwd() + '/package.json'
+                        phrase = 'Updated to ' + pkg.version
+                        super
+                            text: phrase
                             voice: 
-                                phrase: phrase
+                                phrase: 'Update completed'
                             notification:
                                 text: phrase
 
