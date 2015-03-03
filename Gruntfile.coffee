@@ -19,7 +19,7 @@ module.exports = (grunt) ->
                     'coffee/**/*.json',
                     'coffee/**/*.html'
                 ]
-                tasks: ['newer:copy']
+                tasks: ['newer:copy:static']
             tests: 
                 files: [
                     'tests/**/*.js'

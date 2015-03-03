@@ -3,7 +3,8 @@ vocabulary = require '../core/classes/vocabulary'
 
 class BaseModule
     constructor: (@stimulus, @action) ->
-        @entities = @stimulus.entities
+        if @stimulus
+            @entities = @stimulus.entities
         @vocabulary = null
 
     getEntity: (name, def) ->

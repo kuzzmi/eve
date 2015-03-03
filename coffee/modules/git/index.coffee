@@ -4,6 +4,8 @@ gitUtils   = require 'git-promise/util'
 versiony   = require 'versiony'
 fs         = require 'fs'
 
+TwitterModule = require '../twitter'
+
 class Git extends BaseModule
     constructor: (@params) ->
         super @params
@@ -104,27 +106,50 @@ class Git extends BaseModule
                                 text: phrase
 
             when 'push'
-                modulesCount = getDirs(process.cwd() + '/coffee/modules').length
+                modulesDirs = getDirs(process.cwd() + '/coffee/modules')
 
-                versiony
-                    .from 'package.json'
-                    .patch()
-                    .minor(modulesCount)
-                    .to 'package.json'
+                modulesFile = process.cwd() + '/modules.json'
+                modules = require modulesFile
 
-                git 'add -A'
-                    .then ->
-                        git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
-                    .then ->
-                        git 'push origin master'
-                    .then ->
-                        pkg = require process.cwd() + '/package.json'
-                        phrase = 'Uploaded v.' + pkg.version
-                        super 
-                            text: phrase
-                            voice: 
-                                phrase: 'Upload completed'
-                            notification:
+                if modulesDirs.length isnt modules.list.length
+                    newModule = null
+                    for dir in modulesDirs
+                        found = !!~modules.list.indexOf dir
+                        if not found
+                            newModule = dir
+                            break
+
+                    twitter = new TwitterModule()
+                    twitter.tweetAboutNewModule newModule
+
+                    modules.list.push newModule
+                    modules.list = modules.list.sort()
+                    
+                    fs.writeFileSync modulesFile, JSON.stringify modules, null, 4
+                    
+                    versiony
+                        .from 'package.json'
+                        .minor(modulesDirs.length)
+                        .to 'package.json'
+                else 
+                    versiony
+                        .from 'package.json'
+                        .patch()
+                        .to 'package.json'
+
+                    git 'add -A'
+                        .then ->
+                            git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
+                        .then ->
+                            git 'push origin master'
+                        .then ->
+                            pkg = require process.cwd() + '/package.json'
+                            phrase = 'Uploaded v.' + pkg.version
+                            super 
                                 text: phrase
+                                voice: 
+                                    phrase: 'Upload completed'
+                                notification:
+                                    text: phrase
                 
 module.exports = Git
