@@ -129,7 +129,7 @@ class Git extends BaseModule
                     
                     versiony
                         .from 'package.json'
-                        .minor(modulesDirs.length)
+                        .minor modulesDirs.length
                         .to 'package.json'
                 else 
                     versiony
@@ -137,19 +137,19 @@ class Git extends BaseModule
                         .patch()
                         .to 'package.json'
 
-                    git 'add -A'
-                        .then ->
-                            git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
-                        .then ->
-                            git 'push origin master'
-                        .then ->
-                            pkg = require process.cwd() + '/package.json'
-                            phrase = 'Uploaded v.' + pkg.version
-                            super 
+                git 'add -A'
+                    .then ->
+                        git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
+                    .then ->
+                        git 'push origin master'
+                    .then ->
+                        pkg = require process.cwd() + '/package.json'
+                        phrase = 'Uploaded v.' + pkg.version
+                        super 
+                            text: phrase
+                            voice: 
+                                phrase: 'Upload completed'
+                            notification:
                                 text: phrase
-                                voice: 
-                                    phrase: 'Upload completed'
-                                notification:
-                                    text: phrase
                 
 module.exports = Git
