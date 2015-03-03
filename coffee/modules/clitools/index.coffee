@@ -9,8 +9,6 @@ class SystemTools extends BaseModule
         switch @action
             when 'clear'
                 `process.stdout.write('\033c')`
-            when 'reload'
-                process.kill process.pid
 
         super 'Done'
 

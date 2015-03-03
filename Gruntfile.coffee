@@ -13,13 +13,13 @@ module.exports = (grunt) ->
                 ]
                 options:
                     interrupt: true
-                tasks: ['coffee:compile']
+                tasks: ['newer:coffee:compile']
             static:
                 files: [
                     'coffee/**/*.json',
                     'coffee/**/*.html'
                 ]
-                tasks: ['copy']
+                tasks: ['newer:copy']
             tests: 
                 files: [
                     'tests/**/*.js'
