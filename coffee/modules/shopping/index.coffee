@@ -14,15 +14,15 @@ class Shopping extends BaseModule
         deferred = Q.defer()
 
         params =
-            keywords        : [ @query ]
+            keywords        : [ @query            ]
             outputSelector  : [ 'AspectHistogram' ]
             # sortOrder       : [ 'PricePlusShippingLowest' ]
             
             'paginationInput.entriesPerPage' : 5
 
         filters =
-            itemFilter   : [ new ebay.ItemFilter 'AvailableTo', 'CH' ]
-            domainFilter : [ new ebay.ItemFilter 'domainName', 'Electronics' ]
+            itemFilter   : [ new ebay.ItemFilter 'AvailableTo', 'CH'          ]
+            domainFilter : [ new ebay.ItemFilter 'domainName' , 'Electronics' ]
 
         request = 
             serviceName : 'FindingService'
@@ -32,33 +32,50 @@ class Shopping extends BaseModule
             filters     : filters
             parser      : ebay.parseItemsFromResponse
 
-        ebay.ebayApiGetRequest request
-            , (error, items) =>
-                if error then deferred.reject error
+                
+        request2 = 
+            serviceName : 'Shopping'
+            opType      : 'GetShippingCosts'
+            appId       : 'IgorKuzm-e6eb-4580-8a63-f7a888125783'
+            params      : 
+                ItemId: 251864346746
 
-                phrase = 'I\'ve found some good deals about ' + @query
+        ebay.ebayApiGetRequest request2, (err, data) ->
+            console.log err
+            console.log err.stack
+            console.log data
+            super 'aaa'
+                .then deferred.resolve
+        # ebay.ebayApiGetRequest request
+        #     , (error, items) =>
+        #         if error then deferred.reject error
 
-                response =
-                    text: phrase + '\r\n',
-                    voice: 
-                        phrase: phrase
+        #         phrase = 'I\'ve found some good deals about ' + @query
 
-                for item in items
-                    modelName = Categories[item.primaryCategory.categoryName]
+        #         response =
+        #             text: phrase + '\r\n',
+        #             voice: 
+        #                 phrase: phrase
 
-                    # console.log item
-
-                    try
-                        Model = require './models/' + modelName
-                    catch e
-                        Model = require './models/base'
+        #         models = items.map (item) ->
+        #             modelName = Categories[item.primaryCategory.categoryName]
+        #             try
+        #                 Model = require './models/' + modelName
+        #             catch e
+        #                 Model = require './models/base'
                     
-                    model = new Model item
+        #             model = new Model item
+        #             return model
 
-                    response.text += model.summarize()
+        #         models[0].getShippingInfo()
+                
+        #         for model in models
+        #             model.summarize()
+        #                 .then (summary) ->
+        #                     response.text += summary
 
-                super response
-                    .then deferred.resolve
+        #         super response
+        #             .then deferred.resolve
 
         deferred.promise
         

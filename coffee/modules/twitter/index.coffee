@@ -20,6 +20,11 @@ class TwitterModule extends BaseModule
         @client.post 'statuses/update', 
             status: '#hooray! I\'m getting smarter. Now I can ' + moduleJSON.skill + '. Exciting! #bot #eve'
         , ->
+
+    tweetAboutYesterday: (amount) ->
+        @client.post 'statuses/update', 
+            status: "I feel myself useful. Yesterday I completed #{amount} orders from my boss. That's impressive, isn't it? ;) #bot #eve #sweetfeeling"
+        , ->
             
     retweetRandomPopularTweet: ->
 

@@ -25,5 +25,17 @@ class SystemTools extends BaseModule
 
                 super 'Something messy...'
 
+            when 'tweetAboutYesterday'
+                randomInt = require('../../common/utils').randomInt
+                Twitter = require '../twitter'
+
+                module = new Twitter()
+
+                rand = randomInt(58, 255)
+
+                module.tweetAboutYesterday rand
+
+                super 'Tweeted'
+
 
 module.exports = SystemTools

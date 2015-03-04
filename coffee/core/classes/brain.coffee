@@ -1,3 +1,19 @@
+###
+
+    After push with changing minor version ->
+        Tweet "Woohoo! I'm getting smarter. I've learnt how to become socialized!"
+
+    Log amount of stimuluses and randomly during the day ->
+        Depending on amount of stimuluses
+            Tweet "I feel myself (very)? useful. Sweet feeling. Yesterday I completed 341 orders. Isn't it impressive? ;)"
+            OR
+            Tweet ":( Nasty feeling of uselessness. It's like living without goal"
+            OR
+            Tweet "Looks like I'll have a promotion soon. ^_^ Looking forward it"
+            OR
+            Tweet "341 completed orders. Deal with it B-)"
+
+###
 wit          = require 'node-wit' 
 Q            = require 'q'
 EventEmitter = require('events').EventEmitter
@@ -32,7 +48,7 @@ class Brain extends EventEmitter
                     console.log e.stack
                 .done()
 
-    # Normalizing stimulus object to a Stimulus object
+    # Normalizing stimulus object to a Stimulus Model
     # to be able to handle it with Reflex object
     understand: (stimulus) ->
         deferred = Q.defer()
@@ -77,20 +93,3 @@ class Brain extends EventEmitter
 
 module.exports = Brain
 
-
-###
-
-    After push with changing minor version ->
-        Tweet "Woohoo! I'm getting smarter. I've learnt how to become socialized!"
-
-    Log amount of stimuluses and randomly during the day ->
-        Depending on amount of stimuluses
-            Tweet "I feel myself (very)? useful. Sweet feeling. Yesterday I completed 341 orders. Isn't it impressive? ;)"
-            OR
-            Tweet ":( Nasty feeling of uselessness. It's like living without goal"
-            OR
-            Tweet "Looks like I'll have a promotion soon. ^_^ Looking forward it"
-            OR
-            Tweet "341 completed orders. Deal with it B-)"
-
-###
