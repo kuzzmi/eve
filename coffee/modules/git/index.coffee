@@ -9,8 +9,6 @@ class Git extends BaseModule
         super @params
         @action = @getEntity 'git_action', 'status'
         @repo   = @getEntity 'git_repo',   'eve'
-        # @name = @getEntity 'reference_name_type', 'neutral'
-        # @vocabulary = __dirname + '/vocabulary.json'
 
     getDirs = (rootDir) ->
         files = fs.readdirSync(rootDir)

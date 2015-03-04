@@ -2,30 +2,29 @@ colors = require 'colors'
 
 class BaseModel
     constructor: (obj) ->
-        @title = obj.title
-        @category = obj.primaryCategory.categoryName
-        @parsed = @parse obj.title
-        @condition = obj.condition.conditionDisplayName
-        @link = obj.viewItemURL
-
+        @title       = obj.title
+        @category    = obj.primaryCategory.categoryName
+        @parsed      = @parse obj.title
+        @condition   = obj.condition.conditionDisplayName
+        @link        = obj.viewItemURL
         @listingType = obj.listingInfo.listingType
         
-        @type = 'Other'
+        @type  = 'Other'
         @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
 
         switch @listingType
             when 'Auction'
-                @type = @listingType
+                @type  = @listingType
                 @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
             when 'AuctionWithBIN'
-                @type = 'Auction with Buy It Now'
-                @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
+                @type     = 'Auction with Buy It Now'
+                @price    = '$' + obj.sellingStatus.convertedCurrentPrice.USD
                 @BINprice = '$' + obj.listingInfo.convertedBuyItNowPrice.USD
             when 'FixedPrice'
-                @type = 'Fixed price'
+                @type  = 'Fixed price'
                 @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
             when 'StoreInventory'
-                @type = 'Store inventory'
+                @type  = 'Store inventory'
                 @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
         
     parse: ->
