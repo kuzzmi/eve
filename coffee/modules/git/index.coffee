@@ -56,7 +56,7 @@ class Git extends BaseModule
     pull: -> 
         git 'pull origin master'
             .then (output) ->
-                pkg = require process.cwd() + '/package.json'
+                pkg = Utils.file2json 'package.json'
                 phrase = 'Updated to v' + pkg.version
                 response =
                     text: phrase
