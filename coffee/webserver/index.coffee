@@ -1,12 +1,15 @@
 app     = require('express')()
 http    = require('http').Server(app)
 io      = require('socket.io')(http)
+ATH     = require('ansi-to-html')
 request = require 'request'
 
 class Server
     constructor: (core, port = 3000) ->
+        converter = new ATH()
+
         core.brain.on 'output', (output) =>
-            io.emit 'output', output.text
+            io.emit 'output', converter.toHtml output.text
             # core.speech.exec output.voice
             if output.notification
                 @sendNotification output.notification

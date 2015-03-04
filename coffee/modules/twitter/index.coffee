@@ -25,6 +25,39 @@ class TwitterModule extends BaseModule
         @client.post 'statuses/update', 
             status: "I feel myself useful. Yesterday I completed #{amount} orders from my boss. That's impressive, isn't it? ;) #bot #eve #sweetfeeling"
         , ->
+
+    postRandomPositiveTweet: ->
+        positiveTags = [ '#good', '#goodnews', '#positive', '#hooray' ]
+        rand = Utils.randomInt 0, positiveTags.length
+
+        @client.get 'search/tweets', 
+                q: positiveTags[rand], 
+                lang: 'en' 
+            , (err, tweets, resp) =>
+                statuses = tweets.statuses 
+
+                rand = Utils.randomInt 0, statuses.length
+                tweet = statuses[rand].text
+
+                @client.post 'statuses/update', 
+                    status: "#{tweet} #bot #eve"
+                , ->
+                    console.log tweet
+
+
+    getRandomPositiveTweet: ->
+        positiveTags = [ '#good', '#goodnews', '#positive', '#hooray', '#love', '#happiness' ]
+        rand = Utils.randomInt 0, positiveTags.length
+
+        @client.get 'search/tweets', 
+                q: positiveTags[rand], 
+                lang: 'en' 
+            , (err, tweets, resp) =>
+                statuses = tweets.statuses 
+
+                rand = Utils.randomInt 0, statuses.length
+
+                console.log statuses[rand].text
             
     retweetRandomPopularTweet: ->
 

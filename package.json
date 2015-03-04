@@ -1,6 +1,6 @@
 {
     "name": "eve",
-    "version": "0.12.6",
+    "version": "0.12.7",
     "description": "Personal Assistant",
     "main": "js/eve.js",
     "scripts": {
@@ -11,6 +11,7 @@
     "license": "ISC",
     "repository": "git@bitbucket.org:kuzzmi/eve-2.git",
     "dependencies": {
+        "ansi-to-html": "^0.3.0",
         "colors": "^1.0.3",
         "cron": "^1.0.6",
         "ebay-api": "^0.1.1",

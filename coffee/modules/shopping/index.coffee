@@ -32,7 +32,6 @@ class Shopping extends BaseModule
             filters     : filters
             parser      : ebay.parseItemsFromResponse
 
-                
         request2 = 
             serviceName : 'Shopping'
             opType      : 'GetShippingCosts'
