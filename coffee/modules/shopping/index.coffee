@@ -38,15 +38,13 @@ class Shopping extends BaseModule
             opType      : 'GetShippingCosts'
             appId       : 'IgorKuzm-e6eb-4580-8a63-f7a888125783'
             params      : 
-                ItemId: 251864346746
+                ItemId  : 251864346746
 
         ebay.ebayApiGetRequest request2, (err, data) ->
-            console.log err
-            console.log err.stack
             console.log data
 
             response =
-                text: err + ' ' + err.stack,
+                text: err.stack,
                 voice: 
                     phrase: 's'
                 notification:
