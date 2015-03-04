@@ -43,24 +43,28 @@ class Git extends BaseModule
             .then ->
                 git 'push origin master'
             .then ->
-                pkg = require process.cwd() + '/package.json'
+                pkg = Utils.file2json 'package.json'
                 phrase = 'Uploaded v' + pkg.version
-                return text: phrase
+                response =
+                    text: phrase
                     voice: 
                         phrase: 'Upload completed'
                     notification:
                         text: phrase
+                return response
 
     pull: -> 
         git 'pull origin master'
             .then (output) ->
                 pkg = require process.cwd() + '/package.json'
                 phrase = 'Updated to v' + pkg.version
-                return text: phrase
+                response =
+                    text: phrase
                     voice: 
                         phrase: 'Update completed'
                     notification:
                         text: phrase
+                return response
 
     status: ->
         git 'status --porcelain'
