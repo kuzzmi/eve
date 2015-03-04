@@ -16,5 +16,14 @@ class SystemTools extends BaseModule
 
                 super pkg.version
 
+            when 'randomTweet'
+                Twitter = require '../twitter'
+
+                module = new Twitter()
+
+                module.retweetRandomPopularTweet()
+
+                super 'Something messy...'
+
 
 module.exports = SystemTools

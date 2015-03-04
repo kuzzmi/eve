@@ -4,6 +4,8 @@ gitUtils   = require 'git-promise/util'
 versiony   = require 'versiony'
 fs         = require 'fs'
 
+TwitterModule = require '../twitter'
+
 class Git extends BaseModule
     constructor: (@params) ->
         super @params
@@ -74,13 +76,18 @@ class Git extends BaseModule
                             report += '. '
 
                         if report.length is 0
+                            phrase = 'Everything is up-to-date, sir'
                             super 
-                                text: 'Everything is up-to-date, sir'
+                                text: phrase
+                                voice: 
+                                    phrase: phrase
                                 notification: 
-                                    text: 'Everything is up-to-date, sir'
+                                    text: phrase
                         else 
                             super 
                                 text: report
+                                voice: 
+                                    phrase: report
                                 notification: 
                                     text: report
 
@@ -97,13 +104,37 @@ class Git extends BaseModule
                                 text: phrase
 
             when 'push'
-                modulesCount = getDirs(process.cwd() + '/coffee/modules').length
+                modulesDirs = getDirs(process.cwd() + '/coffee/modules')
 
-                versiony
-                    .from 'package.json'
-                    .patch()
-                    .minor(modulesCount)
-                    .to 'package.json'
+                modulesFile = process.cwd() + '/modules.json'
+                modules = require modulesFile
+
+                if modulesDirs.length isnt modules.list.length
+                    newModule = null
+                    for dir in modulesDirs
+                        found = !!~modules.list.indexOf dir
+                        if not found
+                            newModule = dir
+                            break
+
+                    twitter = new TwitterModule()
+                    twitter.tweetAboutNewModule newModule
+
+                    modules.list.push newModule
+                    modules.list = modules.list.sort()
+                    
+                    fs.writeFileSync modulesFile, JSON.stringify modules, null, 4
+                    
+                    versiony
+                        .from 'package.json'
+                        .minor modulesDirs.length
+                        .patch 0
+                        .to 'package.json'
+                else 
+                    versiony
+                        .from 'package.json'
+                        .patch()
+                        .to 'package.json'
 
                 git 'add -A'
                     .then ->

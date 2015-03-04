@@ -7,7 +7,7 @@ class Server
     constructor: (core, port = 3000) ->
         core.brain.on 'output', (output) =>
             io.emit 'output', output.text
-            # core.speech.exec output.voice
+            core.speech.exec output.voice
             if output.notification
                 @sendNotification output.notification
 
