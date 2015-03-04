@@ -44,7 +44,15 @@ class Shopping extends BaseModule
             console.log err
             console.log err.stack
             console.log data
-            super 'aaa'
+
+            response =
+                text: err + ' ' + err.stack,
+                voice: 
+                    phrase: 's'
+                notification:
+                    text: err
+
+            super response
                 .then deferred.resolve
         # ebay.ebayApiGetRequest request
         #     , (error, items) =>
