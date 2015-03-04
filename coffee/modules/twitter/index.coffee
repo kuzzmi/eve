@@ -23,7 +23,7 @@ class TwitterModule extends BaseModule
 
     tweetAboutYesterday: (amount) ->
         @client.post 'statuses/update', 
-            status: "I feel myself useful. Yesterday I completed #{amount} orders from my boss. That's impressive, isn't it? ;) #bot #eve #sweetfeeling"
+            status: "I feel myself useful. Yesterday I completed #{amount} tasks from my boss. That's impressive, isn't it? ;) #bot #eve #sweetfeeling"
         , ->
 
     postRandomPositiveTweet: ->

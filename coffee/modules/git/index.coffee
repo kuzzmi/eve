@@ -38,10 +38,8 @@ class Git extends BaseModule
                 .to 'package.json'
 
         git 'add -A'
-            .then ->
-                git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
-            .then ->
-                git 'push origin master'
+            .then -> git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
+            .then -> git 'push origin master'
             .then ->
                 pkg = Utils.file2json 'package.json'
                 phrase = 'Uploaded v' + pkg.version
@@ -105,16 +103,8 @@ class Git extends BaseModule
 
     exec: ->
         switch @action
-            when 'status'
-                @status()
-                    .then super
+            when 'status' then @status().then super
+            when 'pull'   then   @pull().then super
+            when 'push'   then   @push().then super
 
-            when 'pull'
-                @pull()
-                    .then super
-
-            when 'push'
-                @push()
-                    .then super
-                
 module.exports = Git

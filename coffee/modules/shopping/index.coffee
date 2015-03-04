@@ -32,55 +32,36 @@ class Shopping extends BaseModule
             filters     : filters
             parser      : ebay.parseItemsFromResponse
 
-        request2 = 
-            serviceName : 'Shopping'
-            opType      : 'GetShippingCosts'
-            appId       : 'IgorKuzm-e6eb-4580-8a63-f7a888125783'
-            params      : 
-                ItemId  : 251864346746
+        ebay.ebayApiGetRequest request
+            , (error, items) =>
+                if error then deferred.reject error
 
-        ebay.ebayApiGetRequest request2, (err, data) ->
-            console.log data
+                phrase = 'I\'ve found some good deals about ' + @query
 
-            response =
-                text: err.stack,
-                voice: 
-                    phrase: 's'
-                notification:
-                    text: err
+                response =
+                    text: phrase + '\r\n',
+                    voice: 
+                        phrase: phrase
 
-            super response
-                .then deferred.resolve
-        # ebay.ebayApiGetRequest request
-        #     , (error, items) =>
-        #         if error then deferred.reject error
-
-        #         phrase = 'I\'ve found some good deals about ' + @query
-
-        #         response =
-        #             text: phrase + '\r\n',
-        #             voice: 
-        #                 phrase: phrase
-
-        #         models = items.map (item) ->
-        #             modelName = Categories[item.primaryCategory.categoryName]
-        #             try
-        #                 Model = require './models/' + modelName
-        #             catch e
-        #                 Model = require './models/base'
+                models = items.map (item) ->
+                    modelName = Categories[item.primaryCategory.categoryName]
+                    try
+                        Model = require './models/' + modelName
+                    catch e
+                        Model = require './models/base'
                     
-        #             model = new Model item
-        #             return model
+                    model = new Model item
+                    return model
 
-        #         models[0].getShippingInfo()
+                # models[0].getShippingInfo()
                 
-        #         for model in models
-        #             model.summarize()
-        #                 .then (summary) ->
-        #                     response.text += summary
+                for model in models
+                    model.summarize()
+                        .then (summary) ->
+                            response.text += summary
 
-        #         super response
-        #             .then deferred.resolve
+                super response
+                    .then deferred.resolve
 
         deferred.promise
         

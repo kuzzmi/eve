@@ -41,7 +41,10 @@ class BaseModel
                 .join ' '
             spaces + string
 
-        formatted = (prependWithSpaces(key, 15) + ': ').yellow + value
+        if value
+            formatted = (prependWithSpaces(key, 15) + ': ').yellow + value
+        else
+            formatted = prependWithSpaces(key, 15).yellow
 
     getShippingInfo: ->
         # ebay.ebayApiGetRequest {
@@ -78,11 +81,16 @@ class BaseModel
         if details
             report = report.concat details
         
-        report.push @formatProperty ': : : : ', ''
+        report.push @formatProperty '====='
         report.push @formatProperty 'Type', @type.bold
-        report.push @formatProperty 'Price', @price.yellow.bold
         if @BINprice
-            report.push @formatProperty 'Buy It Now', @BINprice.green.bold
+            report.push @formatProperty 'Price', @price.green.bold
+            report.push @formatProperty 'Buy It Now', @BINprice.yellow.bold
+        else
+            if @listingType is 'Auction'
+                report.push @formatProperty 'Price', @price.green.bold
+            else
+                report.push @formatProperty 'Price', @price.yellow.bold
         report.push @formatProperty 'Link', @link
 
         report.push ''

@@ -19,6 +19,7 @@ class Server
 
         app.get '/input/:query', (req, res) ->
             core.brain.emit 'input', req.params.query
+            io.emit 'output', req.params.query
             res.json
                 status: 'ok'
                 text: req.params.query
@@ -37,9 +38,8 @@ class Server
         url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
         
         if notification.list
-            list = notification.list
             command = 'eve_resp_list'
-            message = list.join(',') + '=:=' + command
+            message = notification.list.join(',') + '=:=' + command
 
             request url + message
 
