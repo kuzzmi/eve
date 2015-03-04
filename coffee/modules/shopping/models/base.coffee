@@ -6,14 +6,14 @@ class BaseModel
     constructor: (obj) ->
         @id          = obj.itemId
         @title       = obj.title
-        @category    = obj.primaryCategory.categoryName
-        @condition   = obj.condition.conditionDisplayName
+        @category    = obj.primaryCategory.categoryName if obj.primaryCategory
+        @condition   = obj.condition.conditionDisplayName if obj.condition
         @link        = obj.viewItemURL
-        @listingType = obj.listingInfo.listingType
+        @listingType = obj.listingInfo.listingType if obj.listingInfo
         @parsed      = @parse obj.title
         
-        @type  = 'Other'
-        @price = '$' + obj.sellingStatus.convertedCurrentPrice.USD
+        @type        = 'Other'
+        @price       = '$' + obj.sellingStatus.convertedCurrentPrice.USD
 
         switch @listingType
             when 'Auction'

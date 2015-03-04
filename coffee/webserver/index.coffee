@@ -9,7 +9,7 @@ class Server
         converter = new ATH()
 
         core.brain.on 'output', (output) =>
-            io.emit 'output', converter.toHtml output.text
+            io.emit 'output', converter.toHtml output.text.replace(/ /g, '&nbsp;')
             # core.speech.exec output.voice
             if output.notification
                 @sendNotification output.notification
@@ -26,6 +26,7 @@ class Server
 
         io.on 'connection', (socket) ->
             socket.on 'input', (msg) ->
+                io.emit 'output', msg
                 core.brain.emit 'input', msg
 
         http.listen port

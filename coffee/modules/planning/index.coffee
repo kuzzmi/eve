@@ -6,7 +6,7 @@ fs          = require 'fs'
 todoist     = require 'node-todoist'
 config      = require './config'
 moment      = require 'moment'
-utils       = require '../../common/utils'
+Utils       = require '../../common/utils'
 API         = require './todoist-api'
 
 class Planning extends BaseModule
@@ -20,16 +20,13 @@ class Planning extends BaseModule
 
         if @entities and @entities.datetime
             @datetime = @entities.datetime[0]
-            if @datetime.type is 'value' 
-                type = @datetime.grain
-            if @datetime.type is 'interval' 
-                type = 'interval'
 
+            type = switch @datetime.type
+                when 'value'    then @datetime.grain
+                when 'interval' then 'interval'
+                
             switch type
-                when 'second'
-                    @datetime = moment @datetime.value
-                        .format 'YYYY-M-DDTHH:mm'
-                when 'hour'
+                when 'second', 'hour'
                     @datetime = moment @datetime.value
                         .format 'YYYY-M-DDTHH:mm'
                 when 'interval'
@@ -40,7 +37,7 @@ class Planning extends BaseModule
                         .format 'DD MM'
             
         else
-            @datetime = 'tomorrow'
+            @datetime = 'today'
 
     login: ->
         deferred = Q.defer()
@@ -74,8 +71,7 @@ class Planning extends BaseModule
     query: (query) ->
         deferred = Q.defer()
 
-        API.query query
-            .then (response) -> deferred.resolve response
+        API.query(query).then deferred.resolve
 
         deferred.promise
 
@@ -85,7 +81,7 @@ class Planning extends BaseModule
         if typeof @item is 'string'
 
             item = 
-                content     : utils.capitalize(@item)
+                content     : Utils.capitalize(@item)
                 token       : @token
                 priority    : @priority
                 date_string : @datetime
@@ -95,12 +91,13 @@ class Planning extends BaseModule
 
             API.addItem item
                 .then (item) =>
+                    text = 'Task "' + Utils.capitalize(@item) + '" added'
                     response = 
-                        text: 'Task "' + utils.capitalize(@item) + '" added'
+                        text: text
                         voice:
                             phrase: 'Reminder added'
                         notification:
-                            text: 'Task "' + utils.capitalize(@item) + '" added'
+                            text: text
                     deferred.resolve response
             
         else
@@ -123,14 +120,7 @@ class Planning extends BaseModule
                         phrase: 'You have ' + amount + ' tasks'
 
     report: ->
-        query = []
-
-        if @datetime is 'tomorrow'
-            query.push 'today'
-        else
-            query.push @datetime
-
-        query.push 'overdue'
+        query = [ @datetime, 'overdue' ]
 
         if @tag
             query.push '@' + @tag
@@ -188,14 +178,10 @@ class Planning extends BaseModule
             @login()
                 .then () =>
                     switch @action
-                        when 'report'
-                            @report()
-                        when 'count_at_home'
-                            @count ['overdue', 'today', '@home']
-                        when 'remind'
-                            @addItem()
-                        when 'count'
-                            @count ['overdue', 'today']
+                        when 'report' then @report()
+                        when 'count_at_home' then @count ['overdue', 'today', '@home']
+                        when 'remind' then @addItem()
+                        when 'count' then @count ['overdue', 'today']
                 .then (response) ->
                     super 
                         .then deferred.resolve

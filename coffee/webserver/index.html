@@ -32,7 +32,6 @@
       $('form').submit(function(){
         var msg = $('#m').val();
         socket.emit('input', msg);
-        $('#messages').append($('<li>').text(msg));
         $('#m').val('');
         return false;
       });
