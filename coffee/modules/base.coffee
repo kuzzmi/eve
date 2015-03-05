@@ -51,6 +51,8 @@ class BaseModule
 
         deferred = Q.defer()
 
+        deferred.reject 'Result is undefined' if result is undefined
+
         response =
             text         : undefined
             voice        : undefined
@@ -64,7 +66,7 @@ class BaseModule
         else if result instanceof Array            
             @execAndConcat(result).then deferred.resolve
                         
-        else
+        else if typeof result is 'object'
             response.text         = result.text
             response.actions      = result.actions
             response.notification = result.notification
@@ -78,8 +80,6 @@ class BaseModule
                         deferred.resolve response
             else
                 deferred.resolve response
-
-        deferred.reject 'Result is undefined' if result is undefined
 
         deferred.promise
 ###
