@@ -4,20 +4,20 @@
     <title>Eve</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px monospace; background: #363636; }
+      body { font: 13px "Lucida Console", Monaco, monospace; background: #1a1a1a; color: #ffffff; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; }
       form button { width: 9.5%; background: #80D20F; border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #8B8B8B; }
+      #messages li:nth-child(odd) { background: #4e4e4e; }
       #messages li:nth-child(even) { background: #363636; }
     </style>
   </head>
   <body>
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" /><button>Send</button>the
     </form>
     
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
