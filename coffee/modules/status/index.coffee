@@ -5,6 +5,8 @@ colors     = require 'colors'
 Planning   = require '../planning'
 Weather    = require '../weather'
 
+Infrared   = require '../../api-clients/infrared'
+
 class Status extends BaseModule
     constructor: (@params) ->
         super @params
@@ -34,6 +36,8 @@ class Status extends BaseModule
 
         if @action is 'update' and @type is 'awake' and @value is 'true'
             deferred = Q.defer()
+            
+            Infrared.led 'power'
         
             new Weather
                 entities:
@@ -51,6 +55,8 @@ class Status extends BaseModule
 
         if @action is 'update' and @type is 'athome' and @value is 'true'
             deferred = Q.defer()
+
+            Infrared.led 'power'
         
             new Planning
                 entities:
@@ -63,6 +69,16 @@ class Status extends BaseModule
                 .then deferred.resolve
 
             return deferred.promise
+
+        if @action is 'update' and @type is 'athome' and @value is 'false'
+            Infrared.led 'power'
+
+            super response
+
+        if @action is 'update' and @type is 'awake' and @value is 'false'
+            Infrared.led 'power'
+
+            super response
 
         else
             super response

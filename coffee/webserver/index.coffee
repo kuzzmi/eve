@@ -10,7 +10,7 @@ class Server
 
         core.brain.on 'output', (output) =>
             io.emit 'output', converter.toHtml output.text.replace(/ /g, '&nbsp;')
-            # core.speech.exec output.voice
+            core.speech.exec output.voice
             if output.notification
                 @sendNotification output.notification
 

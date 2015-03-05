@@ -5,11 +5,13 @@ gitUtils   = require 'git-promise/util'
 versiony   = require 'versiony'
 fs         = require 'fs'
 Helper     = require './helpers'
+Infrared   = require '../../api-clients/infrared'
 
 TwitterModule = require '../twitter'
 
 class Git extends BaseModule
     push: ->
+        Infrared.led 'green'
         newModule = Helper.getNewModule()
 
         if newModule
@@ -44,6 +46,7 @@ class Git extends BaseModule
                         phrase: 'Upload completed'
                     notification:
                         text: phrase
+                Infrared.led 'white'
                 return response
 
     pull: -> 

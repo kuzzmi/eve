@@ -1,4 +1,5 @@
 BaseModule = require '../base'
+Infrared = require '../../api-clients/infrared'
 
 class SystemTools extends BaseModule
     constructor: (@params) ->
@@ -54,6 +55,11 @@ class SystemTools extends BaseModule
                 module.tweetAboutYesterday rand
 
                 super 'Tweeted'
+
+            when 'led'
+                Infrared.led 'power' 
+
+                super 'Done'
 
 
 module.exports = SystemTools
