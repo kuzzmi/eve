@@ -1,11 +1,7 @@
-Ivona = require 'ivona-node'
-child = require 'child_process'
+spawn = require('child_process').spawn
 Q     = require 'q'
 
-ivona = new Ivona {
-    accessKey: 'GDNAI76SALPR4SUR7M2Q',
-    secretKey: 'T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp'    
-}
+ivona = require '../../api-clients/ivona'
 
 sox = null
 
@@ -14,7 +10,7 @@ module.exports =
         if sox and sox.kill
             sox.kill 'SIGKILL'
 
-        sox = child.spawn 'sox', ['-t', 'mp3', '-', '-d', '-q']
+        sox = spawn 'sox', ['-t', 'mp3', '-', '-d', '-q']
 
         sox.stdin.on 'error', (error) ->
             if error.code is 'EPIPE'

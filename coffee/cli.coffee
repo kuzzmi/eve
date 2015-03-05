@@ -3,6 +3,8 @@ colors   = require 'colors'
 
 class CLI
     constructor: (@core, @argv) ->
+        `process.stdout.write('\033c')`
+
         @core.brain.on 'output', (output) =>
             if output.text
                 @print output.text
@@ -31,7 +33,7 @@ class CLI
     print: (data) ->
         process.stdout.clearLine();
         process.stdout.cursorTo(0);
-        console.log 'Eve: '.bold.magenta + data
+        console.log 'Eve: '.bold.cyan + data
 
         @rl.prompt true
     

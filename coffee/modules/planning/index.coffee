@@ -1,5 +1,4 @@
 BaseModule  = require '../base'
-request     = require 'request'
 Q           = require 'q'
 colors      = require 'colors'
 fs          = require 'fs'
@@ -136,6 +135,10 @@ class Planning extends BaseModule
 
                 if tasks.length is 0
                     phrase = 'You have no tasks'
+
+                    @robot.emit 'voice', phrase
+                    @robot.notification 'voice', phrase
+                    
                     return voice:
                             phrase: phrase
                         notification:

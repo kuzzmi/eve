@@ -14,39 +14,44 @@
             Tweet "341 completed orders. Deal with it B-)"
 
 ###
-wit          = require 'node-wit' 
 Q            = require 'q'
 EventEmitter = require('events').EventEmitter
 moment       = require 'moment'
+Wit          = require '../../api-clients/wit'
+Utils        = require '../../common/utils'
 
 ### EVE PARTS ###
 Stimulus     = require '../models/stimulus'
 Reflex       = require './reflex'
 
 class Brain extends EventEmitter
-    memoryFile: __dirname + '/memory.json'
+    config: Utils.file2json '.everc'
 
     constructor: (@params) ->
         @subscribe()
 
     subscribe: ->
         @on 'input', (stimulus) =>
-            if @memory and @memory.length > 0
+            @emit 'process.start'
+            
+            if @memory? and @memory.length > 0
                 reflex = @memory.pop()
                 @process reflex, stimulus
-                return
 
-            @start = moment()
-            @understand stimulus
-                .then (reflex) =>
-                    @process reflex
-                .fail (e) ->
-                    console.log e
-                    console.log e.stack
-                .catch (e) ->
-                    console.log e
-                    console.log e.stack
-                .done()
+            else
+                @start = moment()
+                @understand stimulus
+                    .then (reflex) =>
+                        @process reflex
+
+                    .fail (e) ->
+                        console.log e.stack
+
+                    .catch (e) ->
+                        console.log e.stack
+
+                    .done =>
+                        @emit 'process.complete'
 
     # Normalizing stimulus object to a Stimulus Model
     # to be able to handle it with Reflex object
@@ -54,15 +59,8 @@ class Brain extends EventEmitter
         deferred = Q.defer()
 
         if stimulus.constructor is String and stimulus[0] isnt '/' and stimulus[0] isnt '!'
-            wit.captureTextIntent 'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA', stimulus, (err, res) ->
-                if err
-                    deferred.reject err
-                else if not res
-                    deferred.reject new Error 'Empty response'
-                else if res.outcomes is undefined
-                    deferred.reject new Error 'Empty outcomes array'
-                else
-                    deferred.resolve new Reflex new Stimulus res.outcomes[0]
+            Wit.getIntent stimulus
+                .then (res) -> deferred.resolve new Reflex new Stimulus res
 
         else
             if stimulus[0] is '/' or stimulus[0] is '!'
@@ -78,18 +76,20 @@ class Brain extends EventEmitter
 
     process: (reflex, action) ->
         reflex.exec(action)
-            .then (response) =>
-                if response then @emit 'output', response
-                if response.actions then @memory = [reflex]
+
+        .then (response) =>
+            if response then @emit 'output', response
+            if response.actions then @memory = [reflex]
+
         .fail (e) ->
-            console.log e
             console.log e.stack
 
         .catch (e) ->
-            console.log e
             console.log e.stack
 
         .done()
+
+    respond: ->
 
 module.exports = Brain
 

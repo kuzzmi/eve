@@ -9,11 +9,6 @@ Helper     = require './helpers'
 TwitterModule = require '../twitter'
 
 class Git extends BaseModule
-    constructor: (@params) ->
-        super @params
-        @action = @getEntity 'git_action', 'status'
-        @repo   = @getEntity 'git_repo',   'eve'
-
     push: ->
         newModule = Helper.getNewModule()
 
@@ -67,8 +62,8 @@ class Git extends BaseModule
     status: ->
         git 'status --porcelain'
             .then (output) ->
-                parsedOutput = gitUtils.extractStatus output
-                tree = parsedOutput.workingTree
+                tree = gitUtils.extractStatus output
+                    .workingTree
 
                 modified = tree.modified.length
                 added    = tree.added.length
@@ -76,13 +71,13 @@ class Git extends BaseModule
                 renamed  = tree.renamed.length
                 copied   = tree.copied.length
 
-                report = '';
+                report   = ''
 
                 formatChange = (change, text) ->
-                    if change > 0
-                        report += text + ' ' + change + ' file'
-                        if change > 1 then report += 's'
-                        report += '. '
+                    if change is 0 then return                    
+                    report += text + ' ' + change + ' file'
+                    if change > 1 then report += 's'
+                    report += '. '
 
                 formatChange modified, 'Modified'
                 formatChange    added, 'Added'
@@ -102,7 +97,7 @@ class Git extends BaseModule
                 return response
 
     exec: ->
-        switch @action
+        switch @params.git_action.value
             when 'status' then @status().then super
             when 'pull'   then   @pull().then super
             when 'push'   then   @push().then super

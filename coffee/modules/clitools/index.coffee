@@ -16,7 +16,7 @@ class SystemTools extends BaseModule
 
                 super pkg.version
 
-            when 'randomTweet'
+            when 'randomTweet', 'rt'
                 Twitter = require '../twitter'
 
                 module = new Twitter()
@@ -25,7 +25,7 @@ class SystemTools extends BaseModule
 
                 super 'Something messy...'
 
-            when 'goodTweet'
+            when 'goodTweet', 'gt'
                 Twitter = require '../twitter'
 
                 module = new Twitter()
