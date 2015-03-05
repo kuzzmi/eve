@@ -38,6 +38,7 @@ class Git extends BaseModule
             .then -> git 'commit -m "[Eve] Uploaded at ' + new Date() + '"'
             .then -> git 'push origin master'
             .then ->
+                Infrared.led 'white'
                 pkg = Utils.file2json 'package.json'
                 phrase = 'Uploaded v' + pkg.version
                 response =
@@ -46,7 +47,6 @@ class Git extends BaseModule
                         phrase: 'Upload completed'
                     notification:
                         text: phrase
-                Infrared.led 'white'
                 return response
 
     pull: -> 
