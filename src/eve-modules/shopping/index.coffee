@@ -24,6 +24,7 @@ class Shopping extends BaseModule
             itemFilter   : [ new ebay.ItemFilter 'AvailableTo', 'CH'          ]
             domainFilter : [ new ebay.ItemFilter 'domainName' , 'Electronics' ]
 
+        ### DON'T FORGET TO PLACE IT TO CONFIG AND OMIT ###
         request = 
             serviceName : 'FindingService'
             opType      : 'findItemsByKeywords'

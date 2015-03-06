@@ -2,7 +2,7 @@ Q          = require 'q'
 Utils      = require '../common/utils'
 vocabulary = require '../core/classes/vocabulary'
 
-class BaseModule
+class Module
     constructor: (@Eve, @stimulus, @action) ->
 
         @entities = @stimulus.entities if @stimulus
@@ -25,7 +25,7 @@ class BaseModule
 
     execAndConcat: (results) ->
         deferred = Q.defer()
-        __exec__ = BaseModule.prototype.exec
+        __exec__ = Module.prototype.exec
 
         results  = result.slice(1)
 
@@ -95,4 +95,4 @@ class BaseModule
             args: args
         }
 
-module.exports = BaseModule
+module.exports = Module

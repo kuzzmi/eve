@@ -1,62 +1,60 @@
-'use strict'
+"use strict"
 
 module.exports = (grunt) ->
 
-    require('load-grunt-tasks')(grunt);
-    require('time-grunt')(grunt);
+    require("load-grunt-tasks")(grunt);
+    require("time-grunt")(grunt);
 
-    appConfig =
-        src:  'src',
-        dist: 'js'
+    config =
+        src: "src"
+        dist: "js"
 
     grunt.initConfig
-        root: appConfig
-
         watch:
-            coffee: 
+            coffee:
                 files: [
-                    '<%= root.src =>/**/*.coffee'
+                    "#{config.src}/**/*.coffee"
                 ]
                 options:
                     interrupt: true
-                tasks: ['newer:coffee:compile']
+                tasks: ["newer:coffee:compile"]
             static:
                 files: [
-                    '<%= root.src =>/**/*.json',
-                    '<%= root.src =>/**/*.html'
+                    "#{config.src}/**/*.json",
+                    "#{config.src}/**/*.html"
                 ]
-                tasks: ['newer:copy:static']
+                tasks: ["newer:copy:static"]
             tests: 
                 files: [
-                    'tests/**/*.js'
+                    "tests/**/*.js"
                 ]
-                tasks: ['test']
+                tasks: ["test"]
             
         mochaTest:
             test:
                 options:
-                    reporter: 'spec'
-                src: ['tests/**/*.js']
+                    reporter: "html"
+                src: ["tests/**/*.js"]
 
         coffee:
             compile:
                 expand: true,
                 flatten: false,
-                cwd: '<%= root.src =>/eve/',
-                src: ['**/*.coffee'],
-                dest: '<%= root.dist =>/',
-                ext: '.js'
+                cwd: "#{config.src}",
+                src: ["**/*.coffee"],
+                dest: "#{config.dist}/",
+                ext: ".js"
 
         copy:
             static:
                 files: [{
                     expand: true,
                     dot: true,
-                    cwd: '<%= root.src =>/',
-                    dest: 'js/',
+                    cwd: "#{config.src}/",
+                    dest: "#{config.dist}/",
                     src: [
-                        '**/*.json',
-                        '**/*.html'
+                        "**/*.json",
+                        "**/*.html"
                     ]
                 }]
 
@@ -64,21 +62,21 @@ module.exports = (grunt) ->
             src: 
                 files: [{
                     dot: true,
-                    src: ['<%= root.src =>/**/*.js']
+                    src: ["#{config.src}/**/*.js"]
                 }]
             dist:
                 files: [{
                     dot: true,
-                    src: ['<%= root.dist =>/**/*']
+                    src: ["#{config.dist}/**/*"]
                 }]
 
-    grunt.registerTask 'default', [
-        'clean', 
-        'coffee', 
-        'copy',
-        # 'concurrent:eve',
-        'watch'
+    grunt.registerTask "default", [
+        "clean", 
+        "coffee", 
+        "copy",
+        # "concurrent:eve",
+        "watch"
     ]
 
-    grunt.registerTask 'start', 'execute:eve'
-    grunt.registerTask 'test', 'mochaTest'
+    grunt.registerTask "start", "execute:eve"
+    grunt.registerTask "test", "mochaTest"
