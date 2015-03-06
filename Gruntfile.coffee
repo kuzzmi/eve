@@ -5,19 +5,25 @@ module.exports = (grunt) ->
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 
+    appConfig =
+        src:  'src',
+        dist: 'js'
+
     grunt.initConfig
+        root: appConfig
+
         watch:
             coffee: 
                 files: [
-                    'coffee/**/*.coffee'
+                    '<%= root.src =>/**/*.coffee'
                 ]
                 options:
                     interrupt: true
                 tasks: ['newer:coffee:compile']
             static:
                 files: [
-                    'coffee/**/*.json',
-                    'coffee/**/*.html'
+                    '<%= root.src =>/**/*.json',
+                    '<%= root.src =>/**/*.html'
                 ]
                 tasks: ['newer:copy:static']
             tests: 
@@ -32,20 +38,13 @@ module.exports = (grunt) ->
                     reporter: 'spec'
                 src: ['tests/**/*.js']
 
-        execute:
-            eve:
-                src: ['js/eve.js']
-
-        concurrent:
-            eve: ['watch']                
-
         coffee:
             compile:
                 expand: true,
                 flatten: false,
-                cwd: 'coffee/',
+                cwd: '<%= root.src =>/eve/',
                 src: ['**/*.coffee'],
-                dest: 'js/',
+                dest: '<%= root.dist =>/',
                 ext: '.js'
 
         copy:
@@ -53,7 +52,7 @@ module.exports = (grunt) ->
                 files: [{
                     expand: true,
                     dot: true,
-                    cwd: 'coffee/',
+                    cwd: '<%= root.src =>/',
                     dest: 'js/',
                     src: [
                         '**/*.json',
@@ -65,12 +64,12 @@ module.exports = (grunt) ->
             src: 
                 files: [{
                     dot: true,
-                    src: ['coffee/**/*.js']
+                    src: ['<%= root.src =>/**/*.js']
                 }]
             dist:
                 files: [{
                     dot: true,
-                    src: ['js/**/*']
+                    src: ['<%= root.dist =>/**/*']
                 }]
 
     grunt.registerTask 'default', [

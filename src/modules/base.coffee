@@ -1,8 +1,9 @@
-Q = require 'q'
+Q          = require 'q'
+Utils      = require '../common/utils'
 vocabulary = require '../core/classes/vocabulary'
 
 class BaseModule
-    constructor: (@stimulus, @action) ->
+    constructor: (@Eve, @stimulus, @action) ->
 
         @entities = @stimulus.entities if @stimulus
  
@@ -26,7 +27,7 @@ class BaseModule
         deferred = Q.defer()
         __exec__ = BaseModule.prototype.exec
 
-        results = result.slice(1)
+        results  = result.slice(1)
 
         __exec__(result[0]).then (res) ->
             results.unshift res
@@ -45,13 +46,14 @@ class BaseModule
             deferred.resolve response
 
         deferred.promise
-
+        
+    ###
     exec: (result) ->
         @vocabulary = __dirname + '/vocabulary.json'
 
         deferred = Q.defer()
 
-        deferred.reject 'Result is undefined' if result is undefined
+        deferred.reject 'Result is undefined' if not result
 
         response =
             text         : undefined
@@ -82,32 +84,15 @@ class BaseModule
                 deferred.resolve response
 
         deferred.promise
-###
-    # 
-    # Placeholder for emiting 'voice' event on Eve's brain
-    # 
-    # Currently does nothing
-    # TODO: pass Eve to module
-    # 
-    phrase: (phrase) ->
-        @eve.say phrase
+    ###
+    loadVocabulary: (dir) ->
+        @vocabulary = Utils.file2json 'vocabulary.json', dir
 
-    # 
-    # Placeholder for emiting 'text' event on Eve's brain
-    # 
-    # Currently does nothing
-    # TODO: pass Eve to module
-    # 
-    text: (text) ->
-        @eve
-
-    # 
-    # Placeholder for emiting 'notification' event on Eve's brain
-    # 
-    # Currently does nothing
-    # TODO: pass Eve to module
-    # 
-    notification: (notification) ->
-        @eve###
+    pickPhrase: (code, args) ->
+        return vocabulary.pick {
+            vocabulary: @vocabulary
+            code: code,
+            args: args
+        }
 
 module.exports = BaseModule

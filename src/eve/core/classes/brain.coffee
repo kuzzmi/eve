@@ -27,13 +27,11 @@ Reflex       = require './reflex'
 class Brain extends EventEmitter
     config: Utils.file2json '.everc'
 
-    constructor: (@params) ->
+    constructor: (@Eve) ->
         @subscribe()
 
     subscribe: ->
         @on 'input', (stimulus) =>
-            @emit 'process.start'
-            
             if @memory? and @memory.length > 0
                 reflex = @memory.pop()
                 @process reflex, stimulus
@@ -50,9 +48,6 @@ class Brain extends EventEmitter
                     .catch (e) ->
                         console.log e.stack
 
-                    .done =>
-                        @emit 'process.complete'
-
     # Normalizing stimulus object to a Stimulus Model
     # to be able to handle it with Reflex object
     understand: (stimulus) ->
@@ -60,7 +55,8 @@ class Brain extends EventEmitter
 
         if stimulus.constructor is String and stimulus[0] isnt '/' and stimulus[0] isnt '!'
             Wit.getIntent stimulus
-                .then (res) -> deferred.resolve new Reflex new Stimulus res
+                .then (res) => 
+                    deferred.resolve new Reflex @Eve, new Stimulus res
 
         else
             if stimulus[0] is '/' or stimulus[0] is '!'
@@ -70,24 +66,24 @@ class Brain extends EventEmitter
                         action: [{
                             value: stimulus.slice 1
                         }]
-            deferred.resolve new Reflex stimulus
+            deferred.resolve new Reflex @Eve, stimulus
 
         deferred.promise
 
     process: (reflex, action) ->
         reflex.exec(action)
 
-        .then (response) =>
-            if response then @emit 'output', response
-            if response.actions then @memory = [reflex]
+        # .then (response) =>
+        #     if response then @emit 'output', response
+        #     if response.actions then @memory = [reflex]
 
-        .fail (e) ->
-            console.log e.stack
+        # .fail (e) ->
+        #     console.log e.stack
 
-        .catch (e) ->
-            console.log e.stack
+        # .catch (e) ->
+        #     console.log e.stack
 
-        .done()
+        # .done()
 
     respond: ->
 

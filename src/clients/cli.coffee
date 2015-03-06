@@ -2,33 +2,28 @@ readline = require 'readline'
 colors   = require 'colors'
 
 class CLI
-    constructor: (@core, @argv) ->
-        `process.stdout.write('\033c')`
+    constructor: (Eve, @argv) ->
+        # `process.stdout.write('\033c')`
 
-        @core.brain.on 'output', (output) =>
+        Eve.brain.on 'output', (output) =>
             if output.text
                 @print output.text
-            if output.voice and @argv.speak
-                @say output.voice
         
         @rl = readline.createInterface 
             input: process.stdin,
             output: process.stdout
         
         @rl.on 'line', (line) =>
-            @core.brain.emit 'input', line
+            Eve.brain.emit 'input', line
             @rl.prompt true
 
         @rl.setPrompt 'Igor: '
         @rl.prompt true
 
         if @argv.c
-            @core.brain.emit 'input', {
+            Eve.brain.emit 'input', {
                 intent: @argv.c
             }
-
-    say: (data) ->
-        @core.speech.exec data
 
     print: (data) ->
         process.stdout.clearLine();

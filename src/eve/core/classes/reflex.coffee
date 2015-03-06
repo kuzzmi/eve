@@ -1,7 +1,7 @@
 Q = require 'q'
 
 class Reflex
-    constructor: (@stimulus) ->
+    constructor: (@Eve, @stimulus) ->
         
     exec: (action) ->
         deferred = Q.defer()
@@ -12,7 +12,7 @@ class Reflex
             console.log e
             deferred.reject e
         
-        intentModule = new IntentModule @stimulus, action
+        intentModule = new IntentModule @Eve, @stimulus, action
 
         intentModule
             .exec()

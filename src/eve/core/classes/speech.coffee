@@ -1,14 +1,16 @@
 Ivona = require 'ivona-node'
 child = require 'child_process'
+Utils  = require '../../common/utils'
 # spawn = require('child_process').spawn
 Q     = require 'q'
+config = Utils.file2json('.everc').ivona
 
 # ivona = require '../../api-clients/ivona'
 
-ivona = new Ivona {
-    accessKey: 'GDNAI76SALPR4SUR7M2Q',
-    secretKey: 'T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp'    
-}
+ivona = new Ivona
+    accessKey : config.accessKey
+    secretKey : config.secretKey
+    proxy     : config.proxy
 
 sox = null
 

@@ -42,5 +42,26 @@ exports.pick = (params) ->
                     return match
 
             deferred.resolve result
+            
+    else if typeof params.vocabulary is 'object'
+        vocabulary = params.vocabulary
+        splittedCode = params.code.split '.'
+        args = params.args
+
+        phrases = vocabulary
+
+        for i in splittedCode
+            phrases = phrases[i]
+
+        random = utils.randomInt 0, phrases.length - 1
+        phrase = phrases[random]
+
+        result = phrase.replace /\{(\d+)\}/g, (match, number) ->
+            if typeof args[number] isnt 'undefined'
+                return args[number] 
+            else 
+                return match
+
+        deferred.resolve result
 
     deferred.promise
