@@ -1,6 +1,6 @@
 {
   "name": "eve",
-  "version": "0.12.13",
+  "version": "0.1.0",
   "description": "Personal Assistant",
   "main": "index",
   "scripts": {
@@ -14,6 +14,7 @@
     "url": "git+ssh://git@bitbucket.org/kuzzmi/eve.git"
   },
   "dependencies": {
+    "callsite": "^1.0.0",
     "ivona-node": "kuzzmi/ivona-node",
     "minimist": "^1.1.0",
     "node-wit": "^1.1.0",

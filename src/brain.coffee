@@ -27,14 +27,23 @@ class Brain
             catch error
                 @logger.error "Unable to load #{full}: #{error.stack}"
 
-    process: (message) ->
-        @output message
+    process: (message, client) ->
+        try
+            action = new @modules[message] @, client
+            
+            action.exec()
+        catch error
+            @logger.log @modules
+            @logger.log @modules[message]
+            @logger.error "Unable to execute #{message} on #{client}: #{error.stack}"
 
-    reply: (response, socket) ->
+    reply: (response, client) ->
         if socket?
             socket.emit 'output', response
         else 
             @socket.emit 'output', response
+
+        @logger.log '[output]: ' + JSON.stringify response, null, 4
 
     onLeave: (socket) ->        
         index = @clients.indexOf socket
@@ -47,11 +56,11 @@ class Brain
         @socket = Io port
         @socket.on 'connection', (socket) =>
             socket.on 'disconnect', @onLeave
-            socket.on 'input'
+            socket.on 'input', (data) =>
+                @logger.log data
+                @process data, socket
 
             @clients.push socket
             @reply text: 'Hello', socket
-
-            console.log @clients.length
 
 module.exports = Brain
