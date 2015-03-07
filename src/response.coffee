@@ -1,28 +1,33 @@
 class Response
     constructor: (@Eve, @client) ->
-        @answer = {}
+        @body = {}
 
     add: (name, value) ->        
-        exists = yes if @answer[name]?
+        exists = yes if @body[name]?
 
         if not exists
-            @answer.text = []
+            @body[name] = []
 
         if value instanceof Array
-            @answer[name] = @answer[name].concat text
+            @body[name] = @body[name].concat value
         else
-            @answer[name].push text
+            @body[name].push value
+
+        return @
 
     addText: (text) ->
         @add 'text', text
+        return @
 
     addVoice: (voice) ->
         @add 'voice', voice
+        return @
 
     addNotification: (notification) ->
         @add 'notification', notification
+        return @
 
     send: ->
-        @Eve.reply @answer, @client
+        @Eve.reply @body, @client
 
 module.exports = Response

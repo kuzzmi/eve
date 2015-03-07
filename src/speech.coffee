@@ -10,7 +10,7 @@ config = Utils.file2json('.everc').ivona
 ivona = new Ivona
     accessKey : config.accessKey
     secretKey : config.secretKey
-    proxy     : config.proxy
+    # proxy     : config.proxy
 
 sox = null
 
@@ -43,6 +43,6 @@ module.exports =
                 }
             }
         }
-
+        console.log phrase, body
         ivona.createVoice phrase, body
             .pipe sox.stdin

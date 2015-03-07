@@ -2,7 +2,7 @@
 
 Brain = require '..'
 
-modules = '/Users/kuzzmi/Projects/eve-modules'
+modules = __dirname + '/../modules'
 
 Eve = Brain.load()
 
