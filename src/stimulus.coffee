@@ -9,5 +9,4 @@ class Stimulus
             @confidence
         } = params
 
-    
 module.exports = Stimulus

@@ -1,6 +1,6 @@
 Ivona = require 'ivona-node'
 child = require 'child_process'
-Utils  = require '../../common/utils'
+Utils  = require './utils'
 # spawn = require('child_process').spawn
 Q     = require 'q'
 config = Utils.file2json('.everc').ivona

@@ -1,10 +1,7 @@
 Q     = require 'q'
 wit   = require 'node-wit'
-Utils = require '../common/utils'
 
-config = Utils.file2json('.everc').wit
-
-exports.getIntent = (text) ->
+exports.getIntent = (token, text) ->
     return Q.nfapply wit.captureTextIntent, [config.serverToken, text]
         .then (response) ->
             if not response

@@ -1,0 +1,10 @@
+#!/usr/bin/env coffee
+
+Brain = require '..'
+
+modules = '/Users/kuzzmi/Projects/eve-modules'
+
+Eve = Brain.load()
+
+Eve.register modules
+Eve.run()

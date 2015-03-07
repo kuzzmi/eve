@@ -1,6 +1,6 @@
 fs    = require 'fs'
 Q     = require 'q'
-utils = require '../../common/utils'
+utils = require './utils'
 
 exports.pick = (params) ->
     deferred = Q.defer()
