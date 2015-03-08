@@ -28,7 +28,7 @@ class Response
         return @
 
     addResponse: (response) ->
-        @Eve.logger response
+        @Eve.logger.log response
 
         for key, value of response.body
             @add key, value
