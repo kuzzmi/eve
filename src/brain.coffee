@@ -7,6 +7,7 @@ class Brain
         # @memory = new Memory @
 
         @modules = {}
+        @parse   = require './parser'
         @clients = []
 
         @logger = console
@@ -15,7 +16,6 @@ class Brain
         if Fs.existsSync(path)
             for file in Fs.readdirSync(path).sort()
                 @registerModule path, file
-        @logger.log @modules
 
     registerModule: (path, file) ->
         ext      = Path.extname file
@@ -26,24 +26,24 @@ class Brain
         if require.extensions[ext] or Fs.existsSync(main)
             try
                 @modules[basename] = require full
+                @logger.log "Module #{basename} registered"
             catch error
                 @logger.error "Unable to load #{full}: #{error.stack}"
 
     process: (message, client) ->
         try
-            action = new @modules[message] @, client
-            
-            action.exec()
+            @parse.text message
+                .then (stimulus) =>
+                    action = new @modules[stimulus.intent] @, client, stimulus
+                    action.exec()
         catch error
             @logger.error "Unable to execute #{message} on #{client}: #{error.stack}"
 
     reply: (response, client) ->
-        if socket?
-            socket.emit 'output', response
+        if client?
+            client.emit 'output', response
         else 
             @socket.emit 'output', response
-
-        @logger.log '[output]: ' + JSON.stringify response, null, 4
 
     onLeave: (socket) ->
         if not @clients?

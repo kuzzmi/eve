@@ -1,5 +1,3 @@
-# Q          = require 'q'
-# Phrasebook = require './phrasebook'
 Utils      = require './utils'
 Response   = require './response'
 

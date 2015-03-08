@@ -3,7 +3,7 @@ class Response
         @body = {}
 
     add: (name, value) ->        
-        exists = yes if @body[name]?
+        exists = yes if @body[name]
 
         if not exists
             @body[name] = []
