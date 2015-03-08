@@ -34,10 +34,13 @@ class Brain
         try
             @parse.text message
                 .then (stimulus) =>
-                    action = new @modules[stimulus.intent] @, client, stimulus
-                    action.exec()
+                    try
+                        action = new @modules[stimulus.intent] @, client, stimulus                        
+                        action.exec()
+                    catch error
+                        @logger.error "Unable to execute #{stimulus.intent}: #{error.stack}"
         catch error
-            @logger.error "Unable to execute #{message} on #{client}: #{error.stack}"
+            @logger.error "Unable to handle #{message}: #{error.stack}"
 
     reply: (response, client) ->
         if client?
