@@ -32,7 +32,6 @@ class Response
             promise = response
                 .then (result) =>
                     @addResponse result
-                    console.log @body
             @queue.push promise
         else 
             for key, value of response.body

@@ -49,8 +49,9 @@ class Module
     #       
     #       pick code, args:
     #           baz
-    pick: (code, args) ->
+    pick: (code, args = []) ->
         code = code.split '.' if typeof code is 'string'
+        args =         [args] if typeof args is 'string'
 
         phrases = @vocabulary
 
