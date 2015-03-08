@@ -29,6 +29,9 @@ class Module
         result = module.exec()
 
         return result
+    
+    getValue: (name, default) ->
+        if @[name] then @[name].value else default
 
     # This method allows to pick a random phrase from phrasebook by a
     # code and by replacing arguments.
