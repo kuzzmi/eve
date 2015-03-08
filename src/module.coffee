@@ -30,8 +30,8 @@ class Module
 
         return result
     
-    getValue: (name, default) ->
-        if @[name] then @[name].value else default
+    getValue: (name, def) ->
+        if @[name] then @[name].value else def
 
     # This method allows to pick a random phrase from phrasebook by a
     # code and by replacing arguments.
