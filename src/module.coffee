@@ -18,17 +18,18 @@ class Module
     # This method allows to receive a response from module without
     # actual execution. Useful for linking modules.
     # 
-    # Returns module that was
+    # Returns Response or Promise<Response>
     # 
     # E.g.:
     #       We have module A and B. If we want to get response from 
     #    A in B to concatenate them, we need to call A.exec() instead 
     #    of creating an object instanceof A.
     @exec: (entities) ->
+        transformed = {}
         for k, v of entities
-            v = { value: v }        
+            transformed[k] = [{ value: v }]
 
-        module = new @(null, null, { entities: entities })
+        module = new @(null, null, { entities: transformed })
         result = module.exec()
 
         return result

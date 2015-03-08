@@ -1,6 +1,8 @@
-Io   = require 'socket.io'
-Fs   = require 'fs'
-Path = require 'path'
+Io    = require 'socket.io'
+Fs    = require 'fs'
+Path  = require 'path'
+Log   = require 'log'
+Utils = require './utils'
 
 class Brain 
     constructor: () ->
@@ -10,12 +12,15 @@ class Brain
         @parse   = require './parser'
         @clients = []
 
-        @logger = console
+        @logger = new Log 'debug'
 
     register: (path) ->
         if Fs.existsSync(path)
+            @logger.debug "Registering modules from #{path}"
             for file in Fs.readdirSync(path).sort()
                 @registerModule path, file
+        else
+            @logger.error "#{path} is not a valid path"
 
     registerModule: (path, file) ->
         ext      = Path.extname file
@@ -26,11 +31,12 @@ class Brain
         if require.extensions[ext] or Fs.existsSync(main)
             try
                 @modules[basename] = require full
-                @logger.log "Module #{basename} registered"
+                @logger.debug Utils.appendWith('.', basename, 35) + '[OK]'
             catch error
                 @logger.error "Unable to load #{full}: #{error.stack}"
 
     process: (message, client) ->
+        @logger.debug "Received: #{message}"
         try
             @parse.text message
                 .then (stimulus) =>
@@ -40,17 +46,20 @@ class Brain
                     catch error
                         @logger.error "Unable to execute #{stimulus.intent}: #{error.stack}"
         catch error
-            @logger.error "Unable to handle #{message}: #{error.stack}"
+            @logger.error "Error occured while parsing #{message}: #{error.stack}"
 
     reply: (response, client) ->
+        @logger.debug "Sending: #{JSON.stringify response}"
+
         if client?
             client.emit 'output', response
         else 
             @socket.emit 'output', response
 
-    onLeave: (socket) ->
-        if not @clients?
-            return []
+    onDisconnect: (socket) ->
+        @logger.debug "Client disconnected from #{socket.client.conn.remoteAddress}"
+        
+        if not @clients? then return []
             
         index = @clients.indexOf socket
         @clients = [].concat(
@@ -58,14 +67,16 @@ class Brain
             @clients.slice(index + 1)
         )
 
-    run: (port = 3000) ->
-        @socket = Io port
-        @socket.on 'connection', (socket) =>
-            socket.on 'disconnect', @onLeave
-            socket.on 'input', (data) =>
-                @process data, socket
+    onConnect: (socket) ->
+        @logger.debug "Client connected from #{socket.client.conn.remoteAddress}"
+        @clients.push socket
 
-            @clients.push socket
-            @reply text: 'Hello', socket
+        socket.on 'disconnect', => @onDisconnect socket
+        socket.on 'input', (data) => @process data, socket
+
+    run: (port = 3000) ->
+        @logger.debug "Starting WebSocket listener on :#{port}"
+        @socket = Io port
+        @socket.on 'connection', (socket) => @onConnect socket
 
 module.exports = Brain

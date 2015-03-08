@@ -25,3 +25,22 @@ exports.getCallersDir = ->
     stack = Stack()
     caller = stack[2].getFileName()
     return Path.dirname(caller)
+
+exports.prependWith = (symbol, string, total) ->
+    if total - string.length + 1 < 0 then return ''
+
+    symbols = new Array(total - string.length + 1)
+        .join symbol
+
+    symbols + string
+
+exports.appendWith = (symbol, string, total) ->
+    if total - string.length + 1 < 0 then return ''
+
+    symbols = new Array(total - string.length + 1)
+        .join symbol
+
+    string + symbols
+
+exports.formatJSON = (data) ->
+    JSON.stringify data, null, 4
