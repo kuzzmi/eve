@@ -1,6 +1,9 @@
+Q = require 'q'
+
 class Response
     constructor: (@Eve, @client) ->
         @body = {}
+        @queue = []
 
     add: (name, value) ->        
         exists = yes if @body[name]
@@ -16,26 +19,30 @@ class Response
         return @
 
     addText: (text) ->
-        @add 'text', text
-        return @
+        return @add 'text', text
 
     addVoice: (voice) ->
-        @add 'voice', voice
-        return @
+        return @add 'voice', voice
 
     addNotification: (notification) ->
-        @add 'notification', notification
-        return @
+        return @add 'notification', notification
 
     addResponse: (response) ->
-        @Eve.logger.log response
-
-        for key, value of response.body
-            @add key, value
+        if response.then
+            promise = response
+                .then (result) =>
+                    @addResponse result
+                    console.log @body
+            @queue.push promise
+        else 
+            for key, value of response.body
+                @add key, value
         return @
 
     send: ->
-        if @Eve
-            @Eve.reply @body, @client
+        Q.all @queue
+            .then =>
+                @Eve.reply @body, @client if @Eve
+        return @
 
 module.exports = Response
