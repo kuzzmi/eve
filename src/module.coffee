@@ -10,9 +10,8 @@ class Module
         @response = new Response @Eve, @client
 
         if @stimulus
-            @params = {}
             for name, entity of @stimulus.entities
-                @params[name] = entity[0]
+                @[name] = entity[0]
 
         @vocabulary = Utils.file2json 'phrasebook.json', Utils.getCallersDir()
 
