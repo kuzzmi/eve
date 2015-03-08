@@ -24,8 +24,8 @@ class Module
     #       We have module A and B. If we want to get response from 
     #    A in B to concatenate them, we need to call A.exec() instead 
     #    of creating an object instanceof A.
-    @exec: (stimulus) ->
-        module = new @(null, null, stimulus)
+    @exec: (entities) ->
+        module = new @(null, null, { entities: entities })
         result = module.exec()
 
         return result
