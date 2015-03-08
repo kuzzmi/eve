@@ -15,13 +15,15 @@ class Brain
         if Fs.existsSync(path)
             for file in Fs.readdirSync(path).sort()
                 @registerModule path, file
+        @logger.log @modules
 
     registerModule: (path, file) ->
         ext      = Path.extname file
         basename = Path.basename(file, ext)
         full     = Path.join path, basename
+        main     = Path.join full, 'index.coffee'
         
-        if require.extensions[ext]
+        if require.extensions[ext] or Fs.existsSync(main)
             try
                 @modules[basename] = require full
             catch error
@@ -33,8 +35,6 @@ class Brain
             
             action.exec()
         catch error
-            @logger.log @modules
-            @logger.log @modules[message]
             @logger.error "Unable to execute #{message} on #{client}: #{error.stack}"
 
     reply: (response, client) ->
@@ -45,7 +45,10 @@ class Brain
 
         @logger.log '[output]: ' + JSON.stringify response, null, 4
 
-    onLeave: (socket) ->        
+    onLeave: (socket) ->
+        if not @clients?
+            return []
+            
         index = @clients.indexOf socket
         @clients = [].concat(
             @clients.slice(0, index),
@@ -57,7 +60,6 @@ class Brain
         @socket.on 'connection', (socket) =>
             socket.on 'disconnect', @onLeave
             socket.on 'input', (data) =>
-                @logger.log data
                 @process data, socket
 
             @clients.push socket

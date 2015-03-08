@@ -1,18 +1,12 @@
-Ivona = require 'ivona-node'
-child = require 'child_process'
+Ivona  = require 'ivona-node'
+child  = require 'child_process'
 Utils  = require './utils'
-# spawn = require('child_process').spawn
-Q     = require 'q'
 config = Utils.file2json('.everc').ivona
-
-# ivona = require '../../api-clients/ivona'
 
 ivona = new Ivona
     accessKey : config.accessKey
     secretKey : config.secretKey
-    # proxy     : config.proxy
-
-sox = null
+    proxy     : config.proxy
 
 module.exports = 
     exec: (params) ->
@@ -29,7 +23,7 @@ module.exports =
             phrase = params
         else
             phrase = params.phrase
-            lang = switch params.lang
+            lang   = switch params.lang
                 when 'en' then 'en-US'
                 when 'fr' then 'fr-FR'
                 when 'ru' then 'ru-RU'
@@ -43,6 +37,5 @@ module.exports =
                 }
             }
         }
-        console.log phrase, body
-        ivona.createVoice phrase, body
-            .pipe sox.stdin
+        
+        ivona.createVoice(phrase, body).pipe sox.stdin

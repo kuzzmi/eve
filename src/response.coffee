@@ -27,7 +27,13 @@ class Response
         @add 'notification', notification
         return @
 
+    addResponse: (response) ->
+        for key, value of response.body
+            @add key, value
+        return @
+
     send: ->
-        @Eve.reply @body, @client
+        if @Eve
+            @Eve.reply @body, @client
 
 module.exports = Response
