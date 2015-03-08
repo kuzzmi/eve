@@ -26,8 +26,9 @@ class Module
     #    of creating an object instanceof A.
     @exec: (stimulus) ->
         module = new @(null, null, stimulus)
-        module.exec()
-        return module
+        result = module.exec()
+
+        return result
 
     # This method allows to pick a random phrase from phrasebook by a
     # code and by replacing arguments.
