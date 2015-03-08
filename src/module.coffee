@@ -25,6 +25,9 @@ class Module
     #    A in B to concatenate them, we need to call A.exec() instead 
     #    of creating an object instanceof A.
     @exec: (entities) ->
+        for k, v of entities
+            v = { value: v }        
+
         module = new @(null, null, { entities: entities })
         result = module.exec()
 
