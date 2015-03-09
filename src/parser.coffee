@@ -1,11 +1,28 @@
-Q        = require 'q'
-wit      = require './wrappers/wit'
-Stimulus = require './stimulus'
+Q          = require 'q'
+wit        = require './wrappers/wit'
+Stimulus   = require './stimulus'
+HttpClient = require 'scoped-http-client'
 
 class Parser
     constructor: (@Eve) ->
+        @listeners = []
         
-    text: (text) ->
+    addListener: (regexp, callback) ->
+        @listeners.push { regexp, callback }
+
+    text: (text, client) ->
+        for listener in @listeners
+            if listener.regexp.test text
+                listener.callback {
+                    match : => text.match listener.regexp
+                    reply : (text) => @Eve.reply { text }, client
+                    send  : (text) => @Eve.reply { text }, client,
+                    http: (url, options) -> 
+                        HttpClient.create(url, options)
+                            .header('User-Agent', 'Eve v1')
+                }
+                return Q.fcall -> null
+
         memory = @Eve.memory.remember text
         if memory then return Q.fcall -> memory
 
@@ -17,7 +34,7 @@ class Parser
             .catch (error) =>
                 @Eve.logger.debug "Parsing error: \r\n #{error.stack}"
 
-    voice: (voice) ->
+    voice: (voice, client) ->
         wit.captureVoice 'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA', text
             .then (outcome) ->
                 return new Stimulus outcome
