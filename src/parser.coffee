@@ -15,11 +15,11 @@ class Parser
             if listener.regexp.test text
                 listener.callback {
                     match : => text.match listener.regexp
-                    reply : (text) => @Eve.reply { text }, client
-                    send  : (text) => @Eve.reply { text }, client,
-                    http: (url, options) -> 
+                    reply : (text) => @Eve.reply { text: text, voice: text }, client
+                    send  : (text) => @Eve.reply { text: text, voice: text }, client,
+                    http  : (url, options) -> 
                         HttpClient.create(url, options)
-                            .header('User-Agent', 'Eve v1')
+                            .header('User-Agent', 'Eve')
                 }
                 return Q.fcall -> null
 
