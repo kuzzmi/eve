@@ -7,9 +7,7 @@ request  = require 'request'
 { Speech, Client } = require '..'
 
 class CLI extends Client
-    constructor: ->
-        super
-
+    run: ->        
         `process.stdout.write('\033c')`
         
         @rl = readline.createInterface 
@@ -46,4 +44,4 @@ class CLI extends Client
 
         request url + message
 
-cli = new CLI()
+cli = new CLI('http://eve.kuzzmi.com')

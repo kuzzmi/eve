@@ -3,3 +3,4 @@ node_modules
 old
 js
 npm-debug.log
+.everc

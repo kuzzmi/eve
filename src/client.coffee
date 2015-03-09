@@ -4,6 +4,13 @@ class Client
     constructor: (path = 'http://localhost', port = '3000') ->
         @Eve = socket path + ':' + port
         @Eve.on 'output', (data) => @receive data
+        @Eve.on 'connect', => @run()
+        @start()
+
+    start: ->
+        console.log 'Connecting...'
+
+    run: ->
 
     send: (data) ->
         @Eve.emit 'input', data
