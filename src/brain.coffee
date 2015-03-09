@@ -40,6 +40,7 @@ class Brain
         try
             @parse.text message
                 .then (stimulus) =>
+                    @logger.debug "Parsed to: #{JSON.stringify stimulus}"
                     try
                         action = new @modules[stimulus.intent] @, client, stimulus                        
                         action.exec()

@@ -1,0 +1,49 @@
+#!/usr/bin/env coffee
+
+readline = require 'readline'
+colors   = require 'colors'
+request  = require 'request'
+
+{ Speech, Client } = require '..'
+
+class CLI extends Client
+    constructor: ->
+        super
+
+        `process.stdout.write('\033c')`
+        
+        @rl = readline.createInterface 
+            input: process.stdin,
+            output: process.stdout
+        
+        @rl.on 'line', (data) => @send data
+
+        @rl.setPrompt 'Igor: '
+        @rl.prompt true
+
+    send: (msg) ->
+        super msg
+        @rl.prompt true
+
+    print: (data) ->
+        data = data.join '. ' if data instanceof Array
+
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+        console.log 'Eve: '.bold.cyan + data
+
+        @rl.prompt true
+
+    say: (phrase) ->
+        phrase = phrase.join '. ' if phrase instanceof Array
+        Speech.exec phrase
+
+    notify: (notification) ->
+        url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
+        
+        command = 'eve_resp_text'
+        message = notification.join('. ') + '=:=' + command
+
+        request url + message
+
+cli = new CLI()

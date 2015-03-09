@@ -6,12 +6,7 @@
 
     "ivona": {
         "accessKey": "GDNAI76SALPR4SUR7M2Q",
-        "secretKey": "T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp",
-        
-        "proxy": {
-            "host": "eu-chbs-proxy.eu.novartis.net",
-            "port": 2010
-        }
+        "secretKey": "T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp"
     },
 
     "twitter": {
@@ -29,5 +24,10 @@
     "todoist": {    
         "email": "kuzzmi@gmail.com",
         "password": "27061963"
+    },
+
+    "proxy": {
+        "host": "eu-chbs-proxy.eu.novartis.net",
+        "port": 2010
     }
 }
