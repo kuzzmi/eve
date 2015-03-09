@@ -1,16 +1,24 @@
 { EventEmitter } = require 'events'
+Utils = require './utils'
 
 class Memory extends EventEmitter
 
     constructor: (@Eve) ->
-        @data = {}
+        @data = Utils.file2json 'memory.json' || {
+            phrases: {}
+        }
+
+        setInterval(
+            () => Utils.json2file('memory.json', @data),
+            5000
+        )
 
     add: (text, stimulus) ->
         @Eve.logger.debug "Added new memory: \"#{text}\":\"#{stimulus}\""
-        @data[text] = stimulus
+        @data.phrases[text] = stimulus
 
     remember: (text) ->
         @Eve.logger.debug "Remembering \"#{text}\"..."
-        @data[text]
+        @data.phrases[text]
 
 module.exports = Memory

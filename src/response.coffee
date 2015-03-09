@@ -19,13 +19,13 @@ class Response
         return @
 
     addText: (text) ->
-        return @add 'text', text
+        @add 'text', text
 
     addVoice: (voice) ->
-        return @add 'voice', voice
+        @add 'voice', voice
 
     addNotification: (notification) ->
-        return @add 'notification', notification
+        @add 'notification', notification
 
     addResponse: (response) ->
         if response.then

@@ -14,9 +14,9 @@ class Parser
         for listener in @listeners
             if listener.regexp.test text
                 listener.callback {
-                    match : => text.match listener.regexp
+                    match : text.match(listener.regexp)
                     reply : (text) => @Eve.reply { text: text, voice: text }, client
-                    send  : (text) => @Eve.reply { text: text, voice: text }, client,
+                    send  : (text) => @Eve.reply { text: text, voice: text }, client
                     http  : (url, options) -> 
                         HttpClient.create(url, options)
                             .header('User-Agent', 'Eve')

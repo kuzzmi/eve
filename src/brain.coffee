@@ -4,7 +4,6 @@ Path         = require 'path'
 Log          = require 'log'
 Colors       = require 'colors'
 Utils        = require './utils'
-Module       = require './Module'
 Memory       = require './memory'
 HubotWrapper = require './hubotwrapper'
 
@@ -20,6 +19,7 @@ class Brain
 
     register: (path) ->
         if Fs.existsSync(path)
+            @modulesPath = path
             @logger.debug "Registering modules from #{path}"
             for file in Fs.readdirSync(path).sort()
                 @registerModule path, file

@@ -2,7 +2,7 @@ Module = require './module'
 
 class HubotWrapper extends Module
     @wrap: (module, Eve) ->
-        robot         = extend {}, Eve
+        robot         = Eve
         robot.brain   = Eve.memory
         robot.respond = (regexp, callback) =>
             re = regexp.toString().split('/')
