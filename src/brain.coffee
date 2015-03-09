@@ -1,8 +1,9 @@
-Io    = require 'socket.io'
-Fs    = require 'fs'
-Path  = require 'path'
-Log   = require 'log'
-Utils = require './utils'
+Io     = require 'socket.io'
+Fs     = require 'fs'
+Path   = require 'path'
+Log    = require 'log'
+Colors = require 'colors'
+Utils  = require './utils'
 
 class Brain 
     constructor: () ->
@@ -31,8 +32,9 @@ class Brain
         if require.extensions[ext] or Fs.existsSync(main)
             try
                 @modules[basename] = require full
-                @logger.debug Utils.appendWith('.', basename, 35) + '[OK]'
+                @logger.debug Utils.appendWith('.', basename, 35) + '[' + 'OK'.green + ']'
             catch error
+                @logger.debug Utils.appendWith('.', basename, 32) + '[' + 'ERROR'.red + ']'
                 @logger.error "Unable to load #{full}: #{error.stack}"
 
     process: (message, client) ->

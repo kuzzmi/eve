@@ -7,7 +7,7 @@ request  = require 'request'
 { Speech, Client } = require '..'
 
 class CLI extends Client
-    run: ->        
+    run: ->
         `process.stdout.write('\033c')`
         
         @rl = readline.createInterface 
@@ -18,6 +18,10 @@ class CLI extends Client
 
         @rl.setPrompt 'Igor: '
         @rl.prompt true
+
+    stop: ->
+        super
+        @rl.close()
 
     send: (msg) ->
         super msg
@@ -44,4 +48,4 @@ class CLI extends Client
 
         request url + message
 
-cli = new CLI('http://eve.kuzzmi.com')
+CLI.create()
