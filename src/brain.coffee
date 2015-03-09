@@ -4,13 +4,14 @@ Path   = require 'path'
 Log    = require 'log'
 Colors = require 'colors'
 Utils  = require './utils'
+Memory = require './memory'
 
 class Brain 
     constructor: () ->
-        # @memory = new Memory @
+        @memory = new Memory @
 
         @modules = {}
-        @parse   = require './parser'
+        @parser  = require('./parser') @
         @clients = []
 
         @logger = new Log 'debug'
@@ -40,7 +41,7 @@ class Brain
     process: (message, client) ->
         @logger.debug "Received: #{message}"
         try
-            @parse.text message
+            @parser.text message
                 .then (stimulus) =>
                     @logger.debug "Parsed to: #{JSON.stringify stimulus}"
                     try
@@ -51,13 +52,12 @@ class Brain
         catch error
             @logger.error "Error occured while parsing #{message}: #{error.stack}"
 
-    reply: (response, client) ->
+    reply: (response, client, global) ->
         @logger.debug "Sending: #{JSON.stringify response}"
 
-        if client?
-            client.emit 'output', response
-        else 
-            @socket.emit 'output', response
+        receiver = if client? and not global then client else @socket
+
+        receiver.emit 'output', response
 
     onDisconnect: (socket) ->
         @logger.debug "Client disconnected from #{socket.client.conn.remoteAddress}"
