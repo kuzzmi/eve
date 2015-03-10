@@ -4,7 +4,9 @@ Utils = require './utils'
 class Memory extends EventEmitter
 
     constructor: (@Eve) ->
-        @data = Utils.file2json 'memory.json' || {
+        @data = Utils.file2json 'memory.json'
+
+        @data ||= {
             phrases: {}
         }
 
