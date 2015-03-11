@@ -48,8 +48,8 @@ class Client
             notification
         } = data
 
-        @print text if text
-        @say voice if voice
+        @print          text if text
+        @say           voice if voice
         @notify notification if notification
 
     print: (data) ->

@@ -15,8 +15,11 @@ class Memory extends EventEmitter
             5000
         )
 
+    set: (key, value) ->
+        @data[key] = value
+
     add: (text, stimulus) ->
-        @Eve.logger.debug "Added new memory: \"#{text}\":\"#{stimulus}\""
+        @Eve.logger.debug "Added new memory: \"#{text}\":\"#{JSON.stringify stimulus}\""
         @data.phrases[text] = stimulus
 
     remember: (text) ->

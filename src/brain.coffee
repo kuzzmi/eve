@@ -54,19 +54,39 @@ class Brain
         HubotWrapper.wrap module, @
 
     process: (message, client) ->
+        if not message
+            return false
+
         @logger.debug "Received: #{message}"
         try
-            @parser.text message, client
-                .then (stimulus) =>
-                    if stimulus
-                        @logger.debug "Parsed to: #{JSON.stringify stimulus}"
-                        try
-                            action = new @modules[stimulus.intent] @, client, stimulus
-                            action.exec()
-                        catch error
-                            @logger.error "Unable to execute #{stimulus.intent}: #{error.stack}"
+            if @memory.data.waitForAction
+                memory = @memory.data.waitForAction
+                metadata = {
+                    metadata: memory.metadata,
+                    message
+                }
+                action = new @modules[memory.name] @, client, null, metadata
+                action.exec()
+                delete @memory.data.waitForAction
+            else
+                @parser.text message, client
+                    .then (stimulus) =>
+                        if stimulus
+                            @logger.debug "Parsed to: #{JSON.stringify stimulus}"
+                            try
+                                action = new @modules[stimulus.intent] @, client, stimulus
+                                action.exec()
+                            catch error
+                                @logger.error "Unable to execute #{stimulus.intent}: #{error.stack}"
+                                @reply { text: "Sorry, could not undestartand #{message}" }, client
         catch error
             @logger.error "Error occured while parsing #{message}: #{error.stack}"
+
+    waitForAction: (module) ->
+        @memory.set 'waitForAction', {
+            name     : module.stimulus.intent
+            metadata : module.metadata
+        }
 
     reply: (response, client, global) ->
         @logger.debug "Sending: #{JSON.stringify response}"

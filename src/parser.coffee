@@ -29,7 +29,8 @@ class Parser
         wit.captureText 'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA', text
             .then (outcome) =>
                 stimulus = new Stimulus outcome
-                @Eve.memory.add text, stimulus
+                if stimulus.intent isnt 'UNKNOWN'
+                    @Eve.memory.add text, stimulus
                 return stimulus
             .catch (error) =>
                 @Eve.logger.debug "Parsing error: \r\n #{error.stack}"

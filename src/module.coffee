@@ -5,7 +5,7 @@ class Module
     # This class is for adding basic functionality to modules
     # 
     # In: Eve: Brain, client: Socket, stimulus: Stimulus
-    constructor: (@Eve, @client, @stimulus) ->
+    constructor: (@Eve, @client, @stimulus, @metadata) ->
         
         @response = new Response @Eve, @client
 
@@ -24,12 +24,12 @@ class Module
     #       We have module A and B. If we want to get response from 
     #    A in B to concatenate them, we need to call A.exec() instead 
     #    of creating an object instanceof A.
-    @exec: (entities) ->
+    @exec: (entities, metadata) ->
         transformed = {}
         for k, v of entities
             transformed[k] = [{ value: v }]
 
-        module = new @(null, null, { entities: transformed })
+        module = new @(null, null, { entities: transformed }, metadata)
         result = module.exec()
 
         return result
@@ -62,13 +62,13 @@ class Module
         for key in code
             phrases = phrases[key]
 
-        random = Utils.randomInt phrases.length
+        r = Utils.randomInt phrases.length
         phrase = phrases[random].replace /\{(\d+)\}/g, (match, number) ->
-            if typeof args[number] isnt 'undefined'
-                return args[number] 
             if args[number] instanceof Array
                 r = Utils.randomInt args[number].length
                 return args[number][r]
+            else if typeof args[number] isnt 'undefined'
+                return args[number] 
             else 
                 return match
 
