@@ -52,4 +52,4 @@ class CLI extends Client
 
         request url + message
 
-CLI.create()
+CLI.create(null, null, 'info')

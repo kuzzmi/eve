@@ -15,8 +15,8 @@ class Client
         @Eve.on 'disconnect',      => @stop()
         @start()
 
-    @create: (path, port) ->
-        return new @(path, port)
+    @create: (path, port, debug) ->
+        return new @(path, port, debug)
 
     start: ->
         @Logger.debug 'Connecting...'
