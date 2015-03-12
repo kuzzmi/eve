@@ -31,9 +31,7 @@ class Brain
         basename  = Path.basename(file, ext)
         full      = Path.join path, basename
         main      = Path.join full, 'index.coffee'
-        blacklist = [
-            'package.json'
-        ]
+        blacklist = [ 'package.json' ]
 
         if ext isnt '.json' and require.extensions[ext] or Fs.existsSync(main)
             try
@@ -46,12 +44,21 @@ class Brain
                 else 
                     @modules[basename] = module
                     @logger.debug Utils.appendWith('.', basename, 35) + '[' + 'OK'.green + ']'
+                        
+                    if module.prototype and module.prototype.attach
+                        @attachModule module
+                        @logger.debug Utils.appendWith('.', basename, 29) + '[' + 'ATTACHED'.green.bold + ']'
+                        
             catch error
                 @logger.debug Utils.appendWith('.', basename, 32) + '[' + 'ERROR'.red + ']'
                 @logger.error "Unable to load #{full}: #{error.stack}"
 
     registerHubotScript: (module) ->
         HubotWrapper.wrap module, @
+
+    attachModule: (module) ->
+        action = new module @, null, null
+        action.attach()
 
     process: (message, client) ->
         if not message
