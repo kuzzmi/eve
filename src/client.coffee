@@ -2,9 +2,9 @@ Socket = require 'socket.io-client'
 Log    = require 'log'
 
 class Client
-    constructor: (host = '127.0.0.1', port = '3000', debugLevel = 'debug') ->
+    constructor: (host = '127.0.0.1', port = '3000', logLevel = 'info') ->
         @Eve = Socket 'http://' + host + ':' + port
-        @Logger = new Log debugLevel
+        @Logger = new Log logLevel
 
         @Eve.on 'output', (data)   => @receive data
         @Eve.on 'connect',         => @connect(); @run()

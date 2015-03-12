@@ -34,6 +34,9 @@ class Module
 
         return result
     
+    setValue: (name, value) ->
+        @[name] = { value }
+
     getValue: (name, def) ->
         if @[name] then @[name].value else def
 

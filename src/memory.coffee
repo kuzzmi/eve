@@ -23,7 +23,9 @@ class Memory extends EventEmitter
         @data.phrases[text] = stimulus
 
     remember: (text) ->
-        @Eve.logger.debug "Remembering \"#{text}\"..."
-        @data.phrases[text]
+        memory = @data.phrases[text]
+        if memory
+            @Eve.logger.debug "Remembered \"#{text}\"..."
+        memory
 
 module.exports = Memory

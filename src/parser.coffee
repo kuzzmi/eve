@@ -29,7 +29,7 @@ class Parser
         wit.captureText 'OLTQRQAU6E4K5N2JJWZZJ7HAOHJV72XA', text
             .then (outcome) =>
                 stimulus = new Stimulus outcome
-                if stimulus.intent isnt 'UNKNOWN'
+                if stimulus.intent isnt 'UNKNOWN' and stimulus.entities.datetime is undefined
                     @Eve.memory.add text, stimulus
                 return stimulus
             .catch (error) =>

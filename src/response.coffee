@@ -42,6 +42,8 @@ class Response
         Q.all @queue
             .then =>
                 @Eve.reply @body, @client if @Eve
+                @body = {}
+                @queue = []
         return @
 
 module.exports = Response
