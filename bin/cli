@@ -6,7 +6,7 @@ request  = require 'request'
 
 { Speech, Client } = require '..'
 
-`process.stdout.write('\033c')`
+process.stdout.write '\u001B[2J\u001B[0;0f'
 
 class CLI extends Client
     run: ->        

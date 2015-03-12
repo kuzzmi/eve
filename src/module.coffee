@@ -63,7 +63,7 @@ class Module
             phrases = phrases[key]
 
         r = Utils.randomInt phrases.length
-        phrase = phrases[random].replace /\{(\d+)\}/g, (match, number) ->
+        phrase = phrases[r].replace /\{(\d+)\}/g, (match, number) ->
             if args[number] instanceof Array
                 r = Utils.randomInt args[number].length
                 return args[number][r]
