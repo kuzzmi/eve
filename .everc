@@ -6,12 +6,7 @@
 
     "ivona": {
         "accessKey": "GDNAI76SALPR4SUR7M2Q",
-        "secretKey": "T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp",
-
-        "proxy": {
-            "host": "eu-chbs-proxy.eu.novartis.net",
-            "port": 2010
-        }
+        "secretKey": "T7KnJwnw80hC+nhrTpDxdts5gC2dtiSeuTBP4fUp"
     },
 
     "twitter": {
@@ -22,7 +17,7 @@
     },
 
     "google": {
-        "username": "eve.peras.25@gmail.com",
+        "username": "eve.peras.25",
         "password": "05a55e6e"
     },
 
@@ -34,5 +29,10 @@
     "proxy": {
         "host": "eu-chbs-proxy.eu.novartis.net",
         "port": 2010
-    }
+    },
+
+        "proxy": {
+            "host": "eu-chbs-proxy.eu.novartis.net",
+            "port": 2010
+        }
 }
