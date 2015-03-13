@@ -6,7 +6,7 @@ request  = require 'request'
 
 argv     = require('minimist')(process.argv.slice(2))
 
-{ Speech, Client } = require '..'
+{ Speech, Client, Config } = require '..'
 
 process.stdout.write '\u001B[2J\u001B[0;0f'
 
@@ -43,7 +43,7 @@ class CLI extends Client
         Speech.exec phrase
 
     notify: (notification) ->
-        url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
+        url = Config.autoremote.lgg2
         
         @Logger.debug notification
 
