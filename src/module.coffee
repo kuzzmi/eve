@@ -58,7 +58,7 @@ class Module
     #           baz
     pick: (code, args = []) ->
         code = code.split '.' if typeof code is 'string'
-        args =         [args] if args not instanceof Array
+        args = [args] if args not instanceof Array
 
         phrases = @vocabulary
 

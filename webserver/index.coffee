@@ -1,30 +1,25 @@
-app     = require('express')()
-http    = require('http').Server(app)
-io      = require('socket.io')(http)
-ATH     = require('ansi-to-html')
-request = require 'request'
+app       = require('express')()
+http      = require('http').Server(app)
+io        = require('socket.io')(http)
+Converter = require('ansi-to-html')
+request   = require 'request'
+argv      = require('minimist')(process.argv.slice(2))
 
-{ Speech, Client } = require '../eve'
+{ Speech, Client, Config } = require '..'
 
 class WebServer extends Client
     run: ->
-        @converter = new ATH()
+        @converter = new Converter()
 
-        # core.brain.on 'output', (output) =>
-        #     core.speech.exec output.voice
-        #     if output.notification
-        #         @sendNotification output.notification
-
-        # app.get '/', (req, res) ->
-        #     res.sendFile __dirname + '/index.html'
+        app.get '/', (req, res) ->
+            res.sendFile __dirname + '/index.html'
 
         app.get '/input/:query', (req, res) =>
             @send req.params.query, res
 
-        # io.on 'connection', (socket) ->
-        #     socket.on 'input', (msg) ->
-        #         io.emit 'output', msg
-        #         core.brain.emit 'input', msg
+        io.on 'connection', (socket) =>
+            socket.on 'input', (msg) =>
+                @send msg
 
         http.listen 3030
 
@@ -32,23 +27,28 @@ class WebServer extends Client
 
     send: (data, res) ->
         super data
-        res.json
-            status: 'ok'
-            text: data
+        if res
+            res.json
+                status: 'ok'
+                text: data
 
     print: (data) ->
+        data = data.join '. ' if data instanceof Array
+
         if data
-            io.emit 'output', @converter.toHtml data.join('. ').replace(/ /g, '&nbsp;')
+            io.emit 'output', @converter.toHtml data.replace(/ /g, '&nbsp;')
 
     say: (phrase) ->
-        if phrase
+        if phrase and not silent
             phrase = phrase.join '. ' if phrase instanceof Array
             Speech.exec phrase
 
     notify: (notification) ->
-        url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
+        url = Config.autoremote.lgg2
         
-        if notification instanceof Array
+        @Logger.debug notification
+
+        if notification instanceof Array and notification.length > 1
             command = 'eve_resp_list'
             message = notification.join(',') + '=:=' + command
         else 
@@ -56,21 +56,10 @@ class WebServer extends Client
             message = notification.join('. ') + '=:=' + command
 
         request url + message
-    # sendNotification: (notification) ->
 
-    #     ### PLACE THIS INTO CONFIGURATION FILE ###
-    #     url = 'https://autoremotejoaomgcd.appspot.com/sendmessage?key=APA91bEKsjjhcwsd8hLTBBN0Oi80gLJWKWS5cIGqovFWmHnOWlbpb0AO30fglqOoXwUxMbOBXnYTGVVZ7GqnFIvdU_51yZt7CSZTXWkWcSq_ZPSQSPyxGsfKb0MZ_TmVt7lvVtX18ffvU0GETncF1a_h5AH-eMWRsVmYSoPRTEwY2kbsr8metcU&message='
-        
-    #     if notification.list
-    #         command = 'eve_resp_list'
-    #         message = notification.list.join(',') + '=:=' + command
+host      = argv.h || argv.host
+port      = argv.p || argv.port
+verbosity = if argv.v then 'debug'
+silent    = argv.s || argv.silent
 
-    #         request url + message
-
-    #     if notification.text
-    #         command = 'eve_resp_text'
-    #         message = notification.text + '=:=' + command
-            
-    #         request url + message
-
-WebServer.create()
+WebServer.create(null, null, verbosity)

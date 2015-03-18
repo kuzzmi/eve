@@ -3,21 +3,97 @@
   <head>
     <title>Eve</title>
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px "Lucida Console", Monaco, monospace; background: #1a1a1a; color: #ffffff; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; }
-      form button { width: 9.5%; background: #80D20F; border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #4e4e4e; }
-      #messages li:nth-child(even) { background: #363636; }
+      @import url(http://fonts.googleapis.com/css?family=Open+Sans:700,300,400&subset=latin,cyrillic);
+      @import url(http://fonts.googleapis.com/css?family=Inconsolata:400,700&subset=latin,cyrillic);
+      * { 
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+      }
+      body {
+        background: #343c47; 
+        color: #ffffff; 
+        font-family: 'Open Sans', sans-serif;
+        overflow: hidden;
+      }
+      form {
+        background: #343c47;
+        padding: 15px;
+        position: fixed;
+        bottom: 0;
+        width: 100%; 
+        height: 67px;
+      }
+      form input {
+        font-family: 'Inconsolata';
+        font-size: 15px;
+        border: 0;
+        border-radius: 4px;
+        padding: 10px;
+        width: 100%;
+        background-color: #616d7d;
+        color: #C7CCD3;
+        outline: none;
+      }
+      form input:focus {
+        color: #fff;
+        border: none;
+      }
+      form button { 
+        display: none; 
+      }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background-color: #00b98d;
+        text-align: center;
+      }
+      .header h3 {
+        font-weight: 700;
+        line-height: 45px;
+      }
+      #messages { 
+        font-family: 'Inconsolata';
+        list-style-type: none; 
+        margin: 0; 
+        padding: 0;
+        position: absolute;
+        overflow: hidden;
+        top: 50px;
+        bottom: 67px;
+        left: 0;
+        right: 0;
+      }
+      #messages:hover {
+        overflow: auto;
+      }
+      #messages li {   
+        padding: 15px;
+        word-wrap: break-word;
+        border-bottom: 1px solid #2E353F;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      #messages li.out {
+        text-align: left;
+      }
+      #messages li.in { 
+        text-align: right;        
+      }
     </style>
   </head>
   <body>
-    <ul id="messages"></ul>
+    <div class="header">
+      <h3>Eve</h3>
+    </div>
+
+    <ul id="messages">
+    </ul>
+
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>the
+      <input id="m" autocomplete="off" placeholder="Type your message..."/><button>Send</button>
     </form>
     
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -26,15 +102,23 @@
       var socket = io();
 
       socket.on('output', function(msg){
-        $('#messages').append($('<li>').html(msg.replace(/\r\n/g, '<br />')));
+        $('#messages')
+          .append($('<li class="out">')
+          .html(msg.replace(/\r\n/g, '<br />')));
+        var messages = $('#messages');
+        messages.scrollTop(messages[0].scrollHeight)
       });
 
-      $('form').submit(function(){
+      $('form').submit(function() {
         var msg = $('#m').val();
+        $('#messages').append($('<li class="in">').text(msg));
         socket.emit('input', msg);
         $('#m').val('');
         return false;
       });
+
+      /*Disable inputs when not connected*/
+      /*Display some status indication (connected, disconnected, connecting...)*/
     </script>
   </body>
 </html>
