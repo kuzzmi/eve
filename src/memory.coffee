@@ -15,6 +15,9 @@ class Memory extends EventEmitter
             5000
         )
 
+    get: (key) ->
+        @data[key]
+
     set: (key, value) ->
         @data[key] = value
 
