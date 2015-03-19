@@ -1,5 +1,6 @@
 Utils      = require './utils'
 Response   = require './response'
+jade       = require 'jade'
 
 class Module
     # This class is for adding basic functionality to modules
@@ -33,7 +34,11 @@ class Module
         result = module.exec()
 
         return result
-    
+
+    compileHtml: (file, data) ->
+        compile = jade.compileFile file
+        return compile data
+        
     setValue: (name, value) ->
         @[name] = { value }
 

@@ -1,6 +1,6 @@
 {
     "name": "eve",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "description": "Personal Assistant",
     "main": "index",
     "scripts": {
@@ -17,6 +17,7 @@
         "callsite": "^1.0.0",
         "colors": "^1.0.3",
         "ivona-node": "kuzzmi/ivona-node",
+        "jade": "^1.9.2",
         "log": "^1.4.0",
         "minimist": "^1.1.0",
         "node-wit": "^1.1.0",

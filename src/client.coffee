@@ -41,18 +41,22 @@ class Client
     send: (data) ->
         @Eve.emit 'input', data
 
-    receive: (data) ->
+    receive: (@data) ->
         {
             text
             voice
             notification
-        } = data
+            html
+        } = @data
 
         @print          text if text
+        @show           html if html
         @say           voice if voice
         @notify notification if notification
 
     print: (data) ->
+
+    show: (data) ->
 
     say: (data) ->
 

@@ -33,10 +33,15 @@ class WebServer extends Client
                 text: data
 
     print: (data) ->
+        if @data.html then return
+
         data = data.join '. ' if data instanceof Array
 
         if data
             io.emit 'output', @converter.toHtml data.replace(/ /g, '&nbsp;')
+
+    show: (data) ->
+        io.emit 'output', data[0]
 
     say: (phrase) ->
         if phrase and not silent

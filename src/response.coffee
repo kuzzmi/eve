@@ -27,6 +27,9 @@ class Response
     addNotification: (notification) ->
         @add 'notification', notification
 
+    addHtml: (html) ->
+        @add 'html', html
+
     addResponse: (response) ->
         if response.then
             promise = response
