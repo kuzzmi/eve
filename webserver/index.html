@@ -2,9 +2,13 @@
 <html>
   <head>
     <title>Eve</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <style>
       @import url(http://fonts.googleapis.com/css?family=Open+Sans:700,300,400&subset=latin,cyrillic);
-      @import url(http://fonts.googleapis.com/css?family=Inconsolata:400,700&subset=latin,cyrillic);
+      @import url(http://fonts.googleapis.com/css?family=Anonymous+Pro:700,400&subset=latin,cyrillic);
       * { 
         margin: 0; 
         padding: 0; 
@@ -15,6 +19,7 @@
         color: #ffffff; 
         font-family: 'Open Sans', sans-serif;
         overflow: hidden;
+        font-size: 16px;
       }
       form {
         background: #343c47;
@@ -25,7 +30,7 @@
         height: 67px;
       }
       form input {
-        font-family: 'Inconsolata';
+        font-family: 'Anonymous Pro';
         font-size: 15px;
         border: 0;
         border-radius: 4px;
@@ -54,9 +59,10 @@
       .header h3 {
         font-weight: 700;
         line-height: 45px;
+        margin: 0;
       }
       #messages { 
-        font-family: 'Inconsolata';
+        font-family: 'Anonymous Pro';
         list-style-type: none; 
         margin: 0; 
         padding: 0;
@@ -82,6 +88,15 @@
       #messages li.in { 
         text-align: right;        
       }
+      li.out th, li.out td {
+        padding: 2px 5px;
+      }
+      .text-red {
+        color: #ED7679;
+      }
+      .text-green {
+        color: #B1EC77;
+      }
     </style>
   </head>
   <body>
@@ -98,8 +113,9 @@
     
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script>
-      var socket = io();
+      window.socket = io();
 
       socket.on('output', function(msg){
         $('#messages')
