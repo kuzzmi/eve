@@ -97,6 +97,10 @@
       .text-green {
         color: #B1EC77;
       }
+      .property-name {
+        font-weight: 700;
+        padding: 5px;
+      }
     </style>
   </head>
   <body>
@@ -117,12 +121,16 @@
     <script>
       window.socket = io();
 
+      var scrollDown = function () {
+        var messages = $('#messages');
+        messages.scrollTop(messages[0].scrollHeight);        
+      };
+
       socket.on('output', function(msg){
         $('#messages')
           .append($('<li class="out">')
           .html(msg.replace(/\r\n/g, '<br />')));
-        var messages = $('#messages');
-        messages.scrollTop(messages[0].scrollHeight)
+        scrollDown();
       });
 
       $('form').submit(function() {
@@ -130,6 +138,7 @@
         $('#messages').append($('<li class="in">').text(msg));
         socket.emit('input', msg);
         $('#m').val('');
+        scrollDown();
         return false;
       });
 
