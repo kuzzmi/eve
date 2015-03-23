@@ -39,8 +39,9 @@ class CLI extends Client
         @rl.prompt true
 
     say: (phrase) ->
-        phrase = phrase.join '. ' if phrase instanceof Array
-        Speech.exec phrase
+        if not silent
+            phrase = phrase.join '. ' if phrase instanceof Array
+            Speech.exec phrase
 
     notify: (notification) ->
         url = Config.autoremote.lgg2
@@ -58,6 +59,7 @@ class CLI extends Client
 
 host      = argv.h || argv.host
 port      = argv.p || argv.port
+silent    = argv.s || argv.silent
 verbosity = if argv.v then 'debug'
 
 CLI.create(host, port, verbosity)

@@ -1,6 +1,6 @@
 {
     "name": "eve",
-    "version": "0.1.14",
+    "version": "0.1.15",
     "description": "Personal Assistant",
     "main": "index",
     "scripts": {
@@ -16,6 +16,7 @@
     "dependencies": {
         "callsite": "^1.0.0",
         "colors": "^1.0.3",
+        "global-tunnel": "^1.2.0",
         "ivona-node": "kuzzmi/ivona-node",
         "jade": "^1.9.2",
         "log": "^1.4.0",

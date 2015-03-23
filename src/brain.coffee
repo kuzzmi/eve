@@ -6,6 +6,7 @@ Colors       = require 'colors'
 Utils        = require './utils'
 Memory       = require './memory'
 HubotWrapper = require './hubotwrapper'
+globalTunnel = require 'global-tunnel'
 
 class Brain 
     constructor: (@name = 'Eve') ->
@@ -14,6 +15,10 @@ class Brain
         @modules = {}
         @parser  = require('./parser') @
         @clients = []
+
+        globalTunnel.initialize
+            host: 'eu-chbs-proxy.eu.novartis.net'
+            port: 2010
 
         @logger = new Log 'debug'
 
