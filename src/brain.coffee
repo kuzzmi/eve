@@ -16,9 +16,9 @@ class Brain
         @parser  = require('./parser') @
         @clients = []
 
-        globalTunnel.initialize
-            host: 'eu-chbs-proxy.eu.novartis.net'
-            port: 2010
+        # globalTunnel.initialize
+        #     host: 'eu-chbs-proxy.eu.novartis.net'
+        #     port: 2010
 
         @logger = new Log 'debug'
 
