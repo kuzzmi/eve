@@ -1,10 +1,13 @@
 {
     "name": "eve",
-    "version": "0.1.16",
+    "version": "0.1.18",
     "description": "Personal Assistant",
     "main": "index",
     "scripts": {
-        "start": "nodemon -q js/eve.js",
+        "start": "forever -c coffee bin/eve",
+        "win32": "forever -c coffee.cmd bin/eve",
+        "cli": "bin/cli",
+        "cli-w32": "coffee bin/cli",
         "test": "grunt test"
     },
     "author": "Igor Kuzmenko",
