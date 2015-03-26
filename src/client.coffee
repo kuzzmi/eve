@@ -2,12 +2,12 @@ Socket = require 'socket.io-client'
 Log    = require 'log'
 
 class Client
-    constructor: (host = '127.0.0.1', port = '3000', logLevel = 'info') ->
+    constructor: (host = '127.0.0.1', port = '3000', logLevel = 'info', type = 'unknown') ->
         @Eve = Socket 'http://' + host + ':' + port
         @Logger = new Log logLevel
 
         @Eve.on 'output', (data)   => @receive data
-        @Eve.on 'connect',         => @connect(); @run()
+        @Eve.on 'connect',         => @connect(); @run(); @register(type)
         @Eve.on 'reconnecting',    => @reconnecting()
         @Eve.on 'reconnect',       => @reconnect()
         @Eve.on 'reconnect_error', => @failed()
@@ -15,8 +15,11 @@ class Client
         @Eve.on 'disconnect',      => @stop()
         @start()
 
-    @create: (path, port, debug) ->
-        return new @(path, port, debug)
+    @create: (path, port, debug, type) ->
+        return new @(path, port, debug, type)
+
+    register: (client) ->
+        @Eve.emit 'register', client
 
     start: ->
         @Logger.debug 'Connecting...'

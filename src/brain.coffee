@@ -124,6 +124,7 @@ class Brain
 
         socket.on 'disconnect', => @onDisconnect socket
         socket.on 'input', (data) => @process data, socket
+        socket.on 'register', (data) => @logger.debug "Client #{data} tries to register"
 
     run: (port = 3000) ->
         @logger.debug "Starting WebSocket listener on :#{port}"

@@ -62,4 +62,4 @@ port      = argv.p || argv.port
 silent    = argv.s || argv.silent
 verbosity = if argv.v then 'debug'
 
-CLI.create(host, port, verbosity)
+CLI.create host, port, verbosity, 'cli'
