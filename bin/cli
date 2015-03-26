@@ -50,7 +50,9 @@ class CLI extends Client
 
         notifier.notify
             title: 'Eve',
-            message: notification
+            message: notification,
+            sound: true,
+            icon: require('path').join(__dirname, 'icon.png')
         # url = Config.autoremote.lgg2
         
         # @Logger.debug notification
