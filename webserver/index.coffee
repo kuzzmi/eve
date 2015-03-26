@@ -67,4 +67,4 @@ port      = argv.p || argv.port
 verbosity = if argv.v then 'debug'
 silent    = argv.s || argv.silent
 
-WebServer.create(null, null, verbosity)
+WebServer.create(null, null, verbosity, 'web')

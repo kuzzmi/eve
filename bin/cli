@@ -3,6 +3,7 @@
 readline = require 'readline'
 colors   = require 'colors'
 request  = require 'request'
+notifier = require 'node-notifier'
 
 argv     = require('minimist')(process.argv.slice(2))
 
@@ -44,18 +45,24 @@ class CLI extends Client
             Speech.exec phrase
 
     notify: (notification) ->
-        url = Config.autoremote.lgg2
+
+        notification = notification.join '. ' if notification instanceof Array
+
+        notifier.notify
+            title: 'Eve',
+            message: notification
+        # url = Config.autoremote.lgg2
         
-        @Logger.debug notification
+        # @Logger.debug notification
 
-        if notification instanceof Array and notification.length > 1
-            command = 'eve_resp_list'
-            message = notification.join(',') + '=:=' + command
-        else 
-            command = 'eve_resp_text'
-            message = notification.join('. ') + '=:=' + command
+        # if notification instanceof Array and notification.length > 1
+        #     command = 'eve_resp_list'
+        #     message = notification.join(',') + '=:=' + command
+        # else 
+        #     command = 'eve_resp_text'
+        #     message = notification.join('. ') + '=:=' + command
 
-        request url + message
+        # request url + message
 
 host      = argv.h || argv.host
 port      = argv.p || argv.port

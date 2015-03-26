@@ -1,6 +1,6 @@
 {
     "name": "eve",
-    "version": "0.2.1",
+    "version": "0.2.3",
     "description": "Personal Assistant",
     "main": "index",
     "scripts": {
@@ -24,6 +24,7 @@
         "jade": "^1.9.2",
         "log": "^1.4.0",
         "minimist": "^1.1.0",
+        "node-notifier": "^4.1.2",
         "node-wit": "^1.1.0",
         "nodemailer": "^1.3.2",
         "q": "^1.1.2",

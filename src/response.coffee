@@ -30,6 +30,9 @@ class Response
     addHtml: (html) ->
         @add 'html', html
 
+    addJson: (json) ->
+        @add 'json', json
+
     addResponse: (response) ->
         if response.then
             promise = response
