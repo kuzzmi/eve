@@ -1,6 +1,10 @@
 {
     "name": "eve",
+<<<<<<< HEAD
     "version": "0.2.1",
+=======
+    "version": "0.1.21",
+>>>>>>> 91b16f53d48805cb4b6b2dac7e78bf1df2e592c4
     "description": "Personal Assistant",
     "main": "index",
     "scripts": {
