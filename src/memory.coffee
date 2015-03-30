@@ -12,7 +12,7 @@ class Memory extends EventEmitter
 
         setInterval(
             () => Utils.json2file('memory.json', @data),
-            5000
+            25000
         )
 
     get: (key) ->

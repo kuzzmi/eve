@@ -1,6 +1,7 @@
 Utils      = require './utils'
 Response   = require './response'
 jade       = require 'jade'
+CronJob    = require('cron').CronJob
 
 class Module
     # This class is for adding basic functionality to modules
@@ -34,6 +35,9 @@ class Module
         result = module.exec()
 
         return result
+
+    startJob: (crontime, job) ->
+        return new CronJob crontime, job, null, true
 
     compileHtml: (file, data) ->
         compile = jade.compileFile file
