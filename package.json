@@ -1,52 +1,53 @@
 {
-    "name": "eve",
-    "version": "0.2.16",
-    "description": "Personal Assistant",
-    "main": "index",
-    "scripts": {
-        "start": "forever -c coffee bin/eve",
-        "win32": "forever -c coffee.cmd bin/eve",
-        "cli": "bin/cli",
-        "cli-w32": "coffee bin/cli",
-        "test": "grunt test"
-    },
-    "author": "Igor Kuzmenko",
-    "license": "ISC",
-    "repository": {
-        "type": "git",
-        "url": "git+ssh://git@bitbucket.org/kuzzmi/eve.git"
-    },
-    "dependencies": {
-        "callsite": "^1.0.0",
-        "colors": "^1.0.3",
-        "global-tunnel": "^1.2.0",
-        "ivona-node": "kuzzmi/ivona-node",
-        "jade": "^1.9.2",
-        "log": "^1.4.0",
-        "minimist": "^1.1.0",
-        "node-notifier": "^4.1.2",
-        "node-wit": "^1.1.0",
-        "nodemailer": "^1.3.2",
-        "q": "^1.1.2",
-        "request": "^2.53.0",
-        "scoped-http-client": "^0.10.3",
-        "socket.io": "^1.3.4",
-        "socket.io-client": "^1.3.5"
-    },
-    "devDependencies": {
-        "chai": "^2.0.0",
-        "grunt": "^0.4.5",
-        "grunt-concurrent": "^1.0.0",
-        "grunt-contrib-clean": "^0.6.0",
-        "grunt-contrib-coffee": "^0.13.0",
-        "grunt-contrib-copy": "^0.8.0",
-        "grunt-contrib-watch": "^0.6.1",
-        "grunt-mocha-test": "^0.12.7",
-        "grunt-newer": "^1.1.0",
-        "load-grunt-tasks": "^3.1.0",
-        "mocha": "^2.1.0",
-        "mockery": "^1.4.0",
-        "time-grunt": "^1.0.0"
-    },
-    "private": true
+  "name": "eve",
+  "version": "0.2.16",
+  "description": "Personal Assistant",
+  "main": "index",
+  "scripts": {
+    "start": "forever -c coffee bin/eve",
+    "win32": "forever -c coffee.cmd bin/eve",
+    "cli": "bin/cli",
+    "cli-w32": "coffee bin/cli",
+    "test": "grunt test"
+  },
+  "author": "Igor Kuzmenko",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/kuzzmi/eve.git"
+  },
+  "dependencies": {
+    "callsite": "^1.0.0",
+    "colors": "^1.0.3",
+    "cron": "^1.0.9",
+    "global-tunnel": "^1.2.0",
+    "ivona-node": "kuzzmi/ivona-node",
+    "jade": "^1.9.2",
+    "log": "^1.4.0",
+    "minimist": "^1.1.0",
+    "node-notifier": "^4.1.2",
+    "node-wit": "^1.1.0",
+    "nodemailer": "^1.3.2",
+    "q": "^1.1.2",
+    "request": "^2.53.0",
+    "scoped-http-client": "^0.10.3",
+    "socket.io": "^1.3.4",
+    "socket.io-client": "^1.3.5"
+  },
+  "devDependencies": {
+    "chai": "^2.0.0",
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^1.0.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-newer": "^1.1.0",
+    "load-grunt-tasks": "^3.1.0",
+    "mocha": "^2.1.0",
+    "mockery": "^1.4.0",
+    "time-grunt": "^1.0.0"
+  },
+  "private": true
 }
