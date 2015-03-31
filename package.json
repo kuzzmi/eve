@@ -1,13 +1,13 @@
 {
     "name": "eve",
-    "version": "0.2.16",
+    "version": "0.2.17",
     "description": "Personal Assistant",
     "main": "index",
     "scripts": {
         "start": "forever -c coffee bin/eve",
         "win32": "forever -c coffee.cmd bin/eve",
         "cli": "bin/cli",
-        "cli-w32": "coffee bin/cli",
+        "cli-w32": "coffee bin/cli -s",
         "test": "grunt test"
     },
     "author": "Igor Kuzmenko",

@@ -49,10 +49,10 @@ class CLI extends Client
         notification = notification.join '. ' if notification instanceof Array
 
         notifier.notify
-            title: 'Eve',
-            message: notification,
-            sound: true,
-            icon: require('path').join(__dirname, 'icon.png')
+            title   : 'Eve',
+            message : notification,
+            sound   : true,
+            icon    : require('path').join(__dirname, 'icon.png')
         # url = Config.autoremote.lgg2
         
         # @Logger.debug notification
