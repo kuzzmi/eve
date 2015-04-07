@@ -5,10 +5,10 @@ CronJob    = require('cron').CronJob
 
 class Module
     # This class is for adding basic functionality to modules
-    # 
+    #
     # In: Eve: Brain, client: Socket, stimulus: Stimulus
     constructor: (@Eve, @client, @stimulus, @metadata) ->
-        
+
         @response = new Response @Eve, @client
 
         if @stimulus
@@ -19,19 +19,26 @@ class Module
 
     # This method allows to receive a response from module without
     # actual execution. Useful for linking modules.
-    # 
+    #
     # Returns Response or Promise<Response>
-    # 
+    #
     # E.g.:
-    #       We have module A and B. If we want to get response from 
-    #    A in B to concatenate them, we need to call A.exec() instead 
+    #       We have module A and B. If we want to get response from
+    #    A in B to concatenate them, we need to call A.exec() instead
     #    of creating an object instanceof A.
     @exec: (entities, metadata) ->
         transformed = {}
         for k, v of entities
             transformed[k] = [{ value: v }]
 
-        module = new @(null, null, { entities: transformed }, metadata)
+        EveDummy =
+            logger:
+                debug: (msg) ->
+                    console.log msg
+                error: (msg) ->
+                    console.log msg
+
+        module = new @(EveDummy, null, { entities: transformed }, metadata)
         result = module.exec()
 
         return result
@@ -42,7 +49,7 @@ class Module
     compileHtml: (file, data) ->
         compile = jade.compileFile file
         return compile data
-        
+
     setValue: (name, value) ->
         @[name] = { value }
 
@@ -51,9 +58,9 @@ class Module
 
     # This method allows to pick a random phrase from phrasebook by a
     # code and by replacing arguments.
-    # 
+    #
     # Returns ready-to-output phrase.
-    # 
+    #
     # E.g.:
     #       phrasebook: {
     #           foo: {
@@ -62,7 +69,7 @@ class Module
     #       }
     #       code: "foo.bar" (or ['foo', 'bar'])
     #       args: ["baz"] (or [ ['baz', 'qux'] ] to be randomly picked)
-    #       
+    #
     #       pick code, args:
     #           baz
     pick: (code, args = []) ->
@@ -80,8 +87,8 @@ class Module
                 r = Utils.randomInt args[number].length
                 return args[number][r]
             else if typeof args[number] isnt 'undefined'
-                return args[number] 
-            else 
+                return args[number]
+            else
                 return match
 
         return phrase

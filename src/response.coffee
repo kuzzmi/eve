@@ -5,11 +5,10 @@ class Response
         @body = {}
         @queue = []
 
-    add: (name, value) ->        
+    add: (name, value) ->
         exists = yes if @body[name]
 
-        if not exists
-            @body[name] = []
+        if not exists then @body[name] = []
 
         if value instanceof Array
             @body[name] = @body[name].concat value
@@ -39,7 +38,7 @@ class Response
                 .then (result) =>
                     @addResponse result
             @queue.push promise
-        else 
+        else
             for key, value of response.body
                 @add key, value
         return @
