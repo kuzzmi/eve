@@ -5,6 +5,7 @@
     "main": "index",
     "scripts": {
         "start": "forever -c coffee bin/eve",
+        "webserver": "forever -c coffee webserver",
         "win32": "forever -c coffee.cmd bin/eve",
         "cli": "bin/cli",
         "cli-w32": "coffee bin/cli -s",
